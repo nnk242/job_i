@@ -1,0 +1,135 @@
+.m-slide {
+    height: 477px;
+    margin: 0 auto;
+    display: block;
+}
+.m-bg-slide {
+    background: #b8cccc; /* For browsers that do not support gradients */
+    background: radial-gradient(#b8cccc, #ffc2f3, #b8cccc); /* Standard syntax (must be last) */
+}
+
+.m-tab-i {
+    margin: 0 auto;
+}
+
+.m-cont-w {
+    width: 20%;
+    float: left;
+}
+
+.m-bg-b8cccc {
+    background: #b8cccc;
+}
+
+.m-top-right-bottom-left-0 {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.m-font-size-3em {
+    font-size: 3em;
+}
+
+.m-clear-left {
+    clear: left;
+}
+
+.m-margin-top-15pt {
+    margin-top: 15%;
+}
+
+.m-margin-bottom-15px {
+    margin-bottom: 15px;
+}
+
+.m-margin-top-bottom-15px {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.grid-item {
+    width: 20%;
+}
+
+.grid-item img {
+    width: 100%;
+    margin:0 auto 20px auto;
+    display: block;
+    border-radius: 5px;
+}
+
+.m-bg-img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #b8cccc;
+    opacity: 0.7;
+    border-radius: 5px;
+    transition: 2s;
+}
+
+.m-s-t {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+.m-positon-p {
+    position: relative;
+    background: #b8cccc;
+    width: 95%;
+    margin: 0 auto;
+    display: block;
+}
+
+.m-none {
+    display: none;
+    transition: 2s;
+}
+
+.m-a-p:hover  .m-none {
+    display: block;
+    transition: 2s;
+}
+
+.m-opacity-7 {
+    opacity: 0.7;
+}
+
+.m-opacity-9 {
+    opacity: 0.9;
+}
+
+.m-margin-top-bottom-30px {
+    margin: 30px 0;
+}
+
+.m-margin-top-57px {
+    margin-top: 57px;
+}
+
+.m-margin-top-120px {
+    margin-top: 120px;
+}
+
+.m-collection-w {
+    width: 98%;
+    margin: 0 auto;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    display: block;
+}
+
+.m-border-darius-5 {
+    border-radius: 5px;
+}
+
+.m-img-w {
+    width: 90%;
+    margin: 0 auto;
+    display: block;
+}
