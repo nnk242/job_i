@@ -12,10 +12,10 @@
 */
 
 Route::get('/', function () {
-    return view('frontend.index');
+    return view('frontends.index');
 });
 
-
+Route::
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
