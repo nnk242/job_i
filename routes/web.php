@@ -15,8 +15,9 @@ Route::get('/', function () {
     return view('frontends.index');
 });
 
-Route::
-Auth::routes();
+Route::group(['prefix'=>'admin'], function () {
+    Auth::routes();
+});
 
 Route::get('/home', 'HomeController@index')->name('home');
 
