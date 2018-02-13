@@ -17,6 +17,11 @@ Route::get('/', function () {
 
 Route::group(['prefix'=>'admin'], function () {
     Auth::routes();
+    Route::group(['prefix' => 'image'], function () {
+        Route::get('/', 'backend\ImageController@index')->name('view.image');
+        Route::get('create', 'backend\ImageController@create')->name('view.image.create');
+        Route::post('store', 'backend\ImageController@store')->name('view.image.store');
+    });
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
