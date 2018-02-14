@@ -12,6 +12,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <!-- Common -->
+    <link href="{{ asset('common/style.css') }}" rel="stylesheet">
+    <!-- Font awesome styles -->
+    <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 </head>
 <body>
 <div id="app">

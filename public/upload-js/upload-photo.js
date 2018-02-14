@@ -31,6 +31,7 @@ function uploadPhoto(url) {
         // và thẻ này đã được chọn file.
         // Bạn có thể append luôn thẻ <input type="file"> trong file blade cũng được
         formData.append('upload', file);
+        console.log($('#form').serialize());
         // Tiến hành gửi dữ liệu bằng ajax
         current.currentUpload = $.ajax({
             // url đích, đã được truyền vào từ file PHP
@@ -46,7 +47,7 @@ function uploadPhoto(url) {
                 $('#process').hide();
                 switch (data.status) {
                     case 200: // Nếu upload thành công
-                        $('#file-uploaded').append('<li>' + data.responseJSON.url + '</li>');
+                        $('#file-uploaded').append('<li class="w-25 float-left"><img class="m-b-img" src="' + data.responseJSON.url + '"/></li>');
                         alert(data.responseJSON.message);
                         break;
                     case 500: // Lỗi server

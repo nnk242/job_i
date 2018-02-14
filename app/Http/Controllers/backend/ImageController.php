@@ -49,6 +49,7 @@ class ImageController extends Controller
         // - không được trống
         // - là file image
         // - max size là 2345678
+//        return $request->group;
         $validator = Validator::make($request->all(), [
             'upload' => 'required|image',
         ]);
@@ -73,6 +74,7 @@ class ImageController extends Controller
             return [
                 'status' => true,
                 'url' => $result,
+                'data' => $request->all(),
                 'message' => 'Upload successfull!',
             ];
         } catch (\Exception $ex) {
