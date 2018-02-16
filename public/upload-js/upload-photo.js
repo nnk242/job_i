@@ -47,7 +47,24 @@ function uploadPhoto(url) {
                 $('#process').hide();
                 switch (data.status) {
                     case 200: // Nếu upload thành công
-                        $('#file-uploaded').append('<li class="w-25 float-left"><img class="m-b-img" src="' + data.responseJSON.url + '"/></li>');
+                        $('#file-uploaded').append('<li class="w-25 float-left"><div class="card" style="width: 20rem;">\n' +
+                            '  <img class="card-img-top" src="' + data.responseJSON.url + '" alt="Card image cap">\n' +
+                            '  <div class="card-block">\n' +
+                            '    <h4 class="card-title">Card title</h4>\n' +
+                            '    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card\'s content.</p>\n' +
+                            '  </div>\n' +
+                            '  <ul class="list-group list-group-flush">\n' +
+                            '    <li class="list-group-item">Cras justo odio</li>\n' +
+                            '    <li class="list-group-item">Dapibus ac facilisis in</li>\n' +
+                            '    <li class="list-group-item">Vestibulum at eros</li>\n' +
+                            '  </ul>\n' +
+                            '  <div class="card-block">\n' +
+                            '    <a href="#" class="card-link text-danger"><span class="fa fa-remove"></span>Remove</a>\n' +
+                            '    <a href="#" class="card-link text-success"><span class="fa fa-upload"></span>Upload</a>\n' +
+                            '  </div>\n' +
+                            '</div>'
+                            // '<img class="m-b-img" src="' + data.responseJSON.url + '"/></li>'
+                        );
                         alert(data.responseJSON.message);
                         break;
                     case 500: // Lỗi server
