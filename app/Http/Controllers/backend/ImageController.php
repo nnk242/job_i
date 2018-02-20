@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\backend;
 
+use App\Group;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use RemoteImageUploader\Factory;
@@ -136,5 +137,9 @@ class ImageController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function loadingGroup() {
+        return Group::orderBy('id', 'ASC')->get();
     }
 }

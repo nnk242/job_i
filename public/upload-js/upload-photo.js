@@ -1,3 +1,14 @@
+function loding() {
+    return '<div id="loading" class="loading"><div class="loading-child"><svg width="60px"  height="60px"' +
+        'xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid"' +
+        'class="lds-dual-ring" style="background: none;"><circle cx="50" cy="50" ng-attr-r="{{config.radius}}"' +
+        'ng-attr-stroke-width="{{config.width}}" ng-attr-stroke="{{config.stroke}}"' +
+        'ng-attr-stroke-dasharray="{{config.dasharray}}"fill="none" stroke-linecap="round" r="40" stroke-width="4"' +
+        'stroke="#b84a21" stroke-dasharray="62.83185307179586 62.83185307179586" transform="rotate(208.302 50 50)">' +
+        '<animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50"' +
+        'keyTimes="0;1" dur="5.3s" begin="0s" repeatCount="indefinite"></animateTransform></circle></svg>' +
+        '<p>Loading...</p></div></div>';
+}
 function uploadPhoto(url) {
     var current = this;
     this.url = url;
@@ -25,7 +36,7 @@ function uploadPhoto(url) {
         // Disable nút bấm trong quá trình upload
         $('#upload').prop('disabled', true);
         // Hiện thông báo đang trong quá trình upload
-        $('#process').show();
+        $('body').append(loding());
         // Thêm trường upload có giá trị là file đang được chọn trong thẻ input
         // Giống như trong formData có thẻ <ipput type="file" name="upload"/>
         // và thẻ này đã được chọn file.
@@ -44,20 +55,18 @@ function uploadPhoto(url) {
                 // Enable nút upload
                 // Ẩn thông báo process
                 $('#upload').prop('disabled', false);
-                $('#process').hide();
+                $('#loading').remove();
                 switch (data.status) {
                     case 200: // Nếu upload thành công
                         $('#file-uploaded').append('<li class="w-25 float-left"><div class="card" style="width: 20rem;">\n' +
                             '  <img class="card-img-top" src="' + data.responseJSON.url + '" alt="Card image cap">\n' +
                             '  <div class="card-block">\n' +
-                            '    <h4 class="card-title">Card title</h4>\n' +
-                            '    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card\'s content.</p>\n' +
+                            '    <div class="form-group"><input type="text" class="form-control mt-2" placeholder="Title"></div>\n' +
+                            '    <div class="form-group"><textarea class="form-control" rows="3"></textarea></div>\n' +
                             '  </div>\n' +
-                            '  <ul class="list-group list-group-flush">\n' +
-                            '    <li class="list-group-item">Cras justo odio</li>\n' +
-                            '    <li class="list-group-item">Dapibus ac facilisis in</li>\n' +
-                            '    <li class="list-group-item">Vestibulum at eros</li>\n' +
-                            '  </ul>\n' +
+                            '<select class="form-control group" name="group">\n' +
+                            '      <option>---None---</option>\n' +
+                            '</select>\n' +
                             '  <div class="card-block">\n' +
                             '    <a href="#" class="card-link text-danger"><span class="fa fa-remove"></span>Remove</a>\n' +
                             '    <a href="#" class="card-link text-success"><span class="fa fa-upload"></span>Upload</a>\n' +
@@ -81,3 +90,26 @@ function uploadPhoto(url) {
         });
     };
 }
+
+$(document).on("click", ".group", function () {
+    console.log($(this).find('option').length);
+    if($(this).find('option').length<=1) {
+        console.log(123);
+        $('body').append(loding());
+        $.ajax({
+            url: 'loadingGroups',
+            dataType: 'json',
+            type: 'POST',
+            success: function(response) {
+                $('#loading').remove();
+                console.log(response[0]['id']);
+                $(".group").append("<option value='"+response[0]['id']+"'>"+response[0]['name']+"</option>");
+            },
+            error: function(x, e) {
+
+            }
+
+        });
+    }
+});
+

@@ -20,6 +20,9 @@ class CreateGroupsTable extends Migration
             $table->text('content')->nullable();
             $table->timestamps();
         });
+        DB::table('groups')->insert([[
+            'name' => 'Default',
+        ]]);
     }
 
     /**

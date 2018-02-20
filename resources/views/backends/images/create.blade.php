@@ -27,19 +27,17 @@
                                     class="fa fa-cloud-upload"></span>&nbsp;Upload to flickr
                         </button>
                     </div>
-                    <div id="process" style="display: none; margin: 10px 0">
-                        <div class="alert alert-danger text-center">Process...</div>
-                    </div>
+                    {{--<div id="process" style="display: none; margin: 10px 0">--}}
+                        {{--<div class="alert alert-danger text-center">Process...</div>--}}
+                    {{--</div>--}}
                 </div>
                 <div class="form-inline">
                     <div class="form-group mx-sm-3 mb-2">
                         <label for="group" class="col-form-label">Choose only group</label>
                     </div>
                     <div class="form-group mx-sm-3 mb-2">
-                        <select class="form-control" id="group" name="group">
+                        <select class="form-control group" id="group" name="group">
                             <option>---None---</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
                         </select>
                     </div>
                     <div class="form-check">
