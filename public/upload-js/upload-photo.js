@@ -58,20 +58,21 @@ function uploadPhoto(url) {
                 $('#loading').remove();
                 switch (data.status) {
                     case 200: // Nếu upload thành công
-                        $('#file-uploaded').append('<li class="w-25 float-left"><div class="card" style="width: 20rem;">\n' +
-                            '  <img class="card-img-top" src="' + data.responseJSON.url + '" alt="Card image cap">\n' +
+                        $('#file-uploaded').append('<li class="card mr-1 float-left mb-1 upload-a-file" style="width: 15rem;">\n' +
+                            '  <div class="m-height-150px"><img class="card-img-top m-max-width-100pt" src="' + data.responseJSON.url + '" alt="Card image cap"></div>\n' +
                             '  <div class="card-block">\n' +
-                            '    <div class="form-group"><input type="text" class="form-control mt-2" placeholder="Title"></div>\n' +
-                            '    <div class="form-group"><textarea class="form-control" rows="3"></textarea></div>\n' +
+                            '    <div class="form-group"><input type="text" class="form-control mt-2" placeholder="Link" name="u-link"></div>\n' +
+                            '    <div class="form-group"><input type="text" class="form-control" placeholder="Title" name="u-title"></div>\n' +
+                            '    <div class="form-group"><textarea class="form-control" rows="3" name="u-content" placeholder="Content"></textarea></div>\n' +
                             '  </div>\n' +
                             '<select class="form-control group" name="group">\n' +
                             '      <option>---None---</option>\n' +
                             '</select>\n' +
                             '  <div class="card-block">\n' +
                             '    <a href="#" class="card-link text-danger"><span class="fa fa-remove"></span>Remove</a>\n' +
-                            '    <a href="#" class="card-link text-success"><span class="fa fa-upload"></span>Upload</a>\n' +
+                            '    <a href="#" class="card-link text-success u-upload-a-file"><span class="fa fa-upload"></span>Upload</a>\n' +
                             '  </div>\n' +
-                            '</div>'
+                            '</li>'
                             // '<img class="m-b-img" src="' + data.responseJSON.url + '"/></li>'
                         );
                         alert(data.responseJSON.message);
@@ -92,9 +93,8 @@ function uploadPhoto(url) {
 }
 
 $(document).on("click", ".group", function () {
-    console.log($(this).find('option').length);
+    var current = this;
     if($(this).find('option').length<=1) {
-        console.log(123);
         $('body').append(loding());
         $.ajax({
             url: 'loadingGroups',
@@ -102,8 +102,7 @@ $(document).on("click", ".group", function () {
             type: 'POST',
             success: function(response) {
                 $('#loading').remove();
-                console.log(response[0]['id']);
-                $(".group").append("<option value='"+response[0]['id']+"'>"+response[0]['name']+"</option>");
+                current.append($.parseHTML("<option value='"+response[0]['id']+"'>"+response[0]['name']+"</option>")[0]);
             },
             error: function(x, e) {
 
@@ -113,3 +112,13 @@ $(document).on("click", ".group", function () {
     }
 });
 
+$(document).on("click", ".u-upload-a-file", function () {
+    var current = this;
+    $(this).closest('.upload-a-file').append(loding());
+});
+
+// function uploadtodb() {
+//     var current = this;
+//     $(this).closest('.upload-a-file').append(loding());
+//     console.log('123');
+// }

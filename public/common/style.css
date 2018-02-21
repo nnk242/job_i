@@ -53,6 +53,29 @@
     width: 20%;
 }
 
+@media screen and (max-width: 544px) {
+    .grid-item {
+        width: 100%;
+    }
+}
+@media screen and (max-width: 768px) and (min-width: 545px) {
+    .grid-item {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 992px) and (min-width: 769px) {
+    .grid-item {
+        width: 33.33%;
+    }
+}
+
+@media screen and (max-width: 1200px) and (min-width: 993px) {
+    .grid-item {
+        width: 25%;
+    }
+}
+
 .grid-item img {
     width: 100%;
     margin:0 auto 20px auto;
@@ -149,11 +172,17 @@
 }
 
 .loading {
-    position: absolute; background: #cccccc; top: 0; left: 0; right: 0; bottom: 0;
+    position: fixed; background: #cccccc; top: 0; left: 0; right: 0; bottom: 0;
     opacity: 0.7;
 }
 .loading-child {
     position: absolute;
-    top: 45%; left: 49%;
+    top: 45%; left: 45%;
     transition: 1s;
+}
+.m-height-150px{
+    height: 150px;
+}
+.m-max-width-100pt {
+    max-width: 100%;
 }
