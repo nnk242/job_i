@@ -142,4 +142,30 @@ class ImageController extends Controller
     public function loadingGroup() {
         return Group::orderBy('id', 'ASC')->get();
     }
+
+    public function uploadAFile(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:255',
+            'url' => 'required|unique:posts|max:255',
+            'name' => 'required',
+        ]);
+        if ($validator->fails()) {
+            // gộp mảng errors thành chuỗi, cách nhau bởi dấu cách
+            $message = implode(' ', $validator->errors()->all());
+
+            return [
+                'status' => false,
+                'message' => 'Upload fail! ' . $message,
+            ];
+        } else {
+
+
+            return [
+                'status' => true,
+                'message' => 'Upload successful!',
+            ];
+        }
+
+    }
 }

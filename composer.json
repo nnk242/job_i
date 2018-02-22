@@ -1,4 +1,5 @@
 {
+     "files": ["app/function/function.php"],
     "anahkiasen/flickering": "dev-master",
     "name": "laravel/laravel",
     "description": "The Laravel Framework.",

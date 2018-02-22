@@ -22,6 +22,7 @@ Route::group(['prefix'=>'admin'], function () {
         Route::get('create', 'backend\ImageController@create')->name('view.image.create');
         Route::post('store', 'backend\ImageController@store')->name('view.image.store');
         Route::post('loadingGroups', 'backend\ImageController@loadingGroup')->name('view.image.loadingGroups');
+        Route::post('uploadAFile', 'backend\ImageController@uploadAFile')->name('view.image.uploadafile');
     });
 });
 

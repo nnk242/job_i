@@ -61,9 +61,9 @@ function uploadPhoto(url) {
                         $('#file-uploaded').append('<li class="card mr-1 float-left mb-1 upload-a-file" style="width: 15rem;">\n' +
                             '  <div class="m-height-150px"><img class="card-img-top m-max-width-100pt" src="' + data.responseJSON.url + '" alt="Card image cap"></div>\n' +
                             '  <div class="card-block">\n' +
-                            '    <div class="form-group"><input type="text" class="form-control mt-2" placeholder="Link" name="u-link"></div>\n' +
-                            '    <div class="form-group"><input type="text" class="form-control" placeholder="Title" name="u-title"></div>\n' +
-                            '    <div class="form-group"><textarea class="form-control" rows="3" name="u-content" placeholder="Content"></textarea></div>\n' +
+                            '    <div class="form-group"><input type="text" class="form-control mt-2 u-link" placeholder="Link" name="u-link" value="' + data.responseJSON.url + '"></div>\n' +
+                            '    <div class="form-group"><input type="text" class="form-control u-title" placeholder="Title" name="u-title"></div>\n' +
+                            '    <div class="form-group"><textarea class="form-control u-content" rows="3" name="u-content" placeholder="Content"></textarea></div>\n' +
                             '  </div>\n' +
                             '<select class="form-control group" name="group">\n' +
                             '      <option>---None---</option>\n' +
@@ -114,11 +114,27 @@ $(document).on("click", ".group", function () {
 
 $(document).on("click", ".u-upload-a-file", function () {
     var current = this;
-    $(this).closest('.upload-a-file').append(loding());
-});
+    var link = $(this).closest('.upload-a-file').find('.u-link').val();
+    var title = $(this).closest('.upload-a-file').find('.u-title').val();
+    var content = $(this).closest('.upload-a-file').find('.u-content').val();
+    $(this).append(loding());
 
-// function uploadtodb() {
-//     var current = this;
-//     $(this).closest('.upload-a-file').append(loding());
-//     console.log('123');
-// }
+    var token = $('meta[name="csrf-token"]').attr('content');
+
+    $.ajax({
+        url: 'uploadAFile',
+        dataType: 'json',
+        data: {'_token': token, 'title':title, 'content':content},
+        type: 'POST',
+        success: function(response) {
+            $('#loading').remove();
+            // current.append($.parseHTML("<option value='"+response[0]['id']+"'>"+response[0]['name']+"</option>")[0]);
+            console.log(response);
+        },
+        error: function(x, e) {
+            $('#loading').remove();
+            console.log(x, e)
+        }
+
+    });
+});
