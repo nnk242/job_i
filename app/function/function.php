@@ -83,7 +83,7 @@ function changeTitle($str, $strSymbol = '-', $case = MB_CASE_LOWER)
 }
 
 //category story
-function categoryStory($str, $strSymbol = '-', $case = MB_CASE_LOWER)
+function str_seo($str, $strSymbol = '-', $case = MB_CASE_LOWER)
 {// MB_CASE_UPPER / MB_CASE_TITLE / MB_CASE_LOWER
     $str = trim($str);
     if ($str == "") return "";

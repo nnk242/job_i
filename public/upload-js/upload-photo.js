@@ -9,6 +9,27 @@ function loding() {
         'keyTimes="0;1" dur="5.3s" begin="0s" repeatCount="indefinite"></animateTransform></circle></svg>' +
         '<p>Loading...</p></div></div>';
 }
+
+function error($mes) {
+    return '<div class="m-error">' +
+        '<div class="alert alert-danger alert-dismissible fade show" role="alert">\n' +
+        '  <strong>Holy guacamole!</strong> ' + $mes +
+        '  <button type="button" class="close" data-dismiss="alert" aria-label="Close">\n' +
+        '    <span aria-hidden="true">&times;</span>\n' +
+        '  </button>\n' +
+        '</div></div>';
+}
+
+function successful($mes) {
+    return '<div class="m-error">' +
+        '<div class="alert alert-success alert-dismissible fade show" role="alert">\n' +
+        '  <strong>Holy guacamole!</strong> ' + $mes +
+        '  <button type="button" class="close" data-dismiss="alert" aria-label="Close">\n' +
+        '    <span aria-hidden="true">&times;</span>\n' +
+        '  </button>\n' +
+        '</div></div>';
+}
+
 function uploadPhoto(url) {
     var current = this;
     this.url = url;
@@ -59,19 +80,24 @@ function uploadPhoto(url) {
                 switch (data.status) {
                     case 200: // Nếu upload thành công
                         $('#file-uploaded').append('<li class="card mr-1 float-left mb-1 upload-a-file" style="width: 15rem;">\n' +
-                            '  <div class="m-height-150px"><img class="card-img-top m-max-width-100pt" src="' + data.responseJSON.url + '" alt="Card image cap"></div>\n' +
+                            '<div class="m-height-150px"><img class="card-img-top m-max-width-100pt" src="' + data.responseJSON.url + '" alt="Card image cap"></div>\n' +
                             '  <div class="card-block">\n' +
                             '    <div class="form-group"><input type="text" class="form-control mt-2 u-link" placeholder="Link" name="u-link" value="' + data.responseJSON.url + '"></div>\n' +
+                            '    <div class="form-group"><input type="text" class="form-control u-name" placeholder="Name" name="u-name"></div>\n' +
                             '    <div class="form-group"><input type="text" class="form-control u-title" placeholder="Title" name="u-title"></div>\n' +
                             '    <div class="form-group"><textarea class="form-control u-content" rows="3" name="u-content" placeholder="Content"></textarea></div>\n' +
                             '  </div>\n' +
-                            '<select class="form-control group" name="group">\n' +
+                            '<select class="form-control group" name="u-group">\n' +
                             '      <option>---None---</option>\n' +
                             '</select>\n' +
-                            '  <div class="card-block">\n' +
+                            '<div class="form-check">\n' +
+                            '    <input type="checkbox" class="form-check-input u-status" value="1" checked>\n' +
+                            '    <label class="form-check-label">Hide/Show</label>\n' +
+                            '</div>'+
+                            '<div class="card-block">\n' +
                             '    <a href="#" class="card-link text-danger"><span class="fa fa-remove"></span>Remove</a>\n' +
                             '    <a href="#" class="card-link text-success u-upload-a-file"><span class="fa fa-upload"></span>Upload</a>\n' +
-                            '  </div>\n' +
+                            '</div>\n' +
                             '</li>'
                             // '<img class="m-b-img" src="' + data.responseJSON.url + '"/></li>'
                         );
@@ -115,8 +141,16 @@ $(document).on("click", ".group", function () {
 $(document).on("click", ".u-upload-a-file", function () {
     var current = this;
     var link = $(this).closest('.upload-a-file').find('.u-link').val();
+    var name = $(this).closest('.upload-a-file').find('.u-name').val();
     var title = $(this).closest('.upload-a-file').find('.u-title').val();
-    var content = $(this).closest('.upload-a-file').find('.u-content').val();
+    var content_ = $(this).closest('.upload-a-file').find('.u-content').val();
+    var group = $(this).closest('.upload-a-file').find('.group').val();
+
+    $(this).closest('.upload-a-file').find('.u-status').on('change', function(){
+        this.value = this.checked ? 1 : 0;
+    }).change();
+    var status = $(this).closest('.upload-a-file').find('.u-status').val();
+    console.log(link, name, title, content_, group, status);
     $(this).append(loding());
 
     var token = $('meta[name="csrf-token"]').attr('content');
@@ -124,10 +158,15 @@ $(document).on("click", ".u-upload-a-file", function () {
     $.ajax({
         url: 'uploadAFile',
         dataType: 'json',
-        data: {'_token': token, 'title':title, 'content':content},
+        data: {'_token': token,'link':link,'name':name, 'group':group, 'title':title, 'content_':content_, 'status':status},
         type: 'POST',
         success: function(response) {
             $('#loading').remove();
+            switch (response.status) {
+                case 200: $('body').append($.parseHTML(successful(response.message))); break;
+                case 500: $('body').append($.parseHTML(error(response.message))); break;
+                default: $('body').append($.parseHTML(error(response.message))); break;
+            }
             // current.append($.parseHTML("<option value='"+response[0]['id']+"'>"+response[0]['name']+"</option>")[0]);
             console.log(response);
         },

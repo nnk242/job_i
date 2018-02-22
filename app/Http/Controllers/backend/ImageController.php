@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use RemoteImageUploader\Factory;
 use Validator;
+use App\Images;
 
 class ImageController extends Controller
 {
@@ -149,6 +150,7 @@ class ImageController extends Controller
             'title' => 'required|max:255',
             'url' => 'required|unique:posts|max:255',
             'name' => 'required',
+            'group_id' => 'required'
         ]);
         if ($validator->fails()) {
             // gộp mảng errors thành chuỗi, cách nhau bởi dấu cách
@@ -159,11 +161,17 @@ class ImageController extends Controller
                 'message' => 'Upload fail! ' . $message,
             ];
         } else {
+            $url = $request->url;
+            $name = $request->name;
+            $title = $request->title;
+            $content = $request->content_;
+            $group_id = $request->group_id;
+            $status = $request->status;
 
-
+//            Images:whereimage_s(str_seo($name))->count()>0?;
             return [
                 'status' => true,
-                'message' => 'Upload successful!',
+                'message' => 'Upload successful!'
             ];
         }
 
