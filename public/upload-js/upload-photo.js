@@ -150,22 +150,32 @@ $(document).on("click", ".u-upload-a-file", function () {
         this.value = this.checked ? 1 : 0;
     }).change();
     var status = $(this).closest('.upload-a-file').find('.u-status').val();
-    console.log(link, name, title, content_, group, status);
-    $(this).append(loding());
 
     var token = $('meta[name="csrf-token"]').attr('content');
+    console.log(token, link, name, title, content_, group, status);
+    $(this).append(loding());
+
 
     $.ajax({
         url: 'uploadAFile',
         dataType: 'json',
-        data: {'_token': token,'link':link,'name':name, 'group':group, 'title':title, 'content_':content_, 'status':status},
+        data: {'_token': token,'url':link,'name':name, 'group_id':group, 'title':title, 'content_':content_, 'status':status},
         type: 'POST',
         success: function(response) {
             $('#loading').remove();
             switch (response.status) {
-                case 200: $('body').append($.parseHTML(successful(response.message))); break;
-                case 500: $('body').append($.parseHTML(error(response.message))); break;
-                default: $('body').append($.parseHTML(error(response.message))); break;
+                case 200: $('body').append($.parseHTML(successful(response.message)));
+                setTimeout(function () {
+                    $('.m-error').remove();
+                }, 1500); break;
+                case 500: $('body').append($.parseHTML(error(response.message)));
+                    setTimeout(function () {
+                        $('.m-error').remove();
+                    }, 1500); break;
+                default: $('body').append($.parseHTML(error(response.message)));
+                    setTimeout(function () {
+                        $('.m-error').remove();
+                    }, 3000); break;
             }
             // current.append($.parseHTML("<option value='"+response[0]['id']+"'>"+response[0]['name']+"</option>")[0]);
             console.log(response);
