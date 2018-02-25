@@ -23,6 +23,7 @@ Route::group(['prefix'=>'admin'], function () {
         Route::post('store', 'backend\ImageController@store')->name('view.image.store');
         Route::post('loadingGroups', 'backend\ImageController@loadingGroup')->name('view.image.loadingGroups');
         Route::post('uploadAFile', 'backend\ImageController@uploadAFile')->name('view.image.uploadafile');
+        Route::post('uploadFile', 'backend\ImageController@uploadFile')->name('view.image.uploadfile');
     });
 });
 

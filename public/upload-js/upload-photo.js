@@ -13,7 +13,7 @@ function loding() {
 function error($mes) {
     return '<div class="m-error">' +
         '<div class="alert alert-danger alert-dismissible fade show" role="alert">\n' +
-        '  <strong>Holy guacamole!</strong> ' + $mes +
+        '  <strong>Warning!</strong> ' + $mes +
         '  <button type="button" class="close" data-dismiss="alert" aria-label="Close">\n' +
         '    <span aria-hidden="true">&times;</span>\n' +
         '  </button>\n' +
@@ -23,11 +23,46 @@ function error($mes) {
 function successful($mes) {
     return '<div class="m-error">' +
         '<div class="alert alert-success alert-dismissible fade show" role="alert">\n' +
-        '  <strong>Holy guacamole!</strong> ' + $mes +
+        '  <strong>Successful!</strong> ' + $mes +
         '  <button type="button" class="close" data-dismiss="alert" aria-label="Close">\n' +
         '    <span aria-hidden="true">&times;</span>\n' +
         '  </button>\n' +
         '</div></div>';
+}
+//data.responseJSON.url
+function item_pic($required_group, $required_title, $required_content, $src_img) {
+    return '<li class="card mr-1 float-left mb-1 upload-a-file" style="width: 15rem;">\n' +
+        '<div class="m-height-150px"><img class="card-img-top m-max-width-100pt" src="' + $src_img + '" alt="Card image cap"></div>\n' +
+        '  <div class="card-block">\n' +
+        '    <div class="form-group"><input type="text" class="form-control mt-2 u-link" placeholder="Link" name="u-link[]" value="' + $src_img + '"></div>\n' +
+        '    <div class="form-group"><input type="text" class="form-control u-name" placeholder="Name" name="u-name[]" required></div>\n' +
+        '    <div class="form-group"><input type="text" class="form-control u-title" placeholder="Title" name="u-title[]" '+ $required_title +'></div>\n' +
+        '    <div class="form-group"><textarea class="form-control u-content" rows="3" name="u-content[]" placeholder="Content" '+ $required_content +'></textarea></div>\n' +
+        '  </div>\n' +
+        '<select class="form-control group" name="u-group" '+ $required_group +'>\n' +
+        '      <option value="">---None---</option>\n' +
+        '</select>\n' +
+        '<div class="form-check">\n' +
+        '    <input type="checkbox" class="form-check-input u-status" value="1" name="u-status[]" checked>\n' +
+        '    <label class="form-check-label">Hide/Show</label>\n' +
+        '</div>' +
+        '<div class="card-block">\n' +
+        '    <a href="#" class="card-link text-danger u-remove-a-file"><span class="fa fa-remove"></span>Remove</a>\n' +
+        '    <a href="#" class="card-link text-success u-upload-a-file"><span class="fa fa-upload"></span>Upload</a>\n' +
+        '</div>\n' +
+        '</li>'
+}
+
+function changeBox($ma) {
+    $($ma).on('change', function () {
+        this.value = this.checked ? 1 : 0;
+    }).change();
+}
+
+function closeError() {
+    setTimeout(function () {
+        $('.m-error').remove();
+    }, 5000);
 }
 
 function uploadPhoto(url) {
@@ -47,7 +82,9 @@ function uploadPhoto(url) {
             if (typeof $('#photo')[0].files[0] !== 'undefined') {
                 current.uploadFile($('#photo')[0].files[0]);
             } else {
-                alert('File field is empty');
+                $('body').append($.parseHTML(error('File field is empty')));
+                closeError();
+                // alert('File field is empty');
             }
         });
     };
@@ -63,7 +100,7 @@ function uploadPhoto(url) {
         // và thẻ này đã được chọn file.
         // Bạn có thể append luôn thẻ <input type="file"> trong file blade cũng được
         formData.append('upload', file);
-        console.log($('#form').serialize());
+        // console.log($('#form').serialize());
         // Tiến hành gửi dữ liệu bằng ajax
         current.currentUpload = $.ajax({
             // url đích, đã được truyền vào từ file PHP
@@ -79,35 +116,48 @@ function uploadPhoto(url) {
                 $('#loading').remove();
                 switch (data.status) {
                     case 200: // Nếu upload thành công
-                        $('#file-uploaded').append('<li class="card mr-1 float-left mb-1 upload-a-file" style="width: 15rem;">\n' +
-                            '<div class="m-height-150px"><img class="card-img-top m-max-width-100pt" src="' + data.responseJSON.url + '" alt="Card image cap"></div>\n' +
-                            '  <div class="card-block">\n' +
-                            '    <div class="form-group"><input type="text" class="form-control mt-2 u-link" placeholder="Link" name="u-link" value="' + data.responseJSON.url + '"></div>\n' +
-                            '    <div class="form-group"><input type="text" class="form-control u-name" placeholder="Name" name="u-name"></div>\n' +
-                            '    <div class="form-group"><input type="text" class="form-control u-title" placeholder="Title" name="u-title"></div>\n' +
-                            '    <div class="form-group"><textarea class="form-control u-content" rows="3" name="u-content" placeholder="Content"></textarea></div>\n' +
-                            '  </div>\n' +
-                            '<select class="form-control group" name="u-group">\n' +
-                            '      <option>---None---</option>\n' +
-                            '</select>\n' +
-                            '<div class="form-check">\n' +
-                            '    <input type="checkbox" class="form-check-input u-status" value="1" checked>\n' +
-                            '    <label class="form-check-label">Hide/Show</label>\n' +
-                            '</div>'+
-                            '<div class="card-block">\n' +
-                            '    <a href="#" class="card-link text-danger"><span class="fa fa-remove"></span>Remove</a>\n' +
-                            '    <a href="#" class="card-link text-success u-upload-a-file"><span class="fa fa-upload"></span>Upload</a>\n' +
-                            '</div>\n' +
-                            '</li>'
-                            // '<img class="m-b-img" src="' + data.responseJSON.url + '"/></li>'
-                        );
-                        alert(data.responseJSON.message);
+                        if (data.responseJSON.url) {
+                            // $('#file-uploaded').append(item_pic('required', 'required', 'required', data.responseJSON.url));
+                            if ($('#group-check').val() == 0 && $('#title-check').val() == 0 && $('#content-check').val() == 0) {
+                                $('#file-uploaded').append(item_pic('required', 'required', 'required', data.responseJSON.url));
+                            } else if ($('#group-check').val() == 1 && $('#title-check').val() == 0 && $('#content-check').val() == 0) {
+                                $('#file-uploaded').append(item_pic('', 'required', 'required', data.responseJSON.url));
+                            } else if ($('#group-check').val() == 0 && $('#title-check').val() == 1 && $('#content-check').val() == 0) {
+                                $('#file-uploaded').append(item_pic('required','' , 'required', data.responseJSON.url));
+                            } else if ($('#group-check').val() == 0 && $('#title-check').val() == 0 && $('#content-check').val() == 1) {
+                                $('#file-uploaded').append(item_pic('required', 'required', '', data.responseJSON.url));
+                            } else if ($('#group-check').val() == 1 && $('#title-check').val() == 1 && $('#content-check').val() == 0) {
+                                $('#file-uploaded').append(item_pic('', '', 'required', data.responseJSON.url));
+                            } else if ($('#group-check').val() == 1 && $('#title-check').val() == 0 && $('#content-check').val() == 1) {
+                                $('#file-uploaded').append(item_pic('', 'required', '', data.responseJSON.url));
+                            } else if ($('#group-check').val() == 0 && $('#title-check').val() == 1 && $('#content-check').val() == 1) {
+                                $('#file-uploaded').append(item_pic('required', '', '', data.responseJSON.url));
+                            } else if ($('#group-check').val() == 1 && $('#title-check').val() == 1 && $('#content-check').val() == 1) {
+                                $('#file-uploaded').append(item_pic('', '', '', data.responseJSON.url));
+                            } else {
+                                $('#file-uploaded').append(item_pic('required', 'required', 'required', data.responseJSON.url));
+                            }
+                            // console.log($('#file-uploaded').find('li').length);
+                            if ($('#file-uploaded').find('li').length === 1) {
+                                $('#file-uploaded').after('<div style="clear:left;" class="text-center mt-2 u-buttom-upload">' +
+                                    '<button type="submit" class="btn btn-success">Submit</button></div>');
+                            }
+
+                            $('body').append($.parseHTML(successful(data.responseJSON.message)));
+                            closeError();
+                        } else {
+                            $('body').append($.parseHTML(error(data.responseJSON.message)));
+                            closeError();
+                        }
                         break;
                     case 500: // Lỗi server
-                        alert('Unknown error: ' + data.status);
+                        $('body').append($.parseHTML(error('Unknown error: ' + data.status)));
+                        closeError();
+                        // alert('Unknown error: ' + data.status);
                         break;
                     default : // Các lỗi còn lại: lỗi validate, lỗi Exception.
-                        alert(data.responseJSON.message);
+                        $('body').append($.parseHTML(error(data.responseJSON.message)));
+                        closeError();
                 }
             },
             data: formData, // Dữ liệu gửi đi
@@ -120,17 +170,17 @@ function uploadPhoto(url) {
 
 $(document).on("click", ".group", function () {
     var current = this;
-    if($(this).find('option').length<=1) {
+    if ($(this).find('option').length <= 1) {
         $('body').append(loding());
         $.ajax({
             url: 'loadingGroups',
             dataType: 'json',
             type: 'POST',
-            success: function(response) {
+            success: function (response) {
                 $('#loading').remove();
-                current.append($.parseHTML("<option value='"+response[0]['id']+"'>"+response[0]['name']+"</option>")[0]);
+                current.append($.parseHTML("<option value='" + response[0]['id'] + "'>" + response[0]['name'] + "</option>")[0]);
             },
-            error: function(x, e) {
+            error: function (x, e) {
 
             }
 
@@ -146,7 +196,7 @@ $(document).on("click", ".u-upload-a-file", function () {
     var content_ = $(this).closest('.upload-a-file').find('.u-content').val();
     var group = $(this).closest('.upload-a-file').find('.group').val();
 
-    $(this).closest('.upload-a-file').find('.u-status').on('change', function(){
+    $(this).closest('.upload-a-file').find('.u-status').on('change', function () {
         this.value = this.checked ? 1 : 0;
     }).change();
     var status = $(this).closest('.upload-a-file').find('.u-status').val();
@@ -159,31 +209,70 @@ $(document).on("click", ".u-upload-a-file", function () {
     $.ajax({
         url: 'uploadAFile',
         dataType: 'json',
-        data: {'_token': token,'url':link,'name':name, 'group_id':group, 'title':title, 'content_':content_, 'status':status},
+        data: {
+            '_token': token,
+            'url': link,
+            'name': name,
+            'group_id': group,
+            'title': title,
+            'content_': content_,
+            'status': status
+        },
         type: 'POST',
-        success: function(response) {
+        success: function (response) {
             $('#loading').remove();
             switch (response.status) {
-                case 200: $('body').append($.parseHTML(successful(response.message)));
-                setTimeout(function () {
-                    $('.m-error').remove();
-                }, 1500); break;
-                case 500: $('body').append($.parseHTML(error(response.message)));
-                    setTimeout(function () {
-                        $('.m-error').remove();
-                    }, 1500); break;
-                default: $('body').append($.parseHTML(error(response.message)));
-                    setTimeout(function () {
-                        $('.m-error').remove();
-                    }, 3000); break;
+                case true:
+                    $('body').append($.parseHTML(successful(response.message)));
+                    closeError();
+                    break;
+                case false:
+                    $('body').append($.parseHTML(error(response.message)));
+                    closeError();
+                    break;
+                default:
+                    $('body').append($.parseHTML(error(response.message)));
+                    closeError();
+                    break;
             }
             // current.append($.parseHTML("<option value='"+response[0]['id']+"'>"+response[0]['name']+"</option>")[0]);
             console.log(response);
         },
-        error: function(x, e) {
+        error: function (x, e) {
             $('#loading').remove();
             console.log(x, e)
         }
 
     });
+});
+
+$(document).on('click', '.u-remove-a-file', function () {
+    try {
+        $(this).closest('.upload-a-file').remove();
+        $('body').append($.parseHTML(successful('Remove element successful!')));
+        closeError();
+        if ($('#file-uploaded').find('li').length === 0) {
+            $('.u-buttom-upload').remove();
+        } else {
+        }
+    } catch (err) {
+        $('body').append($.parseHTML(error('Remove element fail!')));
+    }
+});
+
+$(document).on('click','#group-check', function () {
+    changeBox('#group-check');
+    if($('#group-check').val() == 1) {
+        $('#group-check').required = false;
+    } else {
+        $('#group-check').required = true;
+    }
+});
+
+$(document).on('click','#title-check', function () {
+    changeBox('#title-check');
+});
+
+$(document).on('click','#content-check', function () {
+    changeBox('#content-check');
 });

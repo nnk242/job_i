@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use RemoteImageUploader\Factory;
 use Validator;
 use App\Images;
+use Auth;
 
 class ImageController extends Controller
 {
@@ -140,11 +141,13 @@ class ImageController extends Controller
         //
     }
 
-    public function loadingGroup() {
+    public function loadingGroup()
+    {
         return Group::orderBy('id', 'ASC')->get();
     }
 
-    public function uploadAFile(Request $request) {
+    public function uploadAFile(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:255',
             'url' => 'required|unique:images|max:255',
@@ -159,19 +162,38 @@ class ImageController extends Controller
                 'message' => 'Upload fail! ' . $message,
             ];
         } else {
-//            $url = $request->link;
-//            $name = $request->name;
-//            $title = $request->title;
-//            $content = $request->content_;
-//            $group_id = $request->group_id;
-//            $status = $request->status;
+            $url = $request->link;
+            $name = $request->name;
+            $title = $request->title;
+            $content = $request->content_;
+            $group_id = $request->group_id;
+            $status = $request->status;
 
-//            Images:whereimage_s(str_seo($name))->count()>0?;
+            $newImages = new Images();
+            $newImages->user_id = Auth::id();
+            $newImages->url = $url;
+            Images::whereimage_s(str_seo_m($name))->count() > 0 ? $newImages->image_s = str_seo_m(str_replace('.html', '', $name)) . '-' . time() : $newImages->image_s = str_seo_m($name);
+            $newImages->title = $title;
+            $newImages->content = $content;
+            $newImages->group_id = $group_id;
+            $newImages->status = $status;
+//            try {
+//                $newImages->save();
             return [
                 'status' => true,
-                'message' => 'Upload successful!'
+                'message' => 'Upload successful!' . str_seo_m($name . time())
             ];
+//            } catch (\Exception $ex) {
+//                return [
+//                    'status' => false,
+//                    'message' => 'Upload fail!'
+//                ];
+//            }
         }
 
+    }
+
+    public function uploadFile (Request $request) {
+        return $request->all();
     }
 }

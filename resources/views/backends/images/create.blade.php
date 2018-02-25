@@ -28,14 +28,15 @@
                         </button>
                     </div>
                 </div>
-                <form method="POST">
+                <form method="POST" action="{{route('view.image.uploadfile')}}">
+                    {{csrf_field()}}
                     <div class="form-inline mb-1">
                         <div class="form-group col-sm-2">
                             <label for="group" class="col-form-label">Choose only group</label>
                         </div>
                         <div class="form-group col-sm-3">
                             <select class="form-control group" id="group" name="group">
-                                <option>---None---</option>
+                                <option value="">---None---</option>
                             </select>
                         </div>
                         <div class="form-check mx-sm-3 mb-2">
@@ -51,7 +52,7 @@
                             <input class="form-control" id="p-title" name="p-title" placeholder="All title">
                         </div>
                         <div class="form-check mx-sm-3 mb-2">
-                            <input type="checkbox" class="form-check-input" id="title-check">
+                            <input type="checkbox" class="form-check-input" id="title-check" name="title-check">
                             <label class="form-check-label" for="title-check">Select all</label>
                         </div>
                     </div>
@@ -63,7 +64,7 @@
                             <textarea class="form-control" id="p-content" name="p-content" placeholder="All content"></textarea>
                         </div>
                         <div class="form-check mx-sm-3 mb-2">
-                            <input type="checkbox" class="form-check-input" id="content-check">
+                            <input type="checkbox" class="form-check-input" id="content-check" name="content-check">
                             <label class="form-check-label" for="content-check">Select all</label>
                         </div>
                     </div>
