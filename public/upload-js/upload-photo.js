@@ -39,7 +39,7 @@ function item_pic($required_group, $required_title, $required_content, $src_img)
         '    <div class="form-group"><input type="text" class="form-control u-title" placeholder="Title" name="u-title[]" '+ $required_title +'></div>\n' +
         '    <div class="form-group"><textarea class="form-control u-content" rows="3" name="u-content[]" placeholder="Content" '+ $required_content +'></textarea></div>\n' +
         '  </div>\n' +
-        '<select class="form-control group" name="u-group" '+ $required_group +'>\n' +
+        '<select class="form-control group u-group" name="u-group" '+ $required_group +'>\n' +
         '      <option value="">---None---</option>\n' +
         '</select>\n' +
         '<div class="form-check">\n' +
@@ -118,24 +118,22 @@ function uploadPhoto(url) {
                     case 200: // Nếu upload thành công
                         if (data.responseJSON.url) {
                             // $('#file-uploaded').append(item_pic('required', 'required', 'required', data.responseJSON.url));
-                            if ($('#group-check').val() == 0 && $('#title-check').val() == 0 && $('#content-check').val() == 0) {
+                            if ($('#group-check').val() == 0 || $('#group-check').val() != 1 && $('#title-check').val() == 0 || $('#title-check').val() != 1 && $('#content-check').val() == 0 || $('#content-check').val() != 1) {
                                 $('#file-uploaded').append(item_pic('required', 'required', 'required', data.responseJSON.url));
-                            } else if ($('#group-check').val() == 1 && $('#title-check').val() == 0 && $('#content-check').val() == 0) {
+                            } else if ($('#group-check').val() == 1 && $('#title-check').val() == 0 || $('#title-check').val() != 1 && $('#content-check').val() == 0 || $('#content-check').val() != 1) {
                                 $('#file-uploaded').append(item_pic('', 'required', 'required', data.responseJSON.url));
-                            } else if ($('#group-check').val() == 0 && $('#title-check').val() == 1 && $('#content-check').val() == 0) {
+                            } else if ($('#group-check').val() == 0 || $('#group-check').val() != 1 && $('#title-check').val() == 1 && $('#content-check').val() == 0 || $('#content-check').val() != 1) {
                                 $('#file-uploaded').append(item_pic('required','' , 'required', data.responseJSON.url));
-                            } else if ($('#group-check').val() == 0 && $('#title-check').val() == 0 && $('#content-check').val() == 1) {
+                            } else if ($('#group-check').val() == 0 || $('#group-check').val() != 1 && $('#title-check').val() == 0 || $('#title-check').val() != 1 && $('#content-check').val() == 1) {
                                 $('#file-uploaded').append(item_pic('required', 'required', '', data.responseJSON.url));
-                            } else if ($('#group-check').val() == 1 && $('#title-check').val() == 1 && $('#content-check').val() == 0) {
+                            } else if ($('#group-check').val() == 1 && $('#title-check').val() == 1 && $('#content-check').val() == 0 || $('#content-check').val() != 1) {
                                 $('#file-uploaded').append(item_pic('', '', 'required', data.responseJSON.url));
-                            } else if ($('#group-check').val() == 1 && $('#title-check').val() == 0 && $('#content-check').val() == 1) {
+                            } else if ($('#group-check').val() == 1 && $('#title-check').val() == 0 || $('#title-check').val() != 1 && $('#content-check').val() == 1) {
                                 $('#file-uploaded').append(item_pic('', 'required', '', data.responseJSON.url));
-                            } else if ($('#group-check').val() == 0 && $('#title-check').val() == 1 && $('#content-check').val() == 1) {
+                            } else if ($('#group-check').val() == 0 || $('#group-check').val() != 1 && $('#title-check').val() == 1 && $('#content-check').val() == 1) {
                                 $('#file-uploaded').append(item_pic('required', '', '', data.responseJSON.url));
-                            } else if ($('#group-check').val() == 1 && $('#title-check').val() == 1 && $('#content-check').val() == 1) {
-                                $('#file-uploaded').append(item_pic('', '', '', data.responseJSON.url));
                             } else {
-                                $('#file-uploaded').append(item_pic('required', 'required', 'required', data.responseJSON.url));
+                                $('#file-uploaded').append(item_pic('', '', '', data.responseJSON.url));
                             }
                             // console.log($('#file-uploaded').find('li').length);
                             if ($('#file-uploaded').find('li').length === 1) {
@@ -263,16 +261,44 @@ $(document).on('click', '.u-remove-a-file', function () {
 $(document).on('click','#group-check', function () {
     changeBox('#group-check');
     if($('#group-check').val() == 1) {
-        $('#group-check').required = false;
+        $('.u-group').each(function(){
+            $(this).prop('required',false);
+        });
+        $('#group').prop('required',true);
     } else {
-        $('#group-check').required = true;
+        $('.u-group').each(function(){
+            $(this).prop('required',true);
+        });
+        $('#group').prop('required',false);
     }
 });
 
 $(document).on('click','#title-check', function () {
     changeBox('#title-check');
+    if($('#title-check').val() == 1) {
+        $('.u-title').each(function(){
+            $(this).prop('required',false);
+        });
+        $('#p-title').prop('required',true);
+    } else {
+        $('.u-title').each(function(){
+            $(this).prop('required',true);
+        });
+        $('#p-title').prop('required',false);
+    }
 });
 
 $(document).on('click','#content-check', function () {
     changeBox('#content-check');
+    if($('#content-check').val() == 1) {
+        $('.u-content').each(function(){
+            $(this).prop('required',false);
+        });
+        $('#p-content').prop('required',true);
+    } else {
+        $('.u-content').each(function(){
+            $(this).prop('required',true);
+        });
+        $('#p-content').prop('required',false);
+    }
 });
