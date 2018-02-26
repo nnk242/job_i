@@ -40,7 +40,7 @@
                             </select>
                         </div>
                         <div class="form-check mx-sm-3 mb-2">
-                            <input type="checkbox" class="form-check-input" id="group-check" name="group-check">
+                            <input type="checkbox" class="form-check-input" id="group-check" name="group_check">
                             <label class="form-check-label" for="group-check">Select all</label>
                         </div>
                     </div>
@@ -49,10 +49,10 @@
                             <label for="p-title" class="col-form-label">Input title</label>
                         </div>
                         <div class="form-group col-sm-3">
-                            <input class="form-control" id="p-title" name="p-title" placeholder="All title">
+                            <input class="form-control" id="p-title" name="p_title" placeholder="All title">
                         </div>
                         <div class="form-check mx-sm-3 mb-2">
-                            <input type="checkbox" class="form-check-input" id="title-check" name="title-check">
+                            <input type="checkbox" class="form-check-input" id="title-check" name="title_check">
                             <label class="form-check-label" for="title-check">Select all</label>
                         </div>
                     </div>
@@ -61,10 +61,10 @@
                             <label for="p-content" class="col-form-label">Input content</label>
                         </div>
                         <div class="form-group col-sm-3">
-                            <textarea class="form-control" id="p-content" name="p-content" placeholder="All content"></textarea>
+                            <textarea class="form-control" id="p-content" name="p_content" placeholder="All content"></textarea>
                         </div>
                         <div class="form-check mx-sm-3 mb-2">
-                            <input type="checkbox" class="form-check-input" id="content-check" name="content-check">
+                            <input type="checkbox" class="form-check-input" id="content-check" name="content_check">
                             <label class="form-check-label" for="content-check">Select all</label>
                         </div>
                     </div>

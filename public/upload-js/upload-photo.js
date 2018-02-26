@@ -34,16 +34,16 @@ function item_pic($required_group, $required_title, $required_content, $src_img)
     return '<li class="card mr-1 float-left mb-1 upload-a-file" style="width: 15rem;">\n' +
         '<div class="m-height-150px"><img class="card-img-top m-max-width-100pt" src="' + $src_img + '" alt="Card image cap"></div>\n' +
         '  <div class="card-block">\n' +
-        '    <div class="form-group"><input type="text" class="form-control mt-2 u-link" placeholder="Link" name="u-link[]" value="' + $src_img + '"></div>\n' +
-        '    <div class="form-group"><input type="text" class="form-control u-name" placeholder="Name" name="u-name[]" required></div>\n' +
-        '    <div class="form-group"><input type="text" class="form-control u-title" placeholder="Title" name="u-title[]" '+ $required_title +'></div>\n' +
-        '    <div class="form-group"><textarea class="form-control u-content" rows="3" name="u-content[]" placeholder="Content" '+ $required_content +'></textarea></div>\n' +
+        '    <div class="form-group"><input type="text" class="form-control mt-2 u-link" placeholder="Link" name="u_link[]" value="' + $src_img + '" required></div>\n' +
+        '    <div class="form-group"><input type="text" class="form-control u-name" placeholder="Name" name="u_name[]" required></div>\n' +
+        '    <div class="form-group"><input type="text" class="form-control u-title" placeholder="Title" name="u_title[]" '+ $required_title +'></div>\n' +
+        '    <div class="form-group"><textarea class="form-control u-content" rows="3" name="u_content[]" placeholder="Content" '+ $required_content +'></textarea></div>\n' +
         '  </div>\n' +
-        '<select class="form-control group u-group" name="u-group" '+ $required_group +'>\n' +
+        '<select class="form-control group u-group" name="u_group[]" '+ $required_group +'>\n' +
         '      <option value="">---None---</option>\n' +
         '</select>\n' +
         '<div class="form-check">\n' +
-        '    <input type="checkbox" class="form-check-input u-status" value="1" name="u-status[]" checked>\n' +
+        '    <input type="checkbox" class="form-check-input u-status" value="1" name="u_status[]" checked>\n' +
         '    <label class="form-check-label">Hide/Show</label>\n' +
         '</div>' +
         '<div class="card-block">\n' +

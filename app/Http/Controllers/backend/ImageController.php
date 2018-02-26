@@ -193,7 +193,20 @@ class ImageController extends Controller
 
     }
 
-    public function uploadFile (Request $request) {
+    public function uploadFile(Request $request)
+    {
+        $group_check = $request->group_check;
+        $title_check = $request->title_check;
+        $content_check = $request->content_check;
+        $name_check = $request->name_check;
+
+        $group_check == 1 ? $group[] = $request->group : $group = $request->u_group;
+        $title_check == 1 ? $title[] = $request->p_title : $title = $request->u_title;
+        $content_check == 1 ? $content[] = $request->p_content : $content = $request->u_content;
+        $name_check == 1 ? $name[] = $request->p_name : $name = $request->u_name;
+
+
+
         return $request->all();
     }
 }
