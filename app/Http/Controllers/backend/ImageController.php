@@ -198,15 +198,45 @@ class ImageController extends Controller
         $group_check = $request->group_check;
         $title_check = $request->title_check;
         $content_check = $request->content_check;
-        $name_check = $request->name_check;
+        $url = $request->u_link;
+        $name = $request->u_name;
 
-        $group_check == 1 ? $group[] = $request->group : $group = $request->u_group;
-        $title_check == 1 ? $title[] = $request->p_title : $title = $request->u_title;
-        $content_check == 1 ? $content[] = $request->p_content : $content = $request->u_content;
-        $name_check == 1 ? $name[] = $request->p_name : $name = $request->u_name;
+        $count_item = count($request->u_link);
 
+        $group = [];
+        $title = [];
+        $content = [];
 
-
+        if ($group_check == 1) {
+            for ($i=0; $i<$count_item; $i++) {
+                $group[$i] = $request->group;
+            }
+        } else $group = $request->u_group;
+        if ($title_check == 1) {
+            for ($i=0; $i<$count_item; $i++) {
+                $title[$i] = $request->p_title;
+            }
+        } else $title = $request->u_title;
+        if ($content_check == 1) {
+            for ($i=0; $i<$count_item; $i++) {
+                $content[$i] = $request->p_content;
+            }
+        } else $content = $request->u_content;
+        try {
+            for ($i = 0; $i < $count_item; $i++) {
+                Image::create([
+                    'user_id' => Auth::id(),
+                    'url' => $url[$i],
+                    'name' => $name[$i],
+                    'image_s' => Images::whereimage_s(str_seo_m($name[$i]))->count() > 0 ? str_seo_m(str_replace('.html', '', $name[$i])) . '-' . time() . $i : str_seo_m($name[$i]),
+                    'title' => $title[$i],
+                    'content' => $content[$i],
+                    'group_id' => $group[$i]
+                ]);
+            }
+        } catch (\Exception $ex) {
+            return 123;
+        }
         return $request->all();
     }
 }
