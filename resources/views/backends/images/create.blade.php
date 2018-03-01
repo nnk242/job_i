@@ -32,16 +32,14 @@
                     {{csrf_field()}}
                     <div class="form-inline mb-1">
                         <div class="form-group col-sm-2">
-                            <label for="group" class="col-form-label">Choose only group</label>
+                            <label for="p-name" class="col-form-label">Input name</label>
                         </div>
                         <div class="form-group col-sm-3">
-                            <select class="form-control group" id="group" name="group">
-                                <option value="">---None---</option>
-                            </select>
+                            <input class="form-control" id="p-name" name="p_name" placeholder="All name">
                         </div>
                         <div class="form-check mx-sm-3 mb-2">
-                            <input type="checkbox" class="form-check-input" id="group-check" name="group_check">
-                            <label class="form-check-label" for="group-check">Select all</label>
+                            <input type="checkbox" class="form-check-input" id="name-check" name="name_check">
+                            <label class="form-check-label" for="name-check">Select all</label>
                         </div>
                     </div>
                     <div class="form-inline mb-1">
@@ -66,6 +64,20 @@
                         <div class="form-check mx-sm-3 mb-2">
                             <input type="checkbox" class="form-check-input" id="content-check" name="content_check">
                             <label class="form-check-label" for="content-check">Select all</label>
+                        </div>
+                    </div>
+                    <div class="form-inline mt-1">
+                        <div class="form-group col-sm-2">
+                            <label for="group" class="col-form-label">Choose only group</label>
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <select class="form-control group" id="group" name="group">
+                                <option value="">---None---</option>
+                            </select>
+                        </div>
+                        <div class="form-check mx-sm-3 mb-2">
+                            <input type="checkbox" class="form-check-input" id="group-check" name="group_check">
+                            <label class="form-check-label" for="group-check">Select all</label>
                         </div>
                     </div>
                     <hr/>

@@ -29,13 +29,12 @@ function successful($mes) {
         '  </button>\n' +
         '</div></div>';
 }
-//data.responseJSON.url
-function item_pic($required_group, $required_title, $required_content, $src_img) {
+function item_pic($required_group, $required_name, $required_title, $required_content, $src_img) {
     return '<li class="card mr-1 float-left mb-1 upload-a-file" style="width: 15rem;">\n' +
-        '<div class="m-height-150px"><img class="card-img-top m-max-width-100pt" src="' + $src_img + '" alt="Card image cap"></div>\n' +
+        '<div class="m-height-150px mt-2"><img class="card-img-top m-img-b" src="' + $src_img + '" alt="Card image cap"></div>\n' +
         '  <div class="card-block">\n' +
         '    <div class="form-group"><input type="text" class="form-control mt-2 u-link" placeholder="Link" name="u_link[]" value="' + $src_img + '" required></div>\n' +
-        '    <div class="form-group"><input type="text" class="form-control u-name" placeholder="Name" name="u_name[]" required></div>\n' +
+        '    <div class="form-group"><input type="text" class="form-control u-name" placeholder="Name" name="u_name[]" '+ $required_title +'></div>\n' +
         '    <div class="form-group"><input type="text" class="form-control u-title" placeholder="Title" name="u_title[]" '+ $required_title +'></div>\n' +
         '    <div class="form-group"><textarea class="form-control u-content" rows="3" name="u_content[]" placeholder="Content" '+ $required_content +'></textarea></div>\n' +
         '  </div>\n' +
@@ -117,25 +116,13 @@ function uploadPhoto(url) {
                 switch (data.status) {
                     case 200: // Nếu upload thành công
                         if (data.responseJSON.url) {
-                            // $('#file-uploaded').append(item_pic('required', 'required', 'required', data.responseJSON.url));
-                            if ($('#group-check').val() == 0 || $('#group-check').val() != 1 && $('#title-check').val() == 0 || $('#title-check').val() != 1 && $('#content-check').val() == 0 || $('#content-check').val() != 1) {
-                                $('#file-uploaded').append(item_pic('required', 'required', 'required', data.responseJSON.url));
-                            } else if ($('#group-check').val() == 1 && $('#title-check').val() == 0 || $('#title-check').val() != 1 && $('#content-check').val() == 0 || $('#content-check').val() != 1) {
-                                $('#file-uploaded').append(item_pic('', 'required', 'required', data.responseJSON.url));
-                            } else if ($('#group-check').val() == 0 || $('#group-check').val() != 1 && $('#title-check').val() == 1 && $('#content-check').val() == 0 || $('#content-check').val() != 1) {
-                                $('#file-uploaded').append(item_pic('required','' , 'required', data.responseJSON.url));
-                            } else if ($('#group-check').val() == 0 || $('#group-check').val() != 1 && $('#title-check').val() == 0 || $('#title-check').val() != 1 && $('#content-check').val() == 1) {
-                                $('#file-uploaded').append(item_pic('required', 'required', '', data.responseJSON.url));
-                            } else if ($('#group-check').val() == 1 && $('#title-check').val() == 1 && $('#content-check').val() == 0 || $('#content-check').val() != 1) {
-                                $('#file-uploaded').append(item_pic('', '', 'required', data.responseJSON.url));
-                            } else if ($('#group-check').val() == 1 && $('#title-check').val() == 0 || $('#title-check').val() != 1 && $('#content-check').val() == 1) {
-                                $('#file-uploaded').append(item_pic('', 'required', '', data.responseJSON.url));
-                            } else if ($('#group-check').val() == 0 || $('#group-check').val() != 1 && $('#title-check').val() == 1 && $('#content-check').val() == 1) {
-                                $('#file-uploaded').append(item_pic('required', '', '', data.responseJSON.url));
-                            } else {
-                                $('#file-uploaded').append(item_pic('', '', '', data.responseJSON.url));
-                            }
-                            // console.log($('#file-uploaded').find('li').length);
+                            // $('#file-
+                            var group_, name_, content_,title_;
+                            $('#group-check').val() == 1 ? group_ = '' :group_ = 'required';
+                            $('#name-check').val() == 1 ? name_ = '' :name_ = 'required';
+                            $('#title-check').val() == 1 ? title_ = '' :title_ = 'required';
+                            $('#content-check').val() == 1 ? content_ = '' :content_ = 'required';
+                            $('#file-uploaded').append(item_pic(group_,name_, title_, content_, data.responseJSON.url));
                             if ($('#file-uploaded').find('li').length === 1) {
                                 $('#file-uploaded').after('<div style="clear:left;" class="text-center mt-2 u-buttom-upload">' +
                                     '<button type="submit" class="btn btn-success">Submit</button></div>');
@@ -270,6 +257,21 @@ $(document).on('click','#group-check', function () {
             $(this).prop('required',true);
         });
         $('#group').prop('required',false);
+    }
+});
+
+$(document).on('click','#name-check', function () {
+    changeBox('#name-check');
+    if($('#name-check').val() == 1) {
+        $('.u-name').each(function(){
+            $(this).prop('required',false);
+        });
+        $('#p-name').prop('required',true);
+    } else {
+        $('.u-name').each(function(){
+            $(this).prop('required',true);
+        });
+        $('#p-name').prop('required',false);
     }
 });
 
