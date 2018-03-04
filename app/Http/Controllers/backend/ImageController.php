@@ -24,8 +24,8 @@ class ImageController extends Controller
      */
     public function index()
     {
-        //
-        return view('backends.images.index');
+        $images = Images::paginate(1);
+        return view('backends.images.index', compact('images'));
     }
 
     /**
@@ -138,7 +138,7 @@ class ImageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return $id;
     }
 
     public function loadingGroup()
@@ -246,6 +246,6 @@ class ImageController extends Controller
         } catch (\Exception $ex) {
             return 1231231;
         }
-        return $request->all();
+        return redirect()->back();
     }
 }

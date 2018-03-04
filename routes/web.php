@@ -18,9 +18,14 @@ Route::get('/', function () {
 Route::group(['prefix'=>'admin'], function () {
     Auth::routes();
     Route::group(['prefix' => 'image'], function () {
+//        Route::resource('/', 'backend\ImageController', ['names'=> [
+//            'create' => 'view.image.create',
+//            'store'=> 'view.image.store',
+//        ]]);
         Route::get('/', 'backend\ImageController@index')->name('view.image');
         Route::get('create', 'backend\ImageController@create')->name('view.image.create');
         Route::post('store', 'backend\ImageController@store')->name('view.image.store');
+        Route::post('delete/{id}', 'backend\ImageController@destroy')->name('view.image.destroy');
         Route::post('loadingGroups', 'backend\ImageController@loadingGroup')->name('view.image.loadingGroups');
         Route::post('uploadAFile', 'backend\ImageController@uploadAFile')->name('view.image.uploadafile');
         Route::post('uploadFile', 'backend\ImageController@uploadFile')->name('view.image.uploadfile');

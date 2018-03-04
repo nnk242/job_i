@@ -200,3 +200,13 @@
     right: 15px;
     top: 15px;
 }
+
+.m-remove-item {
+    top: 5px;
+    right: 5px;
+    transition: 1s;
+}
+.u-remove-a-file:hover {
+    font-size: 24px;
+    transition: 1s;
+}

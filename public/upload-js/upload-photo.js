@@ -29,25 +29,31 @@ function successful($mes) {
         '  </button>\n' +
         '</div></div>';
 }
+
 function item_pic($required_group, $required_name, $required_title, $required_content, $src_img) {
     return '<li class="card mr-1 float-left mb-1 upload-a-file" style="width: 15rem;">\n' +
         '<div class="m-height-150px mt-2"><img class="card-img-top m-img-b" src="' + $src_img + '" alt="Card image cap"></div>\n' +
         '  <div class="card-block">\n' +
         '    <div class="form-group"><input type="text" class="form-control mt-2 u-link" placeholder="Link" name="u_link[]" value="' + $src_img + '" required></div>\n' +
-        '    <div class="form-group"><input type="text" class="form-control u-name" placeholder="Name" name="u_name[]" '+ $required_title +'></div>\n' +
-        '    <div class="form-group"><input type="text" class="form-control u-title" placeholder="Title" name="u_title[]" '+ $required_title +'></div>\n' +
-        '    <div class="form-group"><textarea class="form-control u-content" rows="3" name="u_content[]" placeholder="Content" '+ $required_content +'></textarea></div>\n' +
+        '    <div class="form-group"><input type="text" class="form-control u-name" placeholder="Name" name="u_name[]" ' + $required_title + '></div>\n' +
+        '    <div class="form-group"><input type="text" class="form-control u-title" placeholder="Title" name="u_title[]" ' + $required_title + '></div>\n' +
+        '    <div class="form-group"><textarea class="form-control u-content" rows="3" name="u_content[]" placeholder="Content" ' + $required_content + '></textarea></div>\n' +
         '  </div>\n' +
-        '<select class="form-control group u-group" name="u_group[]" '+ $required_group +'>\n' +
-        '      <option value="">---None---</option>\n' +
-        '</select>\n' +
-        '<div class="form-check">\n' +
-        '    <input type="checkbox" class="form-check-input u-status" value="1" name="u_status[]" checked>\n' +
-        '    <label class="form-check-label">Hide/Show</label>\n' +
+        '<div class="form-group">' +
+        '  <select class="form-control group u-group" name="u_group[]" ' + $required_group + '>\n' +
+        '    <option value="">---None---</option>\n' +
+        '  </select>' +
         '</div>' +
-        '<div class="card-block">\n' +
-        '    <a href="#" class="card-link text-danger u-remove-a-file"><span class="fa fa-remove"></span>Remove</a>\n' +
-        '    <a href="#" class="card-link text-success u-upload-a-file"><span class="fa fa-upload"></span>Upload</a>\n' +
+        '<div class="form-group text-center">' +
+        '  <label class="switch" title="Show or hide">\n' +
+        '    <input type="checkbox" class="form-check-input u-status" value="1" name="u_status[]" checked>\n' +
+        '    <span class="slider round"></span>\n' +
+        '  </label>' +
+        '<hr>' +
+        '</div>' +
+        '<div class="card-block text-center mb-1">\n' +
+        '    <div class="position-absolute m-remove-item"><a href="#" class="card-link text-danger u-remove-a-file"><span class="fa fa-remove"></span></a></div>\n' +
+        '    <a class="card-link text-light u-upload-a-file btn btn-info"><span class="fa fa-upload"></span>Upload</a>\n' +
         '</div>\n' +
         '</li>'
 }
@@ -117,12 +123,12 @@ function uploadPhoto(url) {
                     case 200: // Nếu upload thành công
                         if (data.responseJSON.url) {
                             // $('#file-
-                            var group_, name_, content_,title_;
-                            $('#group-check').val() == 1 ? group_ = '' :group_ = 'required';
-                            $('#name-check').val() == 1 ? name_ = '' :name_ = 'required';
-                            $('#title-check').val() == 1 ? title_ = '' :title_ = 'required';
-                            $('#content-check').val() == 1 ? content_ = '' :content_ = 'required';
-                            $('#file-uploaded').append(item_pic(group_,name_, title_, content_, data.responseJSON.url));
+                            var group_, name_, content_, title_;
+                            $('#group-check').val() == 1 ? group_ = '' : group_ = 'required';
+                            $('#name-check').val() == 1 ? name_ = '' : name_ = 'required';
+                            $('#title-check').val() == 1 ? title_ = '' : title_ = 'required';
+                            $('#content-check').val() == 1 ? content_ = '' : content_ = 'required';
+                            $('#file-uploaded').append(item_pic(group_, name_, title_, content_, data.responseJSON.url));
                             if ($('#file-uploaded').find('li').length === 1) {
                                 $('#file-uploaded').after('<div style="clear:left;" class="text-center mt-2 u-buttom-upload">' +
                                     '<button type="submit" class="btn btn-success">Submit</button></div>');
@@ -245,62 +251,62 @@ $(document).on('click', '.u-remove-a-file', function () {
     }
 });
 
-$(document).on('click','#group-check', function () {
+$(document).on('click', '#group-check', function () {
     changeBox('#group-check');
-    if($('#group-check').val() == 1) {
-        $('.u-group').each(function(){
-            $(this).prop('required',false);
+    if ($('#group-check').val() == 1) {
+        $('.u-group').each(function () {
+            $(this).prop('required', false);
         });
-        $('#group').prop('required',true);
+        $('#group').prop('required', true);
     } else {
-        $('.u-group').each(function(){
-            $(this).prop('required',true);
+        $('.u-group').each(function () {
+            $(this).prop('required', true);
         });
-        $('#group').prop('required',false);
+        $('#group').prop('required', false);
     }
 });
 
-$(document).on('click','#name-check', function () {
+$(document).on('click', '#name-check', function () {
     changeBox('#name-check');
-    if($('#name-check').val() == 1) {
-        $('.u-name').each(function(){
-            $(this).prop('required',false);
+    if ($('#name-check').val() == 1) {
+        $('.u-name').each(function () {
+            $(this).prop('required', false);
         });
-        $('#p-name').prop('required',true);
+        $('#p-name').prop('required', true);
     } else {
-        $('.u-name').each(function(){
-            $(this).prop('required',true);
+        $('.u-name').each(function () {
+            $(this).prop('required', true);
         });
-        $('#p-name').prop('required',false);
+        $('#p-name').prop('required', false);
     }
 });
 
-$(document).on('click','#title-check', function () {
+$(document).on('click', '#title-check', function () {
     changeBox('#title-check');
-    if($('#title-check').val() == 1) {
-        $('.u-title').each(function(){
-            $(this).prop('required',false);
+    if ($('#title-check').val() == 1) {
+        $('.u-title').each(function () {
+            $(this).prop('required', false);
         });
-        $('#p-title').prop('required',true);
+        $('#p-title').prop('required', true);
     } else {
-        $('.u-title').each(function(){
-            $(this).prop('required',true);
+        $('.u-title').each(function () {
+            $(this).prop('required', true);
         });
-        $('#p-title').prop('required',false);
+        $('#p-title').prop('required', false);
     }
 });
 
-$(document).on('click','#content-check', function () {
+$(document).on('click', '#content-check', function () {
     changeBox('#content-check');
-    if($('#content-check').val() == 1) {
-        $('.u-content').each(function(){
-            $(this).prop('required',false);
+    if ($('#content-check').val() == 1) {
+        $('.u-content').each(function () {
+            $(this).prop('required', false);
         });
-        $('#p-content').prop('required',true);
+        $('#p-content').prop('required', true);
     } else {
-        $('.u-content').each(function(){
-            $(this).prop('required',true);
+        $('.u-content').each(function () {
+            $(this).prop('required', true);
         });
-        $('#p-content').prop('required',false);
+        $('#p-content').prop('required', false);
     }
 });

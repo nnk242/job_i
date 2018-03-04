@@ -16,6 +16,8 @@
     <link href="{{ asset('common/style.css') }}" rel="stylesheet">
     <!-- Font awesome styles -->
     <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+
+    @yield('stylesheet')
 </head>
 <body>
 <div id="app">
@@ -77,7 +79,7 @@
 </div>
 
 <!-- Scripts -->
-{{--<script src="{{ asset('js/app.js') }}"></script>--}}
+<script src="{{ asset('js/app.js') }}"></script>
 @yield('js')
 </body>
 </html>
