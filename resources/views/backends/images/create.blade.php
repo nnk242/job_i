@@ -31,7 +31,7 @@
                         </button>
                     </div>
                 </div>
-                <form method="POST" action="{{route('view.image.uploadfile')}}">
+                <form method="POST" action="{{route('view.image.uploadfile')}}" multiple>
                     {{csrf_field()}}
                     <div class="form-inline mb-1">
                         <div class="form-group col-sm-2">
@@ -93,11 +93,11 @@
                     </div>
                     <div class="form-inline mt-1">
                         <div class="form-group col-sm-2">
-                            <label for="group" class="col-form-label">Show or hide || All item</label>
+                            <label for="p-status" class="col-form-label">Show or hide || All item</label>
                         </div>
                         <div class="form-check col-sm-3">
                             <label class="switch">
-                                <input type="checkbox" class="form-check-input" id="p-check" name="p_check" checked>
+                                <input type="checkbox" class="form-check-input" id="p-status" name="p_status" value="1" checked>
                                 <span class="slider round"></span>
                             </label>
                         </div>
@@ -119,6 +119,7 @@
     <!-- Script jquery -->
     <script src="{{asset('jquery/jquery.js')}}" type="text/javascript"></script>
     <!-- Script upload-js photo -->
+    <script src="{{asset('html-js/html.js')}}" type="text/javascript"></script>
     <script src="{{asset('upload-js/upload-photo.js')}}" type="text/javascript"></script>
     <script>
         //Tạo một đối tượng uploadPhoto

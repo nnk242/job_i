@@ -36,6 +36,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('view.image')}}">Image</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('view.group')}}">Group</a>
+                    </li>
                 </ul>
             </div>
             @endif

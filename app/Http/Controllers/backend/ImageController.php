@@ -22,9 +22,16 @@ class ImageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public $item_page = 3;
+    public function index(Request $request)
     {
-        $images = Images::paginate(1);
+        $images = Images::paginate($this->item_page);
+//        return $images->count();
+//        $lastPage = $images->lastPage();
+//        $currentPage = $images->currentPage();
+//        if ($currentPage > $lastPage) {
+//
+//        }
         return view('backends.images.index', compact('images'));
     }
 
@@ -104,7 +111,8 @@ class ImageController extends Controller
      */
     public function show($id)
     {
-        //
+        $image = Images::find($id);
+        return view('backends.images.show', compact('image'));
     }
 
     /**
@@ -115,7 +123,8 @@ class ImageController extends Controller
      */
     public function edit($id)
     {
-        //
+        $image = Images::find($id);
+        return view();
     }
 
     /**
@@ -138,7 +147,16 @@ class ImageController extends Controller
      */
     public function destroy($id)
     {
-        return $id;
+        $image = Images::find($id);
+        if ($image) {
+            try{
+                $image->delete();
+            } catch (\Exception $ex) {
+                return redirect()->back()->with('er', 'Delete item error...');
+            }
+            return redirect()->back()->with('mes', 'Deleted item...');
+        } else
+            return redirect()->back()->with('er', 'Item not found...');
     }
 
     public function loadingGroup()
@@ -195,13 +213,12 @@ class ImageController extends Controller
 
     public function uploadFile(Request $request)
     {
-//        return $request->all();
         $group_check = $request->group_check;
         $name_check = $request->name_check;
         $title_check = $request->title_check;
         $content_check = $request->content_check;
+        $status_check = $request->status_check;
         $url = $request->u_link;
-        $status = $request->u_status;
 
         $count_item = count($request->u_link);
 
@@ -209,27 +226,39 @@ class ImageController extends Controller
         $title = [];
         $content = [];
         $name = [];
+        $status = [];
 
+        //group
         if ($group_check == 1) {
             for ($i = 0; $i < $count_item; $i++) {
                 $group[$i] = $request->group;
             }
         } else $group = $request->u_group;
+        //name
         if ($name_check == 1) {
             for ($i = 0; $i < $count_item; $i++) {
                 $name[$i] = $request->p_name;
             }
         } else $name = $request->u_name;
+        //title
         if ($title_check == 1) {
             for ($i = 0; $i < $count_item; $i++) {
                 $title[$i] = $request->p_title;
             }
         } else $title = $request->u_title;
+        //content
         if ($content_check == 1) {
             for ($i = 0; $i < $count_item; $i++) {
                 $content[$i] = $request->p_content;
             }
         } else $content = $request->u_content;
+        //status
+        if ($status_check == 1) {
+            for ($i = 0; $i < $count_item; $i++) {
+                $status[$i] = $request->p_status;
+            }
+        } else $status = $request->u_status;
+        //update
         try {
             for ($i = 0; $i < $count_item; $i++) {
                 $image = new Images();
@@ -243,9 +272,32 @@ class ImageController extends Controller
                 $image->status = $status[$i];
                 $image->save();
             }
+            return redirect()->back()->with('mes', 'Upload successful...');
         } catch (\Exception $ex) {
-            return 1231231;
+            return redirect()->back()->with('er', 'Upload fail...');
         }
-        return redirect()->back();
+    }
+
+    public function ajaxStatus(Request $request) {
+        try {
+            $id = $request->id;
+            $status = $request->status;
+            $image = Images::find($id);
+            $status == 1 ? $image->status =0: $image->status = 1;
+            $image->save();
+            return [
+                'status' => true,
+                'message' => 'Status changed successful!'
+            ];
+        } catch (\Exception $ex) {
+            return [
+                'status' => false,
+                'message' => 'Status change fail!!!'
+            ];
+        }
+    }
+
+    public function getUrl(Request $request) {
+
     }
 }

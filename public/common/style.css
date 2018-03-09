@@ -183,6 +183,9 @@
 .m-height-150px{
     height: 150px;
 }
+.m-height-250px{
+    height: 250px;
+}
 .m-max-width-100pt {
     max-width: 100%;
 }
@@ -199,6 +202,7 @@
     opacity: 0.7;
     right: 15px;
     top: 15px;
+    z-index: 99999;
 }
 
 .m-remove-item {
