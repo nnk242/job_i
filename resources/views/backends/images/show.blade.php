@@ -22,8 +22,8 @@
             </div>
             <div class="col-md-9">
                 @if($image)
-                    <form>
-                        <div class="m-height-250px mt-2"><img class="card-img-top m-img-b" src="{{$image->url}}"
+                    <form id="{{$image->id}}" method="post" action="">
+                        <div class="m-height-250px mt-2"><img id="image" class="card-img-top m-img-b" src="{{$image->url}}"
                                                               alt="Card image cap"></div>
                         <div class="form-group">
                             <label for="url">url</label>
@@ -38,7 +38,7 @@
                         <div class="form-group">
                             <label for="link">Link</label>
                             <input type="text" class="form-control" id="link" value="{{$image->image_s}}"
-                                   placeholder="Enter link" name="link" required>
+                                   placeholder="Enter link" name="link" disabled required>
                         </div>
                         <div class="form-group">
                             <label for="title">Title</label>
@@ -75,29 +75,97 @@
     <script>
         $(document).ready(function () {
             var timeout = null;
-
+//file image
+            $('#url').on('keyup', function () {
+                var current = $(this);
+                clearTimeout(timeout);
+                timeout = setTimeout(function () {
+                    $('body').append(loding());
+                    current.attr('disabled', true);
+                    var token = $('meta[name="csrf-token"]').attr('content');
+                    var name = current.val();
+                    var id = current.closest('form').attr('id');
+                    console.log(id);
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ route('view.image.getUrl') }}',
+                        data: {
+                            "_token": token,
+                            'name': name,
+                            'id': id
+                        },
+                        dataType: 'JSON',
+                        timeout: 1000,
+                        success: function (response) {
+                            $('#loading').remove();
+                            current.attr('disabled', false);
+                            switch (response.status) {
+                                case true:
+                                    $('body').append($.parseHTML(successful(response.message)));
+                                    $('#link').val(response.value_seo);
+                                    break;
+                                case false:
+                                    $('body').append($.parseHTML(error(response.message)));
+                                    break;
+                                default:
+                                    $('body').append($.parseHTML(error(response.message)));
+                                    break;
+                            }
+                            closeError();
+                        },
+                        error: function () {
+                            $('#loading').remove();
+                        }
+                    })
+                }, 800);
+                closeError();
+                current.attr('disabled', false);
+            });
+//name
             $('#name').on('keyup', function () {
                 var current = $(this);
                 clearTimeout(timeout);
                 timeout = setTimeout(function () {
-                    console.log(current.val());
-                    {{--$.ajax({--}}
-                        {{--type: 'POST',--}}
-                        {{--url: '{{ route('ajax.validateTitleSeo') }}',--}}
-                        {{--data: {--}}
-                            {{--"_token": "{{ csrf_token() }}",--}}
-                            {{--'title_seo': title_seo--}}
-                        {{--},--}}
-                        {{--dataType: 'JSON',--}}
-                        {{--timeout: 1000,--}}
-                        {{--success: function (rsp) {--}}
-                            {{--$('#title_seo').val(rsp);--}}
-                        {{--},--}}
-                        {{--error: function () {--}}
-                            {{--location.reload();--}}
-                        {{--}--}}
-                    {{--})--}}
-                }, 800)
+                    $('body').append(loding());
+                    current.attr('disabled', true);
+                    var token = $('meta[name="csrf-token"]').attr('content');
+                    var name = current.val();
+                    var id = current.closest('form').attr('id');
+                    console.log(id);
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{ route('view.image.getUrl') }}',
+                        data: {
+                            "_token": token,
+                            'name': name,
+                            'id': id
+                        },
+                        dataType: 'JSON',
+                        timeout: 1000,
+                        success: function (response) {
+                            $('#loading').remove();
+                            current.attr('disabled', false);
+                            switch (response.status) {
+                                case true:
+                                    $('body').append($.parseHTML(successful(response.message)));
+                                    $('#link').val(response.value_seo);
+                                    break;
+                                case false:
+                                    $('body').append($.parseHTML(error(response.message)));
+                                    break;
+                                default:
+                                    $('body').append($.parseHTML(error(response.message)));
+                                    break;
+                            }
+                            closeError();
+                        },
+                        error: function () {
+                            $('#loading').remove();
+                        }
+                    })
+                }, 800);
+                closeError();
+                current.attr('disabled', false);
             });
         });
     </script>

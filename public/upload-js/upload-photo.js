@@ -155,7 +155,6 @@ $(document).on("click", ".u-upload-a-file", function () {
                     break;
             }
             // current.append($.parseHTML("<option value='"+response[0]['id']+"'>"+response[0]['name']+"</option>")[0]);
-            console.log(response);
         },
         error: function (x, e) {
             $('#loading').remove();

@@ -29,11 +29,15 @@ Route::group(['prefix'=>'admin'], function () {
         Route::post('uploadAFile', 'backend\ImageController@uploadAFile')->name('view.image.uploadafile');
         Route::post('uploadFile', 'backend\ImageController@uploadFile')->name('view.image.uploadfile');
         Route::post('ajaxStatus', 'backend\ImageController@ajaxStatus')->name('view.image.ajaxStatus');
+        Route::post('getUrl', 'backend\ImageController@getUrl')->name('view.image.getUrl');
     });
 
     Route::group(['prefix' => 'group'], function () {
         Route::get('/', 'backend\GroupController@index')->name('view.group');
     });
+});
+Route::group(['prefix'=>'image'], function () {
+    Route::get('/{image}', 'frontend\ImageController@show');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');

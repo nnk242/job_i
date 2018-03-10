@@ -40,12 +40,14 @@
                                 <td>{{$image->url}}</td>
                                 <td><img style="height: 65px" src="{{$image->url}}"></td>
                                 <td><label class="switch">
-                                        <input class="status" type="checkbox" value="{{$image->status}}" {{$image->status == 1?'checked':''}}>
+                                        <input class="status" type="checkbox"
+                                               value="{{$image->status}}" {{$image->status == 1?'checked':''}}>
                                         <span class="slider round"></span>
                                     </label>
                                 </td>
                                 <td>{{$image->created_at->todateString()}}</td>
-                                <td><a href="{{url('admin/image/'.$image->id)}}" style="margin-right: 6px" title="edit"><span class="fa fa-pencil"></span></a><a
+                                <td><a href="{{url('admin/image/'.$image->id)}}" style="margin-right: 6px" title="edit"><span
+                                                class="fa fa-pencil"></span></a><a
                                             class="m-remove" href="{{url('admin/image/delete/'.$image->id)}}"
                                             title="remove" data-toggle="modal" data-target=".remove"><span
                                                 class="fa fa-trash"></span></a></td>
@@ -57,7 +59,7 @@
                     <div class=" mb-5">
                         <a href="{{route('view.image')}}" class="h3 text-dark">Not found item</a>
                     </div>
-                @endif
+            @endif
             {{Illuminate\Pagination\AbstractPaginator::defaultView("pagination::bootstrap-4")}}
             {{ $images->links() }}
             <!-- Remove -->
@@ -122,7 +124,6 @@
                 },
                 type: 'POST',
                 success: function (response) {
-
                     $('#loading').remove();
                     switch (response.status) {
                         case true:
@@ -131,12 +132,26 @@
                             break;
                         case false:
                             $('body').append($.parseHTML(error(response.message)));
-                            if(status == 1){current.val(status); current.prop('checked', true)}else {current.val(0);current.prop('checked', false)};
+                            if (status == 1) {
+                                current.val(status);
+                                current.prop('checked', true)
+                            } else {
+                                current.val(0);
+                                current.prop('checked', false)
+                            }
+                            ;
                             closeError();
                             break;
                         default:
                             $('body').append($.parseHTML(error(response.message)));
-                            if(status == 1){current.val(status); current.prop('checked', true)}else {current.val(0);current.prop('checked', false)};
+                            if (status == 1) {
+                                current.val(status);
+                                current.prop('checked', true)
+                            } else {
+                                current.val(0);
+                                current.prop('checked', false)
+                            }
+                            ;
                             closeError();
                             break;
                     }
@@ -144,7 +159,14 @@
                 error: function (x, e) {
                     $('#loading').remove();
                     $('body').append($.parseHTML(error('Status change fail!')));
-                    if(status == 1){current.val(status); current.prop('checked', true)}else {current.val(0);current.prop('checked', false)};
+                    if (status == 1) {
+                        current.val(status);
+                        current.prop('checked', true)
+                    } else {
+                        current.val(0);
+                        current.prop('checked', false)
+                    }
+                    ;
                     closeError();
                 }
 

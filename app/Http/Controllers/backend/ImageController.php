@@ -299,5 +299,21 @@ class ImageController extends Controller
 
     public function getUrl(Request $request) {
 
+        try {
+            $id = $request->id;
+            $name = $request->name;
+            $image = Images::find($id);
+            $image->image_s = Images::whereimage_s(str_seo_m($name))->count() > 0 ? str_seo_m(str_replace('.html', '', $name)) . '-' . time() : str_seo_m($name);
+            return [
+                'status' => true,
+                'value_seo' => $image->image_s,
+                'message' => 'Get url seo successful!'
+            ];
+        } catch (\Exception $ex) {
+            return [
+                'status' => false,
+                'message' => 'Get url fail!!!'
+            ];
+        }
     }
 }
