@@ -214,3 +214,79 @@
     font-size: 24px;
     transition: 1s;
 }
+
+.m-border-img {
+    border: 10px solid #ccc;
+}
+
+#backgroup {
+    content: ' ';
+    display: block;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    z-index: -1;
+    -webkit-filter: blur(5px);
+    -o-filter: blur(5px);
+    -moz-filter: blur(5px);
+    filter: blur(5px);
+    background-repeat: no-repeat;
+    background-position: 50% 0;
+    -ms-background-size: cover;
+    -o-background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    background-size: cover;
+}
+
+.m-tab {
+    border: solid 1px #c6c8ca;
+    position: fixed;
+    bottom: 5px;
+    right: 5px;
+    border-radius: 50%;
+    padding: 2px;
+    transition:         background-position 1s ease-out;
+    -moz-transition:    background-position 1s ease-out;
+    -webkit-transition: background-position 1s ease-out;
+    -o-transition:      background-position 1s ease-out;
+}
+
+.m-tab-c {
+    position: absolute;
+    top: 0;
+    right: 150%;
+}
+
+.m-tab, .m-tab-c {
+    width: 2.2rem;
+    height: 2.2rem;
+}
+.m-tab:hover  .m-tab-icon {
+    display: block;
+    background: #1b1e21;
+    transition:         background-position 1s ease-out;
+    -moz-transition:    background-position 1s ease-out;
+    -webkit-transition: background-position 1s ease-out;
+    -o-transition:      background-position 1s ease-out;
+}
+.m-bg {
+    position: absolute;
+    background: #1d2124;
+    top: -1px;
+    right: -1px;
+    bottom: -1px;
+    left: -55px;
+    border-radius: 0 15px 15px 0;
+    z-index: -1;
+    transition:         background-position 1s ease-out;
+    -moz-transition:    background-position 1s ease-out;
+    -webkit-transition: background-position 1s ease-out;
+    -o-transition:      background-position 1s ease-out;
+}
+.m-tab-icon {
+    display: none;
+}

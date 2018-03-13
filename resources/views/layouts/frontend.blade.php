@@ -18,7 +18,6 @@
     <link href="{{ asset('common/style.css') }}" rel="stylesheet">
     <!-- Font awesome styles -->
     <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
-    <!-- Css -->
     @yield('stylesheet')
 </head>
 <body>
@@ -42,5 +41,6 @@
 <script>
     new WOW().init();
 </script>
+@yield('js')
 </body>
 </html>

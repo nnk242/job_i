@@ -2,8 +2,8 @@
 <header class="header-down">
     <div class="border-bottom border-info">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-top border-light m-opacity-9">
-            <a href="#" class="navbar-brand">
-                <img src="/logo.png" width="30" height="30" alt="" class="d-inline-block align-top">
+            <a href="{{asset('/')}}" class="navbar-brand">
+                <img src="{{asset('logo.png')}}" width="30" height="30" alt="" class="d-inline-block align-top">
                 Picture
             </a>
             <button type="button" data-toggle="collapse" data-target="#navbarSupportedContent"

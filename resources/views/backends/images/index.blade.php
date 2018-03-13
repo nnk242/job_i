@@ -46,7 +46,7 @@
                                     </label>
                                 </td>
                                 <td>{{$image->created_at->todateString()}}</td>
-                                <td><a href="{{url('admin/image/'.$image->id)}}" style="margin-right: 6px" title="edit"><span
+                                <td><a href="{{url('admin/image/'.$image->id.'/edit')}}" style="margin-right: 6px" title="edit"><span
                                                 class="fa fa-pencil"></span></a><a
                                             class="m-remove" href="{{url('admin/image/delete/'.$image->id)}}"
                                             title="remove" data-toggle="modal" data-target=".remove"><span

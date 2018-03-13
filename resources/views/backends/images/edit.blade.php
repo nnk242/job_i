@@ -22,7 +22,8 @@
             </div>
             <div class="col-md-9">
                 @if($image)
-                    <form id="{{$image->id}}" method="post" action="">
+                    <form id="{{$image->id}}" method="post" action="{{route('view.image.update')}}">
+                        {{csrf_field()}}
                         <div class="m-height-250px mt-2"><img id="image" class="card-img-top m-img-b" src="{{$image->url}}"
                                                               alt="Card image cap"></div>
                         <div class="form-group">
@@ -50,6 +51,12 @@
                             <textarea class="form-control" id="content" placeholder="Enter content"
                                       name="content_" required>{{$image->content}}</textarea>
                         </div>
+                        <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" name="group" required>
+                            <option selected>Choose...</option>
+                            @foreach($groups as $group)
+                            <option value="{{$group->id}}">{{$group->name}}</option>
+                            @endforeach
+                        </select>
                         <div class="form-group text-center">
                             <label class="switch">
                                 <input type="checkbox" {{$image->status == 1?'checked':''}}>
@@ -75,52 +82,6 @@
     <script>
         $(document).ready(function () {
             var timeout = null;
-//file image
-            $('#url').on('keyup', function () {
-                var current = $(this);
-                clearTimeout(timeout);
-                timeout = setTimeout(function () {
-                    $('body').append(loding());
-                    current.attr('disabled', true);
-                    var token = $('meta[name="csrf-token"]').attr('content');
-                    var name = current.val();
-                    var id = current.closest('form').attr('id');
-                    console.log(id);
-                    $.ajax({
-                        type: 'POST',
-                        url: '{{ route('view.image.getUrl') }}',
-                        data: {
-                            "_token": token,
-                            'name': name,
-                            'id': id
-                        },
-                        dataType: 'JSON',
-                        timeout: 1000,
-                        success: function (response) {
-                            $('#loading').remove();
-                            current.attr('disabled', false);
-                            switch (response.status) {
-                                case true:
-                                    $('body').append($.parseHTML(successful(response.message)));
-                                    $('#link').val(response.value_seo);
-                                    break;
-                                case false:
-                                    $('body').append($.parseHTML(error(response.message)));
-                                    break;
-                                default:
-                                    $('body').append($.parseHTML(error(response.message)));
-                                    break;
-                            }
-                            closeError();
-                        },
-                        error: function () {
-                            $('#loading').remove();
-                        }
-                    })
-                }, 800);
-                closeError();
-                current.attr('disabled', false);
-            });
 //name
             $('#name').on('keyup', function () {
                 var current = $(this);
@@ -161,6 +122,8 @@
                         },
                         error: function () {
                             $('#loading').remove();
+                            current.attr('disabled', false);
+                            $('body').append($.parseHTML(error("Error!!!")));
                         }
                     })
                 }, 800);

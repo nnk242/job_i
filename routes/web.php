@@ -23,8 +23,10 @@ Route::group(['prefix'=>'admin'], function () {
         Route::post('store', 'backend\ImageController@store')->name('view.image.store');
         //delete
         Route::post('delete/{id}', 'backend\ImageController@destroy')->name('view.image.destroy');
-        //show
-        Route::get('/{id}', 'backend\ImageController@show')->name('view.image.show');
+        //edit
+        Route::get('/{id}/edit', 'backend\ImageController@edit')->name('view.image.show');
+        Route::post('/update', 'backend\ImageController@update')->name('view.image.update');
+        //
         Route::post('loadingGroups', 'backend\ImageController@loadingGroup')->name('view.image.loadingGroups');
         Route::post('uploadAFile', 'backend\ImageController@uploadAFile')->name('view.image.uploadafile');
         Route::post('uploadFile', 'backend\ImageController@uploadFile')->name('view.image.uploadfile');

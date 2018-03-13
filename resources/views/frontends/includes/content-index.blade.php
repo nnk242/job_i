@@ -18,74 +18,96 @@
     </nav>
 
     <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade show active m-margin-top-120px" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <div class="tab-pane fade show active m-margin-top-120px" id="nav-home" role="tabpanel"
+             aria-labelledby="nav-home-tab">
             <div class="container-fluid">
                 <div class="m-margin-top-bottom-30px">
                     <div class="grid">
                         <div class="grid-item wow zoomIn">
                             <div class="m-positon-p">
-                                <a href="#" class="m-a-p">
+                                <div class="m-a-p">
                                     <img src="test/test1.jpg">
                                     <div class="m-none">
                                         <div class="m-bg-img"></div>
                                         <div class="m-text m-s-t">
-                                            <p class="h3 text-dark">Jun, 28</p>
-                                            <p class="h4 text-light">Title</p>
-                                            <p class="h5 text-danger">2,8k Lượt xem - 1k tải xuống</p>
+                                            <h5 class="text-dark">Jun, 28</h5>
+                                            <h2 class="text-light">Title</h2>
+                                            <h5 class="text-danger">2,8k Lượt xem - 1k tải xuống</h5>
+                                            <div><a class="mr-1">
+                                                    <button class="btn btn-secondary">Xem album</button>
+                                                </a><a>
+                                                    <button class="btn btn-secondary">Xem ảnh</button>
+                                                </a></div>
                                         </div>
                                     </div>
-                                </a>
+                                </div>
                             </div>
                         </div>
 
                         <div class="grid-item wow zoomIn">
                             <div class="m-positon-p">
-                                <a href="#" class="m-a-p">
+                                <div class="m-a-p">
                                     <img src="test/test2.jpg">
                                     <div class="m-none">
                                         <div class="m-bg-img"></div>
                                         <div class="m-text m-s-t">
-                                            <p class="h3 text-dark">Jun, 28</p>
-                                            <p class="h4 text-light">Title</p>
-                                            <p class="h5 text-danger">2,8k View - 1k tải xuống</p>
+                                            <h5 class="text-dark">Jun, 28</h5>
+                                            <h2 class="text-light">Title</h2>
+                                            <h5 class="text-danger">2,8k View - 1k tải xuống</h5>
+                                            <div><a class="mr-1">
+                                                    <button class="btn btn-secondary">Xem album</button>
+                                                </a><a>
+                                                    <button class="btn btn-secondary">Xem ảnh</button>
+                                                </a></div>
                                         </div>
                                     </div>
-                                </a>
+                                </div>
                             </div>
                         </div>
                         <div class="grid-item wow zoomIn">
                             <div class="m-positon-p">
-                                <a href="#" class="m-a-p">
+                                <div class="m-a-p">
                                     <img src="test/test3.jpg">
                                     <div class="m-none">
                                         <div class="m-bg-img"></div>
                                         <div class="m-text m-s-t">
-                                            <p class="h3 text-dark">Jun, 28</p>
-                                            <p class="h4 text-light">Title</p>
-                                            <p class="h5 text-danger">2,8k View - 1k tải xuống</p>
+                                            <h5 class="text-dark">Jun, 28</h5>
+                                            <h2 class="text-light">Title</h2>
+                                            <h5 class="text-danger">2,8k View - 1k tải xuống</h5>
+                                            <div><a class="mr-1">
+                                                    <button class="btn btn-secondary">Xem album</button>
+                                                </a><a>
+                                                    <button class="btn btn-secondary">Xem ảnh</button>
+                                                </a></div>
+
                                         </div>
                                     </div>
-                                </a>
+                                </div>
                             </div>
                         </div>
                         <div class="grid-item wow zoomIn">
                             <div class="m-positon-p">
-                                <a href="#" class="m-a-p">
+                                <div class="m-a-p">
                                     <img src="test/test4.jpg">
                                     <div class="m-none">
                                         <div class="m-bg-img"></div>
                                         <div class="m-text m-s-t">
-                                            <p class="h3 text-dark">Jun, 28</p>
-                                            <p class="h4 text-light">Title</p>
-                                            <p class="h5 text-danger">2,8k View - 1k tải xuống</p>
+                                            <h4 class="h3 text-dark">Jun, 28</h4>
+                                            <h2 class="text-light">Title</h2>
+                                            <h5 class="h5 text-danger">2,8k View - 1k tải xuống</h5>
+                                            <div><a class="mr-1">
+                                                    <button class="btn btn-secondary">Xem album</button>
+                                                </a><a>
+                                                    <button class="btn btn-secondary">Xem ảnh</button>
+                                                </a></div>
                                         </div>
                                     </div>
-                                </a>
+                                </div>
                             </div>
                         </div>
                         <div class="grid-item wow zoomIn">
                             <div class="m-positon-p">
-                                <a href="#" class="m-a-p">
+                                <div class="m-a-p">
                                     <img src="test/test5.png">
                                     <div class="m-none">
                                         <div class="m-bg-img"></div>
@@ -93,14 +115,19 @@
                                             <p class="h3 text-dark">Jun, 28</p>
                                             <p class="h4 text-light">Title</p>
                                             <p class="h5 text-danger">2,8k View - 1k tải xuống</p>
+                                            <div><a class="mr-1">
+                                                    <button class="btn btn-secondary">Xem album</button>
+                                                </a><a>
+                                                    <button class="btn btn-secondary">Xem ảnh</button>
+                                                </a></div>
                                         </div>
                                     </div>
-                                </a>
+                                </div>
                             </div>
                         </div>
                         <div class="grid-item wow zoomIn">
                             <div class="m-positon-p">
-                                <a href="#" class="m-a-p">
+                                <div class="m-a-p">
                                     <img src="test/test6.jpg">
                                     <div class="m-none">
                                         <div class="m-bg-img"></div>
@@ -108,14 +135,19 @@
                                             <p class="h3 text-dark">Jun, 28</p>
                                             <p class="h4 text-light">Title</p>
                                             <p class="h5 text-danger">2,8k View - 1k tải xuống</p>
+                                            <div><a class="mr-1">
+                                                    <button class="btn btn-secondary">Xem album</button>
+                                                </a><a>
+                                                    <button class="btn btn-secondary">Xem ảnh</button>
+                                                </a></div>
                                         </div>
                                     </div>
-                                </a>
+                                </div>
                             </div>
                         </div>
                         <div class="grid-item wow zoomIn">
                             <div class="m-positon-p">
-                                <a href="#" class="m-a-p">
+                                <div class="m-a-p">
                                     <img src="test/test7.jpg">
                                     <div class="m-none">
                                         <div class="m-bg-img"></div>
@@ -123,14 +155,19 @@
                                             <p class="h3 text-dark">Jun, 28</p>
                                             <p class="h4 text-light">Title</p>
                                             <p class="h5 text-danger">2,8k View - 1k tải xuống</p>
+                                            <div><a class="mr-1">
+                                                    <button class="btn btn-secondary">Xem album</button>
+                                                </a><a>
+                                                    <button class="btn btn-secondary">Xem ảnh</button>
+                                                </a></div>
                                         </div>
                                     </div>
-                                </a>
+                                </div>
                             </div>
                         </div>
                         <div class="grid-item wow zoomIn">
                             <div class="m-positon-p">
-                                <a href="#" class="m-a-p">
+                                <div class="m-a-p">
                                     <img src="test/test9.jpg">
                                     <div class="m-none">
                                         <div class="m-bg-img"></div>
@@ -138,14 +175,19 @@
                                             <p class="h3 text-dark">Jun, 28</p>
                                             <p class="h4 text-light">Title</p>
                                             <p class="h5 text-danger">2,8k View - 1k tải xuống</p>
+                                            <div><a class="mr-1">
+                                                    <button class="btn btn-secondary">Xem album</button>
+                                                </a><a>
+                                                    <button class="btn btn-secondary">Xem ảnh</button>
+                                                </a></div>
                                         </div>
                                     </div>
-                                </a>
+                                </div>
                             </div>
                         </div>
                         <div class="grid-item wow zoomIn">
                             <div class="m-positon-p">
-                                <a href="#" class="m-a-p">
+                                <div class="m-a-p">
                                     <img src="test/test13.jpg">
                                     <div class="m-none">
                                         <div class="m-bg-img"></div>
@@ -153,16 +195,22 @@
                                             <p class="h3 text-dark">Jun, 28</p>
                                             <p class="h4 text-light">Title</p>
                                             <p class="h5 text-danger">2,8k View - 1k tải xuống</p>
+                                            <div><a class="mr-1">
+                                                    <button class="btn btn-secondary">Xem album</button>
+                                                </a><a>
+                                                    <button class="btn btn-secondary">Xem ảnh</button>
+                                                </a></div>
                                         </div>
                                     </div>
-                                </a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="tab-pane fade m-margin-top-120px" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+        <div class="tab-pane fade m-margin-top-120px" id="nav-profile" role="tabpanel"
+             aria-labelledby="nav-profile-tab">
             <div class="container-fluid">
                 <div class="m-margin-top-bottom-30px">
                     <div class="row">
@@ -275,7 +323,8 @@
                 </div>
             </div>
         </div>
-        <div class="tab-pane fade m-margin-top-120px" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+        <div class="tab-pane fade m-margin-top-120px" id="nav-contact" role="tabpanel"
+             aria-labelledby="nav-contact-tab">
             <div class="container-fluid">
                 <div class="m-margin-top-bottom-30px">
                     <div class="row">
@@ -545,6 +594,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="text-center mb-3">
+        <a href="#"><button class="btn btn-secondary"><span class="fa fa-plus"></span>  Xem thêm</button></a>
     </div>
 </section>
 <!--end content-->

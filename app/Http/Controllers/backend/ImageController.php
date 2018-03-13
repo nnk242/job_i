@@ -111,8 +111,7 @@ class ImageController extends Controller
      */
     public function show($id)
     {
-        $image = Images::find($id);
-        return view('backends.images.show', compact('image'));
+        //
     }
 
     /**
@@ -124,7 +123,8 @@ class ImageController extends Controller
     public function edit($id)
     {
         $image = Images::find($id);
-        return view();
+        $groups = Group::all();
+        return view('backends.images.edit', compact('image', 'groups'));
     }
 
     /**
@@ -134,9 +134,16 @@ class ImageController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        return 1;
+        $image = Images::find($id);
+        $image->url = $request->url;
+        $image->name = $request->name;
+        $image->image_s = $request->link;
+        $image->title = $request->title;
+        $image->content = $request->content_;
+//        $image->
     }
 
     /**
