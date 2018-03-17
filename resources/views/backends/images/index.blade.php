@@ -45,8 +45,9 @@
                                         <span class="slider round"></span>
                                     </label>
                                 </td>
-                                <td>{{$image->created_at->todateString()}}</td>
-                                <td><a href="{{url('admin/image/'.$image->id.'/edit')}}" style="margin-right: 6px" title="edit"><span
+                                <td>{!! $image->created_at?$image->created_at->todateString():'<p class="text-danger">None</p>' !!}</td>
+                                <td><a href="{{url('admin/image/'.$image->id.'/edit')}}" style="margin-right: 6px"
+                                       title="edit"><span
                                                 class="fa fa-pencil"></span></a><a
                                             class="m-remove" href="{{url('admin/image/delete/'.$image->id)}}"
                                             title="remove" data-toggle="modal" data-target=".remove"><span
@@ -98,7 +99,9 @@
 @section('js')
     <!-- Script jquery -->
     <script src="{{asset('jquery/jquery.js')}}" type="text/javascript"></script>
+    <!-- HTML -->
     <script src="{{asset('html-js/html.js')}}" type="text/javascript"></script>
+    <!-- Scrip -->
     <script>
         $(document).on('click', '.m-remove', function () {
             var url = $(this).attr('href');

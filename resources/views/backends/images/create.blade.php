@@ -4,6 +4,7 @@
     <link href="{{ asset('common/toggle_switch.css') }}" rel="stylesheet">
 @endsection
 @section('content')
+    @include('message.message')
     <div class="container-fluid">
         <div class="row mt-5">
             <div class="col-md-3">
@@ -126,5 +127,6 @@
         var UploadPhoto = new uploadPhoto('{!! route('view.image.store') !!}');
         //Thực hiện hàm init để cài đặt token cho ajax và bắt sự kiện upload-js
         UploadPhoto.init();
+        closeError();
     </script>
 @endsection

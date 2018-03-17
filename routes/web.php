@@ -25,7 +25,7 @@ Route::group(['prefix'=>'admin'], function () {
         Route::post('delete/{id}', 'backend\ImageController@destroy')->name('view.image.destroy');
         //edit
         Route::get('/{id}/edit', 'backend\ImageController@edit')->name('view.image.show');
-        Route::post('/update', 'backend\ImageController@update')->name('view.image.update');
+        Route::post('/{id}/edit', 'backend\ImageController@update');
         //
         Route::post('loadingGroups', 'backend\ImageController@loadingGroup')->name('view.image.loadingGroups');
         Route::post('uploadAFile', 'backend\ImageController@uploadAFile')->name('view.image.uploadafile');
@@ -36,6 +36,21 @@ Route::group(['prefix'=>'admin'], function () {
 
     Route::group(['prefix' => 'group'], function () {
         Route::get('/', 'backend\GroupController@index')->name('view.group');
+        Route::post('create', 'backend\GroupController@create')->name('view.group.create');
+        //group edit
+        Route::get('{id}/edit', 'backend\GroupController@edit')->name('view.group.edit');
+        Route::post('{id}/edit', 'backend\GroupController@postEdit');
+        //group delete
+        Route::post('delete/{id}', 'backend\GroupController@delete');
+        //region
+        Route::post('createRegion', 'backend\GroupController@createRegion')->name('view.group.createRegion');
+        //delete region
+        Route::post('deleteRegion/{id}', 'backend\GroupController@deleteRegion');
+        Route::get('{id}/editRegion', 'backend\GroupController@editRegion')->name('view.group.editRegion');
+        Route::post('{id}/editRegion', 'backend\GroupController@postEditRegion');
+
+        Route::post('getNameSeoGroup', 'backend\GroupController@getNameSeoGroup')->name('view.group.getNameSeoGroup');
+        Route::post('getNameSeoRegion', 'backend\GroupController@getNameSeoRegion')->name('view.group.getNameSeoRegion');
     });
 });
 Route::group(['prefix'=>'image'], function () {

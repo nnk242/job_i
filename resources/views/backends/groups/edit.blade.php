@@ -8,67 +8,45 @@
     <div class="container-fluid">
         <div class="row mt-5">
             <div class="col-md-3">
-                <a title="Back to image" class="h2" href="{{url('admin/image')}}"><span
+                <a title="Back to group" class="h2" href="{{url('admin/group')}}"><span
                             class="fa fa-arrow-left text-warning"></span></a>
-                <hr>
-
-                <div class="form-group">
-                    <label for="addgroup" class="col-form-label">Add group:</label>
-                    <input type="text" id="addgroup" class="form-control" placeholder="Add group">
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-info" id="add-group"><span class="fa fa-plus"></span>&nbsp;Add group</button>
-                </div>
                 <hr>
             </div>
             <div class="col-md-9">
-                @if($image)
-                    <form id="{{$image->id}}" method="post" action="">
+                @if($group)
+                    <form id="{{$group->id}}" method="post" action="">
                         {{csrf_field()}}
-                        <div class="m-height-250px mt-2"><img id="image" class="card-img-top m-img-b"
-                                                              src="{{$image->url}}"
-                                                              alt="Card image cap"></div>
-                        <div class="form-group">
-                            <label for="url">url</label>
-                            <input type="url" class="form-control" id="url" value="{{$image->url}}"
-                                   placeholder="Enter url" name="url" required>
-                        </div>
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <input type="text" class="form-control" id="name" value="{{$image->name}}"
+                            <input type="text" class="form-control" id="name" value="{{$group->name}}"
                                    placeholder="Enter name" name="name" required>
                         </div>
                             <div class="form-group">
-                                <label for="link">Link</label>
-                                <input type="text" class="form-control" id="link" value="{{$image->image_s}}"
-                                       placeholder="Enter link" name="link" readonly>
+                                <label for="name_seo">Name seo:</label>
+                                <input type="text" class="form-control" id="name_seo" value="{{$group->name_seo}}"
+                                       placeholder="Enter name seo" name="name_seo" readonly>
                             </div>
                         <div class="form-group">
-                            <label for="title">Title</label>
-                            <input type="text" class="form-control" id="title" value="{{$image->title}}"
-                                   placeholder="Enter title" name="title" required>
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description" placeholder="Enter description"
+                                      name="description">{{$group->description}}</textarea>
                         </div>
-                        <div class="form-group">
-                            <label for="content">Content</label>
-                            <textarea class="form-control" id="content" placeholder="Enter content"
-                                      name="content_" required>{{$image->content}}</textarea>
-                        </div>
-                        <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" name="group"
+                        <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" name="region"
                                 required>
-                            @foreach($groups as $group)
-                                <option value="{{$group->id}}" {{$group->id == $image->group_id?'selected':''}}>{{$group->name}}</option>
+                            @foreach($regions as $region)
+                                <option value="{{$region->id}}" {{$region->id == $group->region_id?'selected':''}}>{{$region->name}}</option>
                             @endforeach
                         </select>
                         <div class="form-group text-center">
                             <label class="switch">
-                                <input type="checkbox" {{$image->status == 1?'checked':''}} name="status" value="{{$image->status}}" id="status">
+                                <input type="checkbox" {{$group->status == 1?'checked':''}} name="status" value="{{$group->status}}" id="status">
                                 <span class="slider round"></span>
                             </label>
                         </div>
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-primary">Update</button>
                             <button type="reset" class="btn btn-warning">Reset</button>
-                            <a href="{{url('admin/image')}}"><button type="button" class="btn btn-danger">Back</button></a>
+                            <a href="{{url('admin/group')}}"><button type="button" class="btn btn-danger">Back</button></a>
                         </div>
                     </form>
                 @else
@@ -95,10 +73,10 @@
                     var token = $('meta[name="csrf-token"]').attr('content');
                     var name = current.val();
                     var id = current.closest('form').attr('id');
-                    console.log(id);
+                    console.log(id, name);
                     $.ajax({
                         type: 'POST',
-                        url: '{{ route('view.image.getUrl') }}',
+                        url: '{{ route('view.group.getNameSeoGroup') }}',
                         data: {
                             "_token": token,
                             'name': name,
@@ -112,7 +90,7 @@
                             switch (response.status) {
                                 case true:
                                     $('body').append($.parseHTML(successful(response.message)));
-                                    $('#link').val(response.value_seo);
+                                    $('#name_seo').val(response.value_seo);
                                     break;
                                 case false:
                                     $('body').append($.parseHTML(error(response.message)));

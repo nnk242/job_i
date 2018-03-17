@@ -58,7 +58,7 @@ function uploadPhoto(url) {
                             $('#content-check').val() == 1 ? content_ = '' : content_ = 'required';
                             $('#file-uploaded').append(item_pic(group_, name_, title_, content_, data.responseJSON.url));
                             if ($('#file-uploaded').find('li').length === 1) {
-                                $('#file-uploaded').after('<div style="clear:left;" class="text-center mt-2 u-buttom-upload">' +
+                                $('#file-uploaded').after('<div style="clear:left;" class="text-center mt-2 mb-2 u-buttom-upload">' +
                                     '<button type="submit" class="btn btn-success">Submit</button></div>');
                             }
 

@@ -15,13 +15,18 @@ class CreateGroupsTable extends Migration
     {
         Schema::create('groups', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->references('id')->on('users');
             $table->string('name', 255);
-            $table->string('title', 255)->nullable();
-            $table->text('content')->nullable();
+            $table->string('name_seo', 255);
+            $table->text('description')->nullable();
+            $table->integer('region_id')->references('id')->on('regions')->default(1);
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
         DB::table('groups')->insert([[
+            'user_id'=> 1,
             'name' => 'Default',
+            'name_seo' => 'default',
         ]]);
     }
 

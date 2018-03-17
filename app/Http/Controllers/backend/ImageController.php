@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\backend;
 
-use App\Group;
+use App\Groups;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use RemoteImageUploader\Factory;
@@ -26,12 +26,6 @@ class ImageController extends Controller
     public function index(Request $request)
     {
         $images = Images::paginate($this->item_page);
-//        return $images->count();
-//        $lastPage = $images->lastPage();
-//        $currentPage = $images->currentPage();
-//        if ($currentPage > $lastPage) {
-//
-//        }
         return view('backends.images.index', compact('images'));
     }
 
@@ -104,17 +98,6 @@ class ImageController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int $id
@@ -123,7 +106,7 @@ class ImageController extends Controller
     public function edit($id)
     {
         $image = Images::find($id);
-        $groups = Group::all();
+        $groups = Groups::all();
         return view('backends.images.edit', compact('image', 'groups'));
     }
 
@@ -134,16 +117,38 @@ class ImageController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        return 1;
-        $image = Images::find($id);
-        $image->url = $request->url;
-        $image->name = $request->name;
-        $image->image_s = $request->link;
-        $image->title = $request->title;
-        $image->content = $request->content_;
-//        $image->
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:255',
+            'url' => 'required|max:255',
+            'link' => 'required|max:255',
+            'title' => 'required|max:255',
+            'content_' => 'required|max:255',
+        ]);
+        if ($validator->fails()) {
+            // gộp mảng errors thành chuỗi, cách nhau bởi dấu cách
+            $message = implode(' ', $validator->errors()->all());
+            return redirect()->back()->with('er', 'Update fail...' . $message);
+        } else {
+            try {
+                $name = $request->name;
+                $status = $request->status;
+                $image = Images::find($id);
+                $image->user_id = Auth::id();
+                $image->url = $request->url;
+                $image->name = $name;
+                $image->image_s = $request->link;
+                $image->title = $request->title;
+                $image->content = $request->content_;
+                $image->group_id = $request->group;
+                $image->status = $status==1?1:0;
+                $image->save();
+                return redirect()->back()->with('mes', 'Updated...');
+            } catch (\Exception $exception) {
+                return redirect()->back()->with('er', 'Update fail...');
+            }
+        }
     }
 
     /**
@@ -168,7 +173,7 @@ class ImageController extends Controller
 
     public function loadingGroup()
     {
-        return Group::orderBy('id', 'ASC')->get();
+        return Groups::orderBy('id', 'ASC')->get();
     }
 
     public function uploadAFile(Request $request)
@@ -202,7 +207,7 @@ class ImageController extends Controller
                 $image->title = $title;
                 $image->content = $content;
                 $image->group_id = $group;
-                $image->status = $status;
+                $image->status = $status==1?1:0;
                 $image->save();
                 return [
                     'status' => true,
@@ -276,7 +281,7 @@ class ImageController extends Controller
                 $image->title = $title[$i];
                 $image->content = $content[$i];
                 $image->group_id = $group[$i];
-                $image->status = $status[$i];
+                $image->status = $status[$i]==1?1:0;
                 $image->save();
             }
             return redirect()->back()->with('mes', 'Upload successful...');
@@ -305,15 +310,12 @@ class ImageController extends Controller
     }
 
     public function getUrl(Request $request) {
-
         try {
-            $id = $request->id;
             $name = $request->name;
-            $image = Images::find($id);
-            $image->image_s = Images::whereimage_s(str_seo_m($name))->count() > 0 ? str_seo_m(str_replace('.html', '', $name)) . '-' . time() : str_seo_m($name);
+            $image = Images::whereimage_s(str_seo_m($name))->count() > 0 ? str_seo_m(str_replace('.html', '', $name)) . '-' . time() : str_seo_m($name);
             return [
                 'status' => true,
-                'value_seo' => $image->image_s,
+                'value_seo' => $image,
                 'message' => 'Get url seo successful!'
             ];
         } catch (\Exception $ex) {
