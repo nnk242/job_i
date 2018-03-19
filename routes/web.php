@@ -32,6 +32,8 @@ Route::group(['prefix'=>'admin'], function () {
         Route::post('uploadFile', 'backend\ImageController@uploadFile')->name('view.image.uploadfile');
         Route::post('ajaxStatus', 'backend\ImageController@ajaxStatus')->name('view.image.ajaxStatus');
         Route::post('getUrl', 'backend\ImageController@getUrl')->name('view.image.getUrl');
+        //upload serve
+        Route::post('uploadFileServe', 'backend\ImageController@uploadFileServe')->name('view.image.uploadServe');
     });
 
     Route::group(['prefix' => 'group'], function () {

@@ -38,7 +38,7 @@
                                 <td>{{$image->title}}</td>
                                 <td>{{str_limit($image->content,$limit=100,$end='...')}}</td>
                                 <td>{{$image->url}}</td>
-                                <td><img style="height: 65px" src="{{$image->url}}"></td>
+                                <td><img style="height: 65px" src="{{in_array(substr($image->url, 0, 4), $first_url_image)?$image->url:asset($image->url)}}"></td>
                                 <td><label class="switch">
                                         <input class="status" type="checkbox"
                                                value="{{$image->status}}" {{$image->status == 1?'checked':''}}>

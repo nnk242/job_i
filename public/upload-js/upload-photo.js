@@ -1,3 +1,17 @@
+function validateFile(bt, current) {
+    $(bt).on('click', function () {
+        // Nếu có file trong thẻ ipput thì thực hiện upload,
+        // ngược lại thì hiện thông báo
+        if (typeof $('#photo')[0].files[0] !== 'undefined') {
+            current.uploadFile($('#photo')[0].files[0]);
+        } else {
+            $('body').append($.parseHTML(error('File field is empty')));
+            closeError();
+            // alert('File field is empty');
+        }
+    });
+}
+
 function uploadPhoto(url) {
     var current = this;
     this.url = url;
@@ -8,18 +22,19 @@ function uploadPhoto(url) {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        //Bắt sự kiện bấm vào nút upload photo
-        $('#upload').on('click', function () {
-            // Nếu có file trong thẻ ipput thì thực hiện upload,
-            // ngược lại thì hiện thông báo
-            if (typeof $('#photo')[0].files[0] !== 'undefined') {
-                current.uploadFile($('#photo')[0].files[0]);
-            } else {
-                $('body').append($.parseHTML(error('File field is empty')));
-                closeError();
-                // alert('File field is empty');
-            }
-        });
+        // //Bắt sự kiện bấm vào nút upload photo
+        // $('#upload').on('click', function () {
+        //     // Nếu có file trong thẻ ipput thì thực hiện upload,
+        //     // ngược lại thì hiện thông báo
+        //     if (typeof $('#photo')[0].files[0] !== 'undefined') {
+        //         current.uploadFile($('#photo')[0].files[0]);
+        //     } else {
+        //         $('body').append($.parseHTML(error('File field is empty')));
+        //         closeError();
+        //         // alert('File field is empty');
+        //     }
+        // });
+        validateFile('#upload', current);
     };
     this.uploadFile = function (file) {
         // Tạo một FormData chứa dữ liệu để gửi ajax
@@ -56,7 +71,7 @@ function uploadPhoto(url) {
                             $('#name-check').val() == 1 ? name_ = '' : name_ = 'required';
                             $('#title-check').val() == 1 ? title_ = '' : title_ = 'required';
                             $('#content-check').val() == 1 ? content_ = '' : content_ = 'required';
-                            $('#file-uploaded').append(item_pic(group_, name_, title_, content_, data.responseJSON.url));
+                            $('#file-uploaded').append(item_pic(group_, name_, title_, content_, data.responseJSON.url, data.responseJSON.url));
                             if ($('#file-uploaded').find('li').length === 1) {
                                 $('#file-uploaded').after('<div style="clear:left;" class="text-center mt-2 mb-2 u-buttom-upload">' +
                                     '<button type="submit" class="btn btn-success">Submit</button></div>');
@@ -142,6 +157,13 @@ $(document).on("click", ".u-upload-a-file", function () {
             $('#loading').remove();
             switch (response.status) {
                 case true:
+                    current.closest('.upload-a-file').remove();
+                    $('body').append($.parseHTML(successful(data.message)));
+                    closeError();
+                    if ($('#file-uploaded').find('li').length === 0) {
+                        $('.u-buttom-upload').remove();
+                    } else {
+                    }
                     $('body').append($.parseHTML(successful(response.message)));
                     closeError();
                     break;
@@ -244,3 +266,60 @@ $(document).on('click', '#status-check', function () {
 $(document).on('click', '#p-status', function () {
     changeBox('#p-status');
 });
+
+function uploadServe(url, name, title, content, group, status, file, current) {
+    $('body').append(loding());
+    var file_data = file;
+    var form_data = new FormData();
+    form_data.append('file', file_data);
+    form_data.append('name', name);
+    form_data.append('title', title);
+    form_data.append('content_', content);
+    form_data.append('group', group);
+    form_data.append('status', status);
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+    });
+
+    // var img_old = $('#profile-image1').attr('src');
+    //$('#profile-image1').attr('src', '{{url('/img')}}' + '/' + 'loader.svg');
+    $.ajax({
+        url: url,
+        data: form_data,
+        type: 'POST',
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (data) {
+            $('#loading').remove();
+            switch (data.status) {
+                case true: // Nếu upload thành công
+
+                    current.closest('.upload-a-file').remove();
+                    $('body').append($.parseHTML(successful(data.message)));
+                    closeError();
+                    if ($('#file-uploaded').find('li').length === 0) {
+                        $('.u-buttom-upload').remove();
+                    } else {
+                    }
+                    break;
+                case false: // Lỗi server
+                    $('body').append($.parseHTML(error('Unknown error: ' + data.status)));
+                    // alert('Unknown error: ' + data.status);
+                    break;
+                default : // Các lỗi còn lại: lỗi validate, lỗi Exception.
+                    $('body').append($.parseHTML(error(data.message)));
+            }
+        },
+        error: function () {
+            closeError();
+            $('#loading').remove();
+        }
+    });
+
+
+    closeError();
+    $('#loading').remove();
+}

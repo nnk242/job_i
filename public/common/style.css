@@ -135,8 +135,11 @@
     margin-top: 57px;
 }
 
-.m-margin-top-120px {
-    margin-top: 120px;
+.m-margin-top-150px {
+    margin-top: 150px;
+}
+.m-margin-top-110px {
+    margin-top: 110px;
 }
 
 .m-collection-w {
@@ -191,8 +194,9 @@
 }
 
 .m-img-b {
-    height: 100%;
+    height: auto;
     width: auto;
+    max-height: 140px;
     margin: 0 auto;
     display: block;
 }

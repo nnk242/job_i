@@ -10,26 +10,20 @@
             <div class="col-md-3">
                 <a title="Back to image" class="h2" href="{{url('admin/image')}}"><span
                             class="fa fa-arrow-left text-warning"></span></a>
-                <hr>
-
-                <div class="form-group">
-                    <label for="addgroup" class="col-form-label">Add group:</label>
-                    <input type="text" id="addgroup" class="form-control" placeholder="Add group">
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-info" id="add-group"><span class="fa fa-plus"></span>&nbsp;Add group</button>
-                </div>
-                <hr>
             </div>
             <div class="col-md-9">
                 <div>
                     <div class="form-inline">
                         <div class="form-group mx-sm-3 mb-2">
-                            <input type="file" id="photo" class="form-control-file" accept="image/*"/>
+                            <input type="file" id="photo" class="form-control-file m-photo" accept="image/*"/>
                         </div>
                         <button type="button" id="upload" class="btn btn-info mx-sm-3 mb-2"><span
                                     class="fa fa-cloud-upload"></span>&nbsp;Upload to flickr
                         </button>
+                        <button type="button" id="upload-serve" class="btn btn-warning mx-sm-3 mb-2"><span
+                                    class="fa fa-braille"></span>&nbsp;Upload to serve
+                        </button>
+                        <img id="output"/>
                     </div>
                 </div>
                 <form method="POST" action="{{route('view.image.uploadfile')}}" multiple>
@@ -127,6 +121,41 @@
         var UploadPhoto = new uploadPhoto('{!! route('view.image.store') !!}');
         //Thực hiện hàm init để cài đặt token cho ajax và bắt sự kiện upload-js
         UploadPhoto.init();
+
+        $(document).on('click', '.u-upload-file-serve', function () {
+            uploadServe('{!! route('view.image.uploadServe') !!}',
+                $(this).closest('.upload-a-file').find('.u-name').val(),
+                $(this).closest('.upload-a-file').find('.u-title').val(),
+                $(this).closest('.upload-a-file').find('.u-content').val(),
+                $(this).closest('.upload-a-file').find('.u-group').val(),
+                $(this).closest('.upload-a-file').find('.u-status').val(),
+                $(this).closest('.upload-a-file').find('.m-photo').prop('files')[0],
+                $(this)
+            )
+        });
+
+        $(document).on('click', '#upload-serve', function () {
+            try {
+                validateFile($(this), this);
+                var src = URL.createObjectURL($('#photo').prop('files')[0]);
+                var group_, name_, content_, title_;
+                $('#group-check').val() == 1 ? group_ = '' : group_ = 'required';
+                $('#name-check').val() == 1 ? name_ = '' : name_ = 'required';
+                $('#title-check').val() == 1 ? title_ = '' : title_ = 'required';
+                $('#content-check').val() == 1 ? content_ = '' : content_ = 'required';
+                $('#file-uploaded').append(item_pic(group_, name_, title_, content_, src, '', 1));
+                if ($('#file-uploaded').find('li').length === 1) {
+                    $('#file-uploaded').after('<div style="clear:left;" class="text-center mt-2 mb-2 u-buttom-upload">' +
+                        '<button type="submit" class="btn btn-success">Submit</button></div>');
+                }
+                var $this = $('#photo'), $clone = $this.clone();
+                $('.upload-a-file').last().append($clone);
+                $('.m-photo').last().addClass( "m-none" )
+            } catch (Ex) {
+                validateFile($(this));
+            }
+        });
+
         closeError();
     </script>
 @endsection

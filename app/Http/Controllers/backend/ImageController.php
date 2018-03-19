@@ -9,6 +9,7 @@ use RemoteImageUploader\Factory;
 use Validator;
 use App\Images;
 use Auth;
+use File;
 
 class ImageController extends Controller
 {
@@ -22,11 +23,16 @@ class ImageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public $item_page = 3;
+    public $item_page = 10;
+    public $first_url_image = array('http');
+    public $folder_save_image = 'uploads/';
+
+
     public function index(Request $request)
     {
         $images = Images::paginate($this->item_page);
-        return view('backends.images.index', compact('images'));
+        $first_url_image = $this->first_url_image;
+        return view('backends.images.index', compact('images', 'first_url_image'));
     }
 
     /**
@@ -142,7 +148,7 @@ class ImageController extends Controller
                 $image->title = $request->title;
                 $image->content = $request->content_;
                 $image->group_id = $request->group;
-                $image->status = $status==1?1:0;
+                $image->status = $status == 1 ? 1 : 0;
                 $image->save();
                 return redirect()->back()->with('mes', 'Updated...');
             } catch (\Exception $exception) {
@@ -160,11 +166,22 @@ class ImageController extends Controller
     public function destroy($id)
     {
         $image = Images::find($id);
+        $str = '';
         if ($image) {
-            try{
+            try {
+                $image_url = $image->url;
+                $check_name = substr($image_url, 0, 4);
+//                $file_name = str_replace($this->folder_save_image,'', $image_url);
+                if (!in_array($check_name, $this->first_url_image)) {
+                    try {
+                        File::delete($image_url);
+                    } catch (\Exception $ex) {
+                        $str = "File not found";
+                    }
+                }
                 $image->delete();
             } catch (\Exception $ex) {
-                return redirect()->back()->with('er', 'Delete item error...');
+                return redirect()->back()->with('er', 'Delete item error... ' . $str);
             }
             return redirect()->back()->with('mes', 'Deleted item...');
         } else
@@ -203,11 +220,21 @@ class ImageController extends Controller
                 $image->user_id = Auth::id();
                 $image->url = $url;
                 $image->name = $name;
-                $image->image_s = Images::whereimage_s(str_seo_m($name))->count() > 0 ? str_seo_m(str_replace('.html', '', $name)) . '-' . time() : str_seo_m($name);
+
+                if (Images::whereimage_s(str_seo_m($name))->count() > 0) {
+                    $image_s = str_seo_m(str_replace('.html', '', $name)) . '-' . time();
+                    if (Images::whereimage_s($image_s)->count() > 0) {
+                        $image_s2 =str_seo_m(str_replace('.html', '', $name)) . uniqid() . '-' . time();
+                        if (Images::whereimage_s($image_s2)->count() > 0) {
+                            $image->image_s = str_seo_m(str_replace('.html', '', $name)) . uniqid() . '-' . time() . '-' . uniqid();
+                        } else $image->image_s = str_seo_m(str_replace('.html', '', $name)) . uniqid() . '-' . time();
+                    } else $image->image_s = str_seo_m(str_replace('.html', '', $name)) .  '-' . time();
+                } else $image->image_s = str_seo_m($name);
+
                 $image->title = $title;
                 $image->content = $content;
                 $image->group_id = $group;
-                $image->status = $status==1?1:0;
+                $image->status = $status == 1 ? 1 : 0;
                 $image->save();
                 return [
                     'status' => true,
@@ -281,7 +308,7 @@ class ImageController extends Controller
                 $image->title = $title[$i];
                 $image->content = $content[$i];
                 $image->group_id = $group[$i];
-                $image->status = $status[$i]==1?1:0;
+                $image->status = $status[$i] == 1 ? 1 : 0;
                 $image->save();
             }
             return redirect()->back()->with('mes', 'Upload successful...');
@@ -290,12 +317,13 @@ class ImageController extends Controller
         }
     }
 
-    public function ajaxStatus(Request $request) {
+    public function ajaxStatus(Request $request)
+    {
         try {
             $id = $request->id;
             $status = $request->status;
             $image = Images::find($id);
-            $status == 1 ? $image->status =0: $image->status = 1;
+            $status == 1 ? $image->status = 0 : $image->status = 1;
             $image->save();
             return [
                 'status' => true,
@@ -309,10 +337,19 @@ class ImageController extends Controller
         }
     }
 
-    public function getUrl(Request $request) {
+    public function getUrl(Request $request)
+    {
         try {
             $name = $request->name;
-            $image = Images::whereimage_s(str_seo_m($name))->count() > 0 ? str_seo_m(str_replace('.html', '', $name)) . '-' . time() : str_seo_m($name);
+            if (Images::whereimage_s(str_seo_m($name))->count() > 0) {
+                $image_s = str_seo_m(str_replace('.html', '', $name)) . '-' . time();
+                if (Images::whereimage_s($image_s)->count() > 0) {
+                    $image_s2 =str_seo_m(str_replace('.html', '', $name)) . uniqid() . '-' . time();
+                    if (Images::whereimage_s($image_s2)->count() > 0) {
+                        $image = str_seo_m(str_replace('.html', '', $name)) . uniqid() . '-' . time() . '-' . uniqid();
+                    } else $image = str_seo_m(str_replace('.html', '', $name)) . uniqid() . '-' . time();
+                } else $image = str_seo_m(str_replace('.html', '', $name)) .  '-' . time();
+            } else $image = str_seo_m($name);
             return [
                 'status' => true,
                 'value_seo' => $image,
@@ -323,6 +360,70 @@ class ImageController extends Controller
                 'status' => false,
                 'message' => 'Get url fail!!!'
             ];
+        }
+    }
+
+    public function uploadFileServe(Request $request)
+    {
+        $validator = Validator::make($request->all(),
+            [
+                'file' => 'image',
+                'name' => 'required|max:255',
+                'title' => 'required|max:255',
+                'content_' => 'required|max:255',
+            ],
+            [
+                'file.image' => 'Image must (jpeg, png, bmp, gif, or svg)'
+            ]);
+        if ($validator->fails()) {
+            $message = implode(' ', $validator->errors()->all());
+            return [
+                'status' => false,
+                'data' => $request->all(),
+                'message' => $message,
+            ];
+        } else {
+            try {
+                $name = $request->name;
+                $status = $request->status;
+                $image = new Images();
+                $extension = $request->file('file')->getClientOriginalExtension();
+                $dir = 'uploads/';
+                $filename = uniqid() . '_' . time() . '.' . $extension;
+                $request->file('file')->move($dir, $filename);
+
+                $image->user_id = Auth:: id();
+                $image->url = $dir . $filename;
+                $image->name = $request->name;
+
+                if (Images::whereimage_s(str_seo_m($name))->count() > 0) {
+                    $image_s = str_seo_m(str_replace('.html', '', $name)) . '-' . time();
+                    if (Images::whereimage_s($image_s)->count() > 0) {
+                        $image_s2 =str_seo_m(str_replace('.html', '', $name)) . uniqid() . '-' . time();
+                        if (Images::whereimage_s($image_s2)->count() > 0) {
+                            $image->image_s = str_seo_m(str_replace('.html', '', $name)) . uniqid() . '-' . time() . '-' . uniqid();
+                        } else $image->image_s = str_seo_m(str_replace('.html', '', $name)) . uniqid() . '-' . time();
+                    } else $image->image_s = str_seo_m(str_replace('.html', '', $name)) .  '-' . time();
+                } else $image->image_s = str_seo_m($name);
+
+                $image->title = $request->title;
+                $image->content = $request->content_;
+                $image->group_id = $request->group;
+                $image->status = $status == 1 ? 1 : 0;
+                $image->save();
+                return [
+                    'status' => true,
+                    'url' => $filename,
+                    'data' => $request->all(),
+                    'message' => 'uploaded.',
+                ];
+            } catch (\Exception $exception) {
+                return [
+                    'status' => false,
+                    'data' => $request->all(),
+                    'message' => 'upload fail.',
+                ];
+            }
         }
     }
 }
