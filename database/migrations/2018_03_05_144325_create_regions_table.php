@@ -19,7 +19,7 @@ class CreateRegionsTable extends Migration
             $table->string('name', 255);
             $table->string('name_seo', 255);
             $table->text('description')->nullable();
-            $table->text('image');
+            $table->text('image')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });

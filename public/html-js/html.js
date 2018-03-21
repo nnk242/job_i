@@ -35,6 +35,7 @@ function item_pic($required_group, $required_name, $required_title, $required_co
         return '<li class="card mr-1 float-left mb-1 upload-a-file" style="width: 15rem;">\n' +
             '<div class="m-height-150px mt-2"><img class="card-img-top m-img-b" src="' + $src_img + '" alt="Card image cap"></div>\n' +
             '  <div class="card-block">\n' +
+            '    <input type="checkbox" value="1" name="u_type_upload[]" class="d-none" checked>\n' +
             '    <div class="form-group"><input type="text" class="form-control mt-2 u-link" placeholder="Link" name="u_link[]" readonly></div>\n' +
             '    <div class="form-group"><input type="text" class="form-control u-name" placeholder="Name" name="u_name[]" ' + $required_title + '></div>\n' +
             '    <div class="form-group"><input type="text" class="form-control u-title" placeholder="Title" name="u_title[]" ' + $required_title + '></div>\n' +
@@ -61,7 +62,8 @@ function item_pic($required_group, $required_name, $required_title, $required_co
     return '<li class="card mr-1 float-left mb-1 upload-a-file" style="width: 15rem;">\n' +
         '<div class="m-height-150px mt-2"><img class="card-img-top m-img-b" src="' + $src_img + '" alt="Card image cap"></div>\n' +
         '  <div class="card-block">\n' +
-        '    <div class="form-group"><input type="text" class="form-control mt-2 u-link" placeholder="Link" name="u_link[]" value="' + $src_input + '" required></div>\n' +
+        '    <input type="checkbox" value="0" name="u_type_upload[]" class="d-none" checked>\n' +
+        '    <div class="form-group"><input type="text" class="form-control mt-2 u-link" placeholder="Link" name="u_link[]" value="' + $src_input + '" required readonly></div>\n' +
         '    <div class="form-group"><input type="text" class="form-control u-name" placeholder="Name" name="u_name[]" ' + $required_title + '></div>\n' +
         '    <div class="form-group"><input type="text" class="form-control u-title" placeholder="Title" name="u_title[]" ' + $required_title + '></div>\n' +
         '    <div class="form-group"><textarea class="form-control u-content" rows="3" name="u_content[]" placeholder="Content" ' + $required_content + '></textarea></div>\n' +
@@ -77,7 +79,7 @@ function item_pic($required_group, $required_name, $required_title, $required_co
         '    <span class="slider round"></span>\n' +
         '  </label>' +
         '<hr>' +
-        '</div>' +
+        '</div>'+
         '<div class="card-block text-center mb-1">\n' +
         '    <div class="position-absolute m-remove-item"><a href="#" class="card-link text-danger u-remove-a-file"><span class="fa fa-remove"></span></a></div>\n' +
         '    <a class="card-link text-light u-upload-a-file btn btn-info"><span class="fa fa-upload"></span>Upload</a>\n' +

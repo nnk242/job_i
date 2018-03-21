@@ -15,7 +15,7 @@
                 <div>
                     <div class="form-inline">
                         <div class="form-group mx-sm-3 mb-2">
-                            <input type="file" id="photo" class="form-control-file m-photo" accept="image/*"/>
+                            <input type="file" id="photo" class="form-control-file m-photo" name="u_upload_file_m[]" accept="image/*"/>
                         </div>
                         <button type="button" id="upload" class="btn btn-info mx-sm-3 mb-2"><span
                                     class="fa fa-cloud-upload"></span>&nbsp;Upload to flickr
@@ -26,7 +26,7 @@
                         <img id="output"/>
                     </div>
                 </div>
-                <form method="POST" action="{{route('view.image.uploadfile')}}" multiple>
+                <form method="POST" action="{{route('view.image.uploadfile')}}" enctype="multipart/form-data">
                     {{csrf_field()}}
                     <div class="form-inline mb-1">
                         <div class="form-group col-sm-2">
