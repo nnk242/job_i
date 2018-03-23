@@ -113,7 +113,8 @@ class ImageController extends Controller
     {
         $image = Images::find($id);
         $groups = Groups::all();
-        return view('backends.images.edit', compact('image', 'groups'));
+        $first_url_image = $this->first_url_image;
+        return view('backends.images.edit', compact('image', 'groups', 'first_url_image'));
     }
 
     /**
@@ -132,17 +133,34 @@ class ImageController extends Controller
             'title' => 'required|max:255',
             'content_' => 'required|max:255',
         ]);
+        $str = '';
         if ($validator->fails()) {
             // gộp mảng errors thành chuỗi, cách nhau bởi dấu cách
             $message = implode(' ', $validator->errors()->all());
             return redirect()->back()->with('er', 'Update fail...' . $message);
         } else {
+            $image = Images::find($id);
             try {
+                if ($request->image) {
+                    $filepath = $image->url;
+                    $extension = $request->file('image')->getClientOriginalExtension();
+                    $dir = $this->folder_save_image;
+                    $filename = uniqid() . '_' . time() . '.' . $extension;
+                    $request->file('image')->move($dir, $filename);
+                    $check_name = substr($image, 0, 4);
+                    if (!in_array($check_name, $this->first_url_image)) {
+                        try{
+                            File::delete($filepath);
+                        } catch (\Exception $ex) {
+                            $str = "File not found";
+                        }
+                    }
+                    $image->url = $dir. $filename;
+                }
+
                 $name = $request->name;
                 $status = $request->status;
-                $image = Images::find($id);
                 $image->user_id = Auth::id();
-                $image->url = $request->url;
                 $image->name = $name;
                 $image->image_s = $request->link;
                 $image->title = $request->title;
@@ -150,7 +168,7 @@ class ImageController extends Controller
                 $image->group_id = $request->group;
                 $image->status = $status == 1 ? 1 : 0;
                 $image->save();
-                return redirect()->back()->with('mes', 'Updated...');
+                return redirect()->back()->with('mes', 'Updated... ' . $str);
             } catch (\Exception $exception) {
                 return redirect()->back()->with('er', 'Update fail...');
             }

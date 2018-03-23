@@ -24,149 +24,24 @@
             <div class="container-fluid">
                 <div class="m-margin-top-bottom-30px">
                     <div class="grid">
-                        <div class="grid-item wow zoomIn">
-                            <div class="m-positon-p">
-                                <a href="{{url('image/id')}}" class="m-a-p">
-                                    <img src="test/test1.jpg">
-                                    <div class="m-none">
-                                        <div class="m-bg-img"></div>
-                                        <div class="m-text m-s-t">
-                                            <h5 class="text-dark small">Jun, 28</h5>
-                                            <h2 class="text-light">Title</h2>
-                                            <p class="text-danger">2,8k Lượt xem - 1k tải xuống</p>
-                                            
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
+                        @foreach($images as $image)
+                            <div class="grid-item wow zoomIn">
+                                <div class="m-positon-p">
+                                    <a href="{{url('image/' . $image->image_s)}}" class="m-a-p">
+                                        <img src="{{in_array(substr($image->url, 0, 4), $first_url_image)?$image->url:asset($image->url)}}">
+                                        <div class="m-none">
+                                            <div class="m-bg-img"></div>
+                                            <div class="m-text m-s-t">
+                                                <h5 class="text-dark -bold">{{date_format($image->created_at, "d") . ' Th' . date_format($image->created_at, "m," ). date_format($image->created_at, "Y" )}}</h5>
+                                                <h2 class="text-light">{{$image->title}}</h2>
+                                                <p class="text-danger">2,8k Lượt xem - 1k tải xuống</p>
 
-                        <div class="grid-item wow zoomIn">
-                            <div class="m-positon-p">
-                                <a href="{{url('image/id')}}" class="m-a-p">
-                                    <img src="test/test2.jpg">
-                                    <div class="m-none">
-                                        <div class="m-bg-img"></div>
-                                        <div class="m-text m-s-t">
-                                            <h5 class="text-dark">Jun, 28</h5>
-                                            <h2 class="text-light">Title</h2>
-                                            <h5 class="text-danger">2,8k View - 1k tải xuống</h5>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="grid-item wow zoomIn">
-                            <div class="m-positon-p">
-                                <a href="{{url('image/id')}}" class="m-a-p">
-                                    <img src="test/test3.jpg">
-                                    <div class="m-none">
-                                        <div class="m-bg-img"></div>
-                                        <div class="m-text m-s-t">
-                                            <h5 class="text-dark">Jun, 28</h5>
-                                            <h2 class="text-light">Title</h2>
-                                            <h5 class="text-danger">2,8k View - 1k tải xuống</h5>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="grid-item wow zoomIn">
-                            <a href="{{url('image/id')}}" class="m-positon-p">
-                                <div class="m-a-p">
-                                    <img src="test/test4.jpg">
-                                    <div class="m-none">
-                                        <div class="m-bg-img"></div>
-                                        <div class="m-text m-s-t">
-                                            <h4 class="h3 text-dark">Jun, 28</h4>
-                                            <h2 class="text-light">Title</h2>
-                                            <h5 class="h5 text-danger">2,8k View - 1k tải xuống</h5>
-                                            
-                                        </div>
-                                    </div>
+                                    </a>
                                 </div>
-                            </a>
-                        </div>
-                        <div class="grid-item wow zoomIn">
-                            <div class="m-positon-p">
-                                <a href="{{url('image/id')}}" class="m-a-p">
-                                    <img src="test/test5.png">
-                                    <div class="m-none">
-                                        <div class="m-bg-img"></div>
-                                        <div class="m-text m-s-t">
-                                            <p class="h3 text-dark">Jun, 28</p>
-                                            <p class="h4 text-light">Title</p>
-                                            <p class="h5 text-danger">2,8k View - 1k tải xuống</p>
-                                            
-                                        </div>
-                                    </div>
-                                </a>
                             </div>
-                        </div>
-                        <div class="grid-item wow zoomIn">
-                            <div class="m-positon-p">
-                                <a href="{{url('image/id')}}" class="m-a-p">
-                                    <img src="test/test6.jpg">
-                                    <div class="m-none">
-                                        <div class="m-bg-img"></div>
-                                        <div class="m-text m-s-t">
-                                            <p class="h3 text-dark">Jun, 28</p>
-                                            <p class="h4 text-light">Title</p>
-                                            <p class="h5 text-danger">2,8k View - 1k tải xuống</p>
-                                            
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="grid-item wow zoomIn">
-                            <div class="m-positon-p">
-                                <a href="{{url('image/id')}}" class="m-a-p">
-                                    <img src="test/test7.jpg">
-                                    <div class="m-none">
-                                        <div class="m-bg-img"></div>
-                                        <div class="m-text m-s-t">
-                                            <p class="h3 text-dark">Jun, 28</p>
-                                            <p class="h4 text-light">Title</p>
-                                            <p class="h5 text-danger">2,8k View - 1k tải xuống</p>
-                                            
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="grid-item wow zoomIn">
-                            <div class="m-positon-p">
-                                <a href="{{url('image/id')}}" class="m-a-p">
-                                    <img src="test/test9.jpg">
-                                    <div class="m-none">
-                                        <div class="m-bg-img"></div>
-                                        <div class="m-text m-s-t">
-                                            <p class="h3 text-dark">Jun, 28</p>
-                                            <p class="h4 text-light">Title</p>
-                                            <p class="h5 text-danger">2,8k View - 1k tải xuống</p>
-                                            
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="grid-item wow zoomIn">
-                            <div class="m-positon-p">
-                                <a href="{{url('image/id')}}" class="m-a-p">
-                                    <img src="test/test13.jpg">
-                                    <div class="m-none">
-                                        <div class="m-bg-img"></div>
-                                        <div class="m-text m-s-t">
-                                            <p class="h3 text-dark">Jun, 28</p>
-                                            <p class="h4 text-light">Title</p>
-                                            <p class="h5 text-danger">2,8k View - 1k tải xuống</p>
-                                            
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>

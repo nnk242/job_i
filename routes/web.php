@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('frontends.index');
-});
+Route::get('/', 'frontend\ImageController@index');
 
 Route::group(['prefix'=>'admin'], function () {
     Auth::routes();

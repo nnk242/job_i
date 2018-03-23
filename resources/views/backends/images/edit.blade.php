@@ -23,15 +23,20 @@
             </div>
             <div class="col-md-9">
                 @if($image)
-                    <form id="{{$image->id}}" method="post" action="">
+                    <form id="{{$image->id}}" method="post" action="" enctype="multipart/form-data">
                         {{csrf_field()}}
                         <div class="m-height-250px mt-2"><img id="image" class="card-img-top m-img-b"
-                                                              src="{{$image->url}}"
+                                                              src="{{in_array(substr($image->url, 0, 4), $first_url_image)?$image->url:asset($image->url)}}"
                                                               alt="Card image cap"></div>
                         <div class="form-group">
+                            <label for="image">Image</label>
+                            <input type="file" class="form-control" id="url" value="{{$image->url}}"
+                                   placeholder="File" name="image" accept="image/*">
+                        </div>
+                        <div class="form-group">
                             <label for="url">url</label>
-                            <input type="url" class="form-control" id="url" value="{{$image->url}}"
-                                   placeholder="Enter url" name="url" required>
+                            <input type="text" class="form-control" id="url" value="{{$image->url}}"
+                                   placeholder="Enter url" name="url" readonly>
                         </div>
                         <div class="form-group">
                             <label for="name">Name</label>
@@ -66,7 +71,7 @@
                             </label>
                         </div>
                         <div class="form-group text-center">
-                            <button type="submit" class="btn btn-primary">Update</button>
+                            <button type="submit" class="btn btn-primary" id="update">Update</button>
                             <button type="reset" class="btn btn-warning">Reset</button>
                             <a href="{{url('admin/image')}}"><button type="button" class="btn btn-danger">Back</button></a>
                         </div>
@@ -86,7 +91,14 @@
         $(document).ready(function () {
             var timeout = null;
 //name
+            $('#name').on('focus', function () {
+                $('#update').prop('disabled', true);
+            });
+            $('#name').on('blur', function () {
+                $('#update').prop('disabled', false);
+            });
             $('#name').on('keyup', function () {
+                $('#update').prop('disabled', true);
                 var current = $(this);
                 clearTimeout(timeout);
                 timeout = setTimeout(function () {
@@ -130,6 +142,7 @@
                         }
                     })
                 }, 800);
+                $('#update').prop('disabled', false);
                 closeError();
                 current.attr('disabled', false);
             });
