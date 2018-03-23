@@ -112,7 +112,10 @@ $(document).on("click", ".group", function () {
             type: 'POST',
             success: function (response) {
                 $('#loading').remove();
-                current.append($.parseHTML("<option value='" + response[0]['id'] + "'>" + response[0]['name'] + "</option>")[0]);
+                console.log(response.length)
+                for(var i = 0; i< response.length; i++) {
+                    current.append($.parseHTML("<option value='" + response[i]['id'] + "'>" + response[i]['name'] + "</option>")[0]);
+                }
             },
             error: function (x, e) {
 

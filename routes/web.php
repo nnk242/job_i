@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'frontend\ImageController@index');
+Route::get('/bo-suu-tap/{id}', 'frontend\ImageController@group');
 
 Route::group(['prefix'=>'admin'], function () {
     Auth::routes();
