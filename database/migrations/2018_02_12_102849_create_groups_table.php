@@ -18,8 +18,10 @@ class CreateGroupsTable extends Migration
             $table->integer('user_id')->references('id')->on('users');
             $table->string('name', 255);
             $table->string('name_seo', 255);
+            $table->string('thumbnail', 255)->nullable();
             $table->text('description')->nullable();
             $table->integer('region_id')->references('id')->on('regions')->default(1);
+            $table->integer('type_id')->references('id')->on('types')->default(1);
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });

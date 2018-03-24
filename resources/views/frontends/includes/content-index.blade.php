@@ -28,13 +28,13 @@
                             @foreach($group->image as $image)
                                 <div class="grid-item wow zoomIn">
                                     <div class="m-positon-p">
-                                        <a href="{{url('bo-suu-tap/' . $group->name_seo)}}" class="m-a-p">
+                                        <a href="{{url($group->name_seo)}}" class="m-a-p">
                                             <img src="{{in_array(substr($image->url, 0, 4), $first_url_image)?$image->url:asset($image->url)}}">
                                             <div class="m-none">
                                                 <div class="m-bg-img"></div>
                                                 <div class="m-text m-s-t">
                                                     <h5 class="text-dark -bold">{{date_format($image->created_at, "d") . ' Th' . date_format($image->created_at, "m," ). date_format($image->created_at, "Y" )}}</h5>
-                                                    <h2 class="text-light">{{$image->title}}</h2>
+                                                    <h2 class="text-light">{{$group->name}}</h2>
                                                     <p class="text-danger">2,8k Lượt xem</p>
 
                                                 </div>

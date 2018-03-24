@@ -12,7 +12,7 @@
 */
 
 Route::get('/', 'frontend\ImageController@index');
-Route::get('/bo-suu-tap/{id}', 'frontend\ImageController@group');
+Route::get('/{id}', 'frontend\ImageController@group');
 
 Route::group(['prefix'=>'admin'], function () {
     Auth::routes();
@@ -57,6 +57,4 @@ Route::group(['prefix'=>'admin'], function () {
 Route::group(['prefix'=>'image'], function () {
     Route::get('/{image}', 'frontend\ImageController@show');
 });
-
-Route::get('/home', 'HomeController@index')->name('home');
 

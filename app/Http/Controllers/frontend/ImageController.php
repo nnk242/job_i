@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\frontend;
 
 use App\Groups;
+use App\Regions;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Images;
@@ -29,17 +30,10 @@ class ImageController extends Controller
 
     public function group($id)
     {
-        $post = Groups::where([['status', '=', 1], ['id', '<>', 1], ['name_seo', $id]])
-            ->with(['image' => function ($q) {
-                $q->where('status', '=', 1);
-            }])->first();
-        return $post;
-        $groups = Groups::with('image')->take(10)->get()->map(function ($q) {
-            $q->setRelation('image', $q->image->take(3));
-            return $q;
-        });
+        $post = Groups::where([['status', '=', 1], ['id', '<>', 1], ['name_seo', $id]])->with('region')->first();
+        $images = Images::whereGroup_id($post->id)->orderby('id', 'DESC')->paginate(10);
         $first_url_image = $this->first_url_image;
-        return view('frontends.album', compact('groups', 'first_url_image'));
+        return view('frontends.album', compact('post', 'images', 'first_url_image'));
     }
 
     public function show($id)
