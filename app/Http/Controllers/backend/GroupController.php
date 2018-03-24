@@ -24,10 +24,11 @@ class GroupController extends Controller
     public $item_group = 10;
     public $first_url_image = array('http');
     public $folder_save_image = 'regions/';
+    public $folder_save_image_group = 'thumbnails/';
 
     public function index()
     {
-        $groups = Groups::paginate($this->item_group);
+        $groups = Groups::orderBy('id', 'DESC')->paginate($this->item_group);
         $regions = Regions::all();
         $continents = Continents::all();
         $types = Types::all();
@@ -52,6 +53,16 @@ class GroupController extends Controller
 
                 $group->user_id = Auth::id();
                 $group->name = $name;
+                if ($request->group_image) {
+                    $extension = $request->file('group_image')->getClientOriginalExtension();
+                    $dir = $this->folder_save_image_group;
+                    $filename = uniqid() . '_' . time() . '.' . $extension;
+                    $request->file('group_image')->move($dir, $filename);
+
+                    $group->thumbnail = $dir. $filename;
+                } else {
+                    $group->thumbnail = $request->link_group_image;
+                }
 
                 $group->type_id = $request->type_id;
 
@@ -70,26 +81,51 @@ class GroupController extends Controller
 
     public function edit($id)
     {
+        $first_url_image = $this->first_url_image;
         $group = Groups::find($id);
         $types = Types::all();
         $regions = Regions::all();
-        return view('backends.groups.edit', compact('group', 'regions', 'types'));
+        return view('backends.groups.edit', compact('group', 'regions', 'first_url_image', 'types'));
     }
 
     public function postEdit($id, Request $request)
     {
         try {
+            $str = '';
             $status = $request->status;
             $group = Groups::find($id);
             $group->user_id = Auth::id();
             $group->name = $request->name;
             $group->name_seo = $request->name_seo;
+
+            if ($request->image_thumbnail) {
+                $extension = $request->file('image_thumbnail')->getClientOriginalExtension();
+                $dir = $this->folder_save_image_group;
+                $filename = uniqid() . '_' . time() . '.' . $extension;
+                $request->file('image_thumbnail')->move($dir, $filename);
+
+                $filepath = $group->thumbnail;
+                $check_name = substr($filepath, 0, 4);
+
+                if (!in_array($check_name, $this->first_url_image)) {
+                    try {
+                        File::delete($filepath);
+                    } catch (\Exception $ex) {
+                        $str = "File not found";
+                    }
+                }
+
+                $group->thumbnail = $dir . $filename;
+            } else {
+                $group->thumbnail = $request->link_image_thumbnail;
+            }
+
             $group->description = $request->description;
             $group->region_id = $request->region;
             $group->type_id = $request->type;
             $group->status = $status == 1 ? 1 : 0;
             $group->save();
-            return redirect()->back()->with('mes', 'edited group.');
+            return redirect()->back()->with('mes', 'edited group. ' . $str);
         } catch (\Exception $exception) {
             return redirect()->back()->with('er', 'edit group fail.');
         }
@@ -98,8 +134,21 @@ class GroupController extends Controller
     public function delete($id)
     {
         try {
-            Groups::find($id)->delete();
-            return redirect()->back()->with('mes', 'Deleted group.');
+            $str = '';
+            $group = Groups::find($id);
+
+            $filepath = $group->thumbnail;
+            $check_name = substr($filepath, 0, 4);
+
+            if (!in_array($check_name, $this->first_url_image)) {
+                try {
+                    File::delete($filepath);
+                } catch (\Exception $ex) {
+                    $str = "File not found";
+                }
+            }
+            $group->delete();
+            return redirect()->back()->with('mes', 'Deleted group. ' . $str);
         } catch (\Exception $exception) {
             return redirect()->back()->with('er', 'Delete group fail...');
         }
@@ -122,9 +171,8 @@ class GroupController extends Controller
                 $status = $request->status;
 
                 $region->user_id = Auth::id();
-                $extension = $request->file('flag_image')->getClientOriginalExtension();
                 if ($request->flag_image) {
-
+                    $extension = $request->file('flag_image')->getClientOriginalExtension();
                     $dir = $this->folder_save_image;
                     $filename = uniqid() . '_' . time() . '.' . $extension;
                     $request->file('flag_image')->move($dir, $filename);

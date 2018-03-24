@@ -16,6 +16,19 @@
                 @if($group)
                     <form id="{{$group->id}}" method="post" action="" enctype="multipart/form-data">
                         {{csrf_field()}}
+                        <div class="m-height-250px mt-2"><img id="image" class="card-img-top m-img-b"
+                                                              src="{{in_array(substr($group->thumbnail, 0, 4), $first_url_image)?$group->thumbnail:asset($group->thumbnail)}}"
+                                                              alt="Card image cap">
+                        </div>
+                        <div class="form-group">
+                            <label for="upload_image">Upload image thumbnail:</label>
+                            <input type="file" class="form-control" id="upload_image" name="image_thumbnail">
+                        </div>
+                        <div class="form-group">
+                            <label for="url">link image thumbnail</label>
+                            <input type="text" class="form-control" id="url" value=""
+                                   placeholder="Enter image" name="link_image_thumbnail">
+                        </div>
                         <div class="form-group">
                             <label for="name">Name</label>
                             <input type="text" class="form-control" id="name" value="{{$group->name}}"

@@ -210,10 +210,9 @@
             <!-- Add group -->
                 <div class="modal fade" id="addGroup">
                     <div class="modal-dialog modal-lg">
-                        <form method="POST" action="{{route('view.group.create')}}">
+                        <form method="POST" action="{{route('view.group.create')}}" enctype="multipart/form-data">
                             {{csrf_field()}}
                             <div class="modal-content">
-
                                 <!-- Modal Header -->
                                 <div class="modal-header">
                                     <h4 class="modal-title">Add Group</h4>
@@ -222,6 +221,15 @@
 
                                 <!-- Modal body -->
                                 <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="group_image">Upload image thumbnail:</label>
+                                        <input type="file" class="form-control" id="group_image" name="group_image" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="group_image">Link image thumbnail:</label>
+                                        <input type="file" class="form-control" id="group_image" name="link_group_image" required>
+                                    </div>
+
                                     <div class="form-group">
                                         <label for="name">Name:</label>
                                         <input type="text" class="form-control" id="name" name="name" required>
