@@ -6,7 +6,7 @@
             <div class="container">
                 <a class="breadcrumb-item" href="{{url('/')}}"><i class="fa fa-home"></i>Trang chủ</a>
                 <a class="breadcrumb-item" href="#">{{$post->region->name}}</a>
-                <a class="breadcrumb-item" href="#">{{$post->name}}</a>
+                <a class="breadcrumb-item" href="#">{{$post->type->name}}</a>
                 <span class="breadcrumb-item active">{{$post->name}}</span>
             </div>
         </nav>
@@ -59,8 +59,6 @@
                                                 <a href="#"><i class="fa fa-flag"></i> test</a>
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </div>
 

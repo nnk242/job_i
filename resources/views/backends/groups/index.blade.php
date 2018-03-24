@@ -223,11 +223,11 @@
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label for="group_image">Upload image thumbnail:</label>
-                                        <input type="file" class="form-control" id="group_image" name="group_image" required>
+                                        <input type="file" class="form-control" id="group_image" name="group_image">
                                     </div>
                                     <div class="form-group">
                                         <label for="group_image">Link image thumbnail:</label>
-                                        <input type="file" class="form-control" id="group_image" name="link_group_image" required>
+                                        <input type="text" class="form-control" id="group_image" name="link_group_image">
                                     </div>
 
                                     <div class="form-group">
