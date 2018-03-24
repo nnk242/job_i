@@ -17,12 +17,15 @@
     <div class="container-fluid">
         <div class="row mt-5">
             <div class="col-sm-4" style="overflow-y: scroll; height: 800px">
-                <form method="POST" action="{{route('view.group.createRegion')}}">
+                <form method="POST" action="{{route('view.group.createRegion')}}" enctype="multipart/form-data">
                     {{csrf_field()}}
                     <div class="form-group">
+                        <label for="upload_image">Upload flag image:</label>
+                        <input type="file" class="form-control" id="upload_image" name="flag_image">
+                    </div>
+                    <div class="form-group">
                         <label for="image">Link image:</label>
-                        <input type="text" class="form-control" id="image" placeholder="Enter image" name="image"
-                               required>
+                        <input type="text" class="form-control" id="image" placeholder="Enter image" name="image">
                     </div>
                     <div class="form-group">
                         <label for="name_region">Name:</label>
@@ -34,6 +37,14 @@
                         <textarea type="text" class="form-control" id="description_region"
                                   placeholder="Enter description" name="description"></textarea>
                     </div>
+                    <div class="form-group">
+                        <select class="form-control" name="continent">
+                            @foreach($continents as $continent)
+                                <option value="{{$continent->id}}">{{$continent->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
                     <div class="form-group text-center">
                         <label class="switch">
                             <input type="checkbox" name="status" value="1" class="status" checked>
@@ -77,13 +88,24 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
-                                        @if($region->image)<img class="m-img-w" src="{{$region->image}}">@else<p
-                                                class="text-danger text-center">Image not found</p>@endif
+                                        @if($region->image)<img class="m-img-w"
+                                                                src="{{in_array(substr($region->image, 0, 4), $first_url_image)?$region->image:asset($region->image)}}">@else
+                                            <p
+                                                    class="text-danger text-center">Image not found</p>
+                                        @endif
                                     </div>
                                 </div>
 
                                 <div class="mb-3">
                                     <textarea class="form-control" placeholder="Description" readonly></textarea>
+                                </div>
+                                <div class="form-group">
+                                    @foreach($continents as $continent)
+                                        @if($continent->id == $region->continent_id)
+                                            <input type="text" class="form-control"
+                                                   value="{{$continent->name}}" name="continent" readonly>
+                                        @endif
+                                    @endforeach
                                 </div>
                                 <div class="form-group text-center">
                                     <label class="switch">
@@ -112,6 +134,12 @@
             </div>
             <div class="col-sm-8">
                 <div class="mb-3">
+                    <button class="btn btn-info text-light" data-toggle="modal" data-target="#type"><span
+                                class="fa fa-building"></span> Type
+                    </button>
+                    <button class="btn btn-info text-light" data-toggle="modal" data-target="#continent"><span
+                                class="fa fa-send"></span> Continent
+                    </button>
                     <button class="btn btn-info text-light" data-toggle="modal" data-target="#addGroup"><span
                                 class="fa fa-group"></span> Add Group
                     </button>
@@ -124,6 +152,8 @@
                             <th>Name</th>
                             <th>SEO</th>
                             <th>Description</th>
+                            <th>type</th>
+                            <th>Region</th>
                             <th>Status</th>
                             <th>Date</th>
                             <th>###</th>
@@ -136,11 +166,29 @@
                                 <td>{{$group->name}}</td>
                                 <td>{{$group->name_seo}}</td>
                                 <td>{!! $group->description?str_limit($group->description,$limit=100,$end='...'):'<p class="text-danger">None</p>' !!}</td>
+                                <td>
+                                    <select class="form-control">
+                                        @foreach($types as $type)
+                                            <option value="{{$type->id}}" {{$group->type_id == $type->id?'selected':''}}>{{$type->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control" name="continent">
+                                            @foreach($regions as $region)
+                                                <option value="{{$region->id}}" {{$group->region_id == $region->id?'selected':''}}>{{$region->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </td>
                                 <td><label class="switch">
                                         <input class="status" type="checkbox"
                                                value="{{$group->status}}" {{$group->status == 1?'checked':''}}>
                                         <span class="slider round"></span>
-                                    </label></td>
+                                    </label>
+                                </td>
+
                                 <td>{!! $group->created_at?$group->created_at->todateString():'<p class="text-danger">None</p>' !!}</td>
                                 <td><a href="{{url('admin/group/'.$group->id.'/edit')}}" style="margin-right: 6px"
                                        title="edit"><span
@@ -156,9 +204,9 @@
                     <div class=" mb-5">
                         <a href="{{route('view.image')}}" class="h3 text-dark">Not found item</a>
                     </div>
-            @endif
-            {{Illuminate\Pagination\AbstractPaginator::defaultView("pagination::bootstrap-4")}}
-            {{ $groups->links() }}
+                @endif
+                {{Illuminate\Pagination\AbstractPaginator::defaultView("pagination::bootstrap-4")}}
+                {{ $groups->links() }}
             <!-- Add group -->
                 <div class="modal fade" id="addGroup">
                     <div class="modal-dialog modal-lg">
@@ -193,6 +241,14 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="type_group">Type:</label>
+                                        <select class="form-control" id="type_group" name="type_id">
+                                            @foreach($types as $type)
+                                                <option value="{{$type->id}}">{{$type->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <div class="form-group text-center">
                                         <label class="switch">
                                             <input type="checkbox" name="status" value="1" class="status" id="status"
@@ -210,6 +266,151 @@
 
                             </div>
                         </form>
+                    </div>
+                </div>
+                {{--type--}}
+                <div class="modal fade" id="type">
+                    <div class="modal-dialog modal-lg">
+
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Type</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h1>Add type</h1>
+                                        <form method="POST" action="{{route('view.group.createType')}}">
+                                            {{csrf_field()}}
+                                            <div class="form-group">
+                                                <label for="name">Name:</label>
+                                                <input type="text" class="form-control" id="name" name="typename"
+                                                       required>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-success">Submit</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        @foreach($types as $type)
+                                            <form method="POST" action="{{url('admin/group/' . $type->id . '/editType')}}">
+                                                {{csrf_field()}}
+                                                <div class="form-group">
+                                                    <label for="name">Name:</label>
+                                                    <input type="text" class="form-control" id="name" name="name"
+                                                           value="{{$type->name}}"
+                                                           required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="name_seo_type">Name seo:</label>
+                                                    <input type="text" class="form-control" id="name_seo_type" disabled
+                                                           value="{{$type->name_seo}}"
+                                                           required>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-success"><i
+                                                                class="fa fa-pencil"></i>Edit
+                                                    </button>
+                                                    <a href="{{url('admin/group/deleteType/' . $type->id)}}"
+                                                            onclick="return window.confirm('Are u sure?')">
+                                                        <button type="button" class="btn btn-danger"><i
+                                                                    class="fa fa-trash" data-toggle="modal"
+                                                                    data-target=".remove"></i> Delete
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                            </form>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Modal footer -->
+
+
+                        </div>
+
+                    </div>
+                </div>
+
+                {{--continents--}}
+                <div class="modal fade" id="continent">
+                    <div class="modal-dialog modal-lg">
+
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">Continent</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h1>Add continent</h1>
+                                        <form method="POST" action="{{route('view.group.createContinent')}}">
+                                            {{csrf_field()}}
+                                            <div class="form-group">
+                                                <label for="name_continent">Name:</label>
+                                                <input type="text" class="form-control" id="name_continent" name="continentname"
+                                                       required>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-success">Submit</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        @foreach($continents as $continent)
+                                            <form method="POST" action="{{url('admin/group/' . $continent->id . '/editContinent')}}">
+                                                {{csrf_field()}}
+                                                <div class="form-group">
+                                                    <label for="name">Name:</label>
+                                                    <input type="text" class="form-control" id="name" name="name"
+                                                           value="{{$continent->name}}"
+                                                           required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="name_seo_continent">Name seo:</label>
+                                                    <input type="text" class="form-control" id="name_seo_continent" disabled
+                                                           value="{{$continent->name_seo}}"
+                                                           required>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-success"><i
+                                                                class="fa fa-pencil"></i>Edit
+                                                    </button>
+                                                    <a href="{{url('admin/group/deleteContinent/' . $continent->id)}}"
+                                                            onclick="return window.confirm('Are u sure?')">
+                                                        <button type="button" class="btn btn-danger"><i
+                                                                    class="fa fa-trash" data-toggle="modal"
+                                                                    data-target=".remove"></i> Delete
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                            </form>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal footer -->
+                        </div>
+
                     </div>
                 </div>
                 <!--delete-->

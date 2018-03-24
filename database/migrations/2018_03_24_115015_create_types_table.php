@@ -31,8 +31,8 @@ class CreateTypesTable extends Migration
             'name_seo' => 'anh-pha-trinh',
         ],[
             'user_id'=> 1,
-            'name' => 'Ảnh phá loạn luân',
-            'name_seo' => 'anh-loan-luân',
+            'name' => 'Ảnh loạn luân',
+            'name_seo' => 'anh-loan-luan',
         ],[
             'user_id'=> 1,
             'name' => 'Ảnh sex ma',
@@ -41,6 +41,10 @@ class CreateTypesTable extends Migration
             'user_id'=> 1,
             'name' => 'Ảnh thủ dâm',
             'name_seo' => 'anh-thu-dam',
+        ],[
+            'user_id'=> 1,
+            'name' => 'Ảnh học sinh',
+            'name_seo' => 'anh-hoc-sinh',
         ]]);
     }
 

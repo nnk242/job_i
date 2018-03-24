@@ -74,33 +74,35 @@ class ImageController extends Controller
                 'url' => '',
                 'message' => 'Upload fail! ' . $message,
             ];
+        } else {
+            try {
+                // Thực hiện create và upload photo với config đã cài sẵn
+                $result = Factory::create(config('uploadphoto.host'), config('uploadphoto.auth'))
+                    ->upload($request->upload->path());
+
+                return [
+                    'status' => true,
+                    'url' => $result,
+                    'data' => $request->all(),
+                    'message' => 'Upload successfull!',
+                ];
+            } catch (\Exception $ex) {
+                // Nếu bị Exception thì trả về message của Exception đó
+                // Exception ở đây có thể là:
+                // - host không hợp lệ
+                // - api không hợp lệ
+                // - xác thực auth không thành công
+                // - không có quyền upload
+                // - php không enable curl
+                return [
+                    'status' => false,
+                    'url' => '',
+                    'message' => 'Upload fail! ' . $ex->getMessage(),
+                ];
+            }
         }
 
-        try {
-            // Thực hiện create và upload photo với config đã cài sẵn
-            $result = Factory::create(config('uploadphoto.host'), config('uploadphoto.auth'))
-                ->upload($request->upload->path());
 
-            return [
-                'status' => true,
-                'url' => $result,
-                'data' => $request->all(),
-                'message' => 'Upload successfull!',
-            ];
-        } catch (\Exception $ex) {
-            // Nếu bị Exception thì trả về message của Exception đó
-            // Exception ở đây có thể là:
-            // - host không hợp lệ
-            // - api không hợp lệ
-            // - xác thực auth không thành công
-            // - không có quyền upload
-            // - php không enable curl
-            return [
-                'status' => false,
-                'url' => '',
-                'message' => 'Upload fail! ' . $ex->getMessage(),
-            ];
-        }
     }
 
     /**
@@ -147,7 +149,7 @@ class ImageController extends Controller
                     $dir = $this->folder_save_image;
                     $filename = uniqid() . '_' . time() . '.' . $extension;
                     $request->file('image')->move($dir, $filename);
-                    $check_name = substr($image, 0, 4);
+                    $check_name = substr($image->url, 0, 4);
                     if (!in_array($check_name, $this->first_url_image)) {
                         try{
                             File::delete($filepath);

@@ -14,12 +14,20 @@
             </div>
             <div class="col-md-9">
                 @if($region)
-                    <form id="{{$region->id}}" method="post" action="">
+                    <form id="{{$region->id}}" method="post" action="" enctype="multipart/form-data">
                         {{csrf_field()}}
+                        <div class="m-height-250px mt-2"><img id="image" class="card-img-top m-img-b"
+                                                              src="{{in_array(substr($region->image, 0, 4), $first_url_image)?$region->image:asset($region->image)}}"
+                                                              alt="Card image cap">
+                        </div>
                         <div class="form-group">
-                            <label for="url">Image</label>
-                            <input type="url" class="form-control" id="url" value="{{$region->image}}"
-                                   placeholder="Enter image" name="image" required>
+                            <label for="upload_image">Upload flag image:</label>
+                            <input type="file" class="form-control" id="upload_image" name="flag_image">
+                        </div>
+                        <div class="form-group">
+                            <label for="url">Image link</label>
+                            <input type="text" class="form-control" id="url" value=""
+                                   placeholder="Enter image" name="image">
                         </div>
                         <div class="form-group">
                             <label for="name">Name</label>

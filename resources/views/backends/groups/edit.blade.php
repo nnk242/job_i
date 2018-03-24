@@ -14,7 +14,7 @@
             </div>
             <div class="col-md-9">
                 @if($group)
-                    <form id="{{$group->id}}" method="post" action="">
+                    <form id="{{$group->id}}" method="post" action="" enctype="multipart/form-data">
                         {{csrf_field()}}
                         <div class="form-group">
                             <label for="name">Name</label>
@@ -31,12 +31,23 @@
                             <textarea class="form-control" id="description" placeholder="Enter description"
                                       name="description">{{$group->description}}</textarea>
                         </div>
-                        <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" name="region"
-                                required>
-                            @foreach($regions as $region)
-                                <option value="{{$region->id}}" {{$region->id == $group->region_id?'selected':''}}>{{$region->name}}</option>
-                            @endforeach
-                        </select>
+                        <div class="form-group">
+                            <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" name="region"
+                                    required>
+                                @foreach($regions as $region)
+                                    <option value="{{$region->id}}" {{$region->id == $group->region_id?'selected':''}}>{{$region->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select class="custom-select my-1 mr-sm-2" id="type" name="type"
+                                    required>
+                                @foreach($types as $type)
+                                    <option value="{{$type->id}}" {{$type->id == $group->type_id?'selected':''}}>{{$type->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <div class="form-group text-center">
                             <label class="switch">
                                 <input type="checkbox" {{$group->status == 1?'checked':''}} name="status" value="{{$group->status}}" id="status">
@@ -64,6 +75,14 @@
         $(document).ready(function () {
             var timeout = null;
 //name
+
+            $('#name').on('focus', function () {
+                $('#update').prop('disabled', true);
+            });
+            $('#name').on('blur', function () {
+                $('#update').prop('disabled', false);
+            });
+
             $('#name').on('keyup', function () {
                 var current = $(this);
                 clearTimeout(timeout);

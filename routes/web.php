@@ -52,6 +52,16 @@ Route::group(['prefix'=>'admin'], function () {
 
         Route::post('getNameSeoGroup', 'backend\GroupController@getNameSeoGroup')->name('view.group.getNameSeoGroup');
         Route::post('getNameSeoRegion', 'backend\GroupController@getNameSeoRegion')->name('view.group.getNameSeoRegion');
+
+        //type
+        Route::post('createType', 'backend\GroupController@createType')->name('view.group.createType');
+        Route::post('{id}/editType', 'backend\GroupController@editType');
+        Route::get('deleteType/{id}', 'backend\GroupController@deleteType')->name('view.group.deleteType');
+
+        //continent
+        Route::post('createContinent', 'backend\GroupController@createContinent')->name('view.group.createContinent');
+        Route::post('{id}/editContinent', 'backend\GroupController@editContinent');
+        Route::get('deleteContinent/{id}', 'backend\GroupController@deleteContinent')->name('view.group.deleteContinent');
     });
 });
 Route::group(['prefix'=>'image'], function () {

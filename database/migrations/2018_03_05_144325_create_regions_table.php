@@ -20,14 +20,36 @@ class CreateRegionsTable extends Migration
             $table->string('name_seo', 255);
             $table->text('description')->nullable();
             $table->text('image')->nullable();
+            $table->integer('continent_id')->references('id')->on('continents')->default(1);
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
         DB::table('regions')->insert([[
             'user_id'=> 1,
-            'name' => 'Default',
-            'name_seo' => 'default',
-        ]]);
+            'name' => 'Việt Nam',
+            'name_seo' => 'viet-nam',
+            'image' => 'regions/vietnam.png',
+        ],[
+            'user_id'=> 1,
+            'name' => 'Hàn Quốc',
+            'name_seo' => 'han-quoc',
+            'image' => 'regions/korea.png',
+        ],[
+            'user_id'=> 1,
+            'name' => 'Nhật Bản',
+            'name_seo' => 'nhat-ban',
+            'image' => 'regions/japan.png',
+        ],[
+            'user_id'=> 1,
+            'name' => 'Trung Quốc',
+            'name_seo' => 'trung-quoc',
+            'image' => 'regions/china.png',
+        ],[
+            'user_id'=> 1,
+            'name' => 'Thái Lan',
+            'name_seo' => 'thai-lan',
+            'image' => 'regions/thailand.png',
+        ],]);
     }
 
     /**
