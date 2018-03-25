@@ -50,6 +50,7 @@
 
                                     <div class="col-md-3">
                                         @include('frontends.includes.menu.menu_type')
+                                        @include('frontends.includes.menu.menu_relationship')
                                     </div>
                                 </div>
 

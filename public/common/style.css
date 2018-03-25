@@ -312,11 +312,11 @@
     display: none;
 }
 
-.m-menu-type {
+.m-menu-type, .m-type-a, .m-tag{
     transition: 1s ease-out;
 }
 
-.m-type-a {
+ {
     transition: 1s ease-out;
 }
 
@@ -327,4 +327,12 @@
 .m-menu-type:hover .m-type-a {
     margin-left: 10px;
     transition: 1s ease-out;
+}
+
+
+
+.m-tag:hover {
+    background: #bf5329;
+    transition: 1s ease-out;
+    color: #f8f9fa;
 }

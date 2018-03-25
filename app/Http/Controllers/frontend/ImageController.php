@@ -5,6 +5,7 @@ namespace App\Http\Controllers\frontend;
 use App\Continents;
 use App\Groups;
 use App\Regions;
+use App\Tags;
 use App\Types;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -34,16 +35,25 @@ class ImageController extends Controller
                 $q->where('status', '=', 1);
             }])->orderBy('id', 'DESC')->take($this->show_img)->get();
         $types = Types::all();
+        //tag
+        $tag = Tags::first();
+        $tags = array();
+        $tags['name'] = explode(",", $tag->name);
+        $tags['name_seo'] = explode(",", $tag->name_seo);
+        //region
+        $regions = Regions::all();
         $first_url_image = $this->first_url_image;
-        return view('frontends.index', compact('groups', 'first_url_image', 'types'));
+        return view('frontends.index', compact('groups', 'first_url_image', 'types', 'tags', 'regions'));
     }
 
     public function show($id, Groups $groups)
     {
         $post = Groups::where([['status', '=', 1], ['id', '<>', 1], ['name_seo', $id]])->with('region')->first();
         $types = Types::all();
-
-//        return $groups;
+        $post_relationship = Groups::where([['status', '=', 1],['id', '<>', 1],['id', '<>', $post->id]])
+            ->offset($post->id - 6)->limit(5)
+            ->orderBy('id', 'DESC')
+            ->get();
 
         if(isset($post)) {
             $view_current_old = $post->view;
@@ -54,7 +64,7 @@ class ImageController extends Controller
             $view_current_new = $post->view;
             //top view
             $view = new topView();$view->topView7($post->id, $view_current_old, $view_current_new);
-        } return view('frontends.album', compact('post', 'images', 'types', 'first_url_image', 'continent'));
+        } return view('frontends.album', compact('post', 'images', 'types', 'first_url_image', 'continent', 'post_relationship'));
     }
 
     public function group($id)
@@ -68,6 +78,10 @@ class ImageController extends Controller
             $first_url_image = $this->first_url_image;
             Event::fire(URL::current(), $post);
         } return view('frontends.album', compact('post', 'images', 'types', 'first_url_image', 'continent'));
+    }
+
+    public function tag($id) {
+
     }
 
     public function type($id)

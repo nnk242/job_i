@@ -12,10 +12,11 @@
 */
 //frontend
 Route::get('/', 'frontend\ImageController@index');
-Route::get('/{id}', 'frontend\ImageController@show')->middleware('filter');
+Route::get('/{id}', 'frontend\ImageController@show')->name('post')->middleware('filter');
 Route::get('/the-loai/{id}', 'frontend\ImageController@group')->name('group');
 Route::get('/quoc-gia/{id}', 'frontend\ImageController@region')->name('region');
 Route::get('/chau-luc/{id}', 'frontend\ImageController@continent')->name('continent');
+Route::get('/tag/{id}', 'frontend\ImageController@tag')->name('tag');
 
 
 //backend
