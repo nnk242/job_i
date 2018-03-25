@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 @section('title')Xem ảnh - @endsection
 @section('stylesheet')<link rel="stylesheet" href="{{asset('common/header.css')}}">@endsection
-@section('content')
+@section('contents')
     @include('frontends.includes.header')
     <div class="m-margin-top-110px">
         <div class="mb-5">

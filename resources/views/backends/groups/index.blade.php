@@ -12,7 +12,7 @@
         }
     </style>
 @endsection
-@section('content')
+@section('contents')
     @include('message.message')
     <div class="container-fluid">
         <div class="row mt-5">

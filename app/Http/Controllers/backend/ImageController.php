@@ -309,7 +309,7 @@ class ImageController extends Controller
                 $title[$i] = $request->p_title;
             }
         } else $title = $request->u_title;
-        //content
+        //contents
         if ($content_check == 1) {
             for ($i = 0; $i < $count_item; $i++) {
                 $content[$i] = $request->p_content;

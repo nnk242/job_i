@@ -22,7 +22,7 @@
 </head>
 <body>
 <div id="app">
-@yield('content')
+@yield('contents')
 </div>
 
 <script src="{{ asset('js/app.js') }}"></script>

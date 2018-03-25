@@ -1,4 +1,4 @@
-<!-- content  data-toggle="tab" -->
+<!-- contents  data-toggle="tab" -->
 <section>
     <nav class="m-margin-top-57px fixed-top bg-light" id="m-nav-tab">
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -16,14 +16,14 @@
                 tháng</a>
         </div>
     </nav>
-    @if(count($groups) > 0)
-        <div class="tab-content mt-5" id="nav-tabContent">
-            <div class="tab-pane fade show active m-margin-top-150px" id="nav-home" role="tabpanel"
-                 aria-labelledby="nav-home-tab">
-                <div class="container-fluid">
-                    <div class="m-margin-top-bottom-30px">
-                        <div class="row">
-                            <div class="col-md-9">
+    <div class="tab-content mt-5" id="nav-tabContent">
+        <div class="tab-pane fade show active m-margin-top-150px" id="nav-home" role="tabpanel"
+             aria-labelledby="nav-home-tab">
+            <div class="container-fluid">
+                <div class="m-margin-top-bottom-30px">
+                    <div class="row">
+                        <div class="col-md-9">
+                            @if(count($groups) > 0)
                                 <div class="grid">
                                     @foreach($groups as $group)
                                         <div class="grid-item wow zoomIn">
@@ -35,7 +35,9 @@
                                                         <div class="m-text m-s-t">
                                                             <h5 class="text-dark small">{{date_format($group->created_at, "d") . ' Th' . date_format($group->created_at, "m," ). date_format($group->created_at, "Y" )}}</h5>
                                                             <h2 class="text-light">{{$group->name}}</h2>
-                                                            <p class="text-danger"><i class="fa fa-eye"></i> 2,8k - <i class="fa fa-picture-o"></i> {{count($group->image)}}</p>
+                                                            <p class="text-danger"><i class="fa fa-eye"></i> {{post_views($group->view)}} -
+                                                                <i class="fa fa-picture-o"></i> {{count($group->image)}}
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </a>
@@ -45,21 +47,30 @@
                                 </div>
                                 <div class="text-center mb-3">
                                     <a href="#">
-                                        <button class="btn btn-secondary"><span class="fa fa-plus"></span> Xem thêm</button>
+                                        <button class="btn btn-secondary"><span class="fa fa-plus"></span> Xem thêm
+                                        </button>
                                     </a>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                @include('frontends.includes.menu.menu_type')
-                            </div>
-                        </div>
+                                @else
+                                <div class="text-center">
+                                    <a href="{{url('/')}}" class="text-danger">
+                                        <i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
+                                        <span class="sr-only">Loading...</span>
+                                        <p class="h1">Tải lại site</p>
+                                    </a>
 
+                                </div>
+
+                            @endif
+                        </div>
+                        <div class="col-md-3">
+                            @include('frontends.includes.menu.menu_type')
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
-    @else
-
-    @endif
+    </div>
 </section>
-<!--end content-->
+<!--end contents-->

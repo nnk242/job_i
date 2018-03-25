@@ -3,7 +3,7 @@
     <!-- Toggle Switch -->
     <link href="{{ asset('common/toggle_switch.css') }}" rel="stylesheet">
 @endsection
-@section('content')
+@section('contents')
     @include('message.message')
     <div class="container-fluid">
         <div class="row mt-5">
@@ -126,7 +126,7 @@
             uploadServe('{!! route('view.image.uploadServe') !!}',
                 $(this).closest('.upload-a-file').find('.u-name').val(),
                 $(this).closest('.upload-a-file').find('.u-title').val(),
-                $(this).closest('.upload-a-file').find('.u-content').val(),
+                $(this).closest('.upload-a-file').find('.u-contents').val(),
                 $(this).closest('.upload-a-file').find('.u-group').val(),
                 $(this).closest('.upload-a-file').find('.u-status').val(),
                 $(this).closest('.upload-a-file').find('.m-photo').prop('files')[0],
@@ -142,7 +142,7 @@
                 $('#group-check').val() == 1 ? group_ = '' : group_ = 'required';
                 $('#name-check').val() == 1 ? name_ = '' : name_ = 'required';
                 $('#title-check').val() == 1 ? title_ = '' : title_ = 'required';
-                $('#content-check').val() == 1 ? content_ = '' : content_ = 'required';
+                $('#contents-check').val() == 1 ? content_ = '' : content_ = 'required';
                 $('#file-uploaded').append(item_pic(group_, name_, title_, content_, src, '', 1));
                 if ($('#file-uploaded').find('li').length === 1) {
                     $('#file-uploaded').after('<div style="clear:left;" class="text-center mt-2 mb-2 u-buttom-upload">' +

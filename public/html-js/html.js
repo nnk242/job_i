@@ -39,7 +39,7 @@ function item_pic($required_group, $required_name, $required_title, $required_co
             '    <div class="form-group"><input type="text" class="form-control mt-2 u-link" placeholder="Link" name="u_link[]" readonly></div>\n' +
             '    <div class="form-group"><input type="text" class="form-control u-name" placeholder="Name" name="u_name[]" ' + $required_title + '></div>\n' +
             '    <div class="form-group"><input type="text" class="form-control u-title" placeholder="Title" name="u_title[]" ' + $required_title + '></div>\n' +
-            '    <div class="form-group"><textarea class="form-control u-content" rows="3" name="u_content[]" placeholder="Content" ' + $required_content + '></textarea></div>\n' +
+            '    <div class="form-group"><textarea class="form-control u-contents" rows="3" name="u_content[]" placeholder="Content" ' + $required_content + '></textarea></div>\n' +
             '  </div>\n' +
             '<div class="form-group">' +
             '  <select class="form-control group u-group" name="u_group[]" ' + $required_group + '>\n' +
@@ -66,7 +66,7 @@ function item_pic($required_group, $required_name, $required_title, $required_co
         '    <div class="form-group"><input type="text" class="form-control mt-2 u-link" placeholder="Link" name="u_link[]" value="' + $src_input + '" required readonly></div>\n' +
         '    <div class="form-group"><input type="text" class="form-control u-name" placeholder="Name" name="u_name[]" ' + $required_title + '></div>\n' +
         '    <div class="form-group"><input type="text" class="form-control u-title" placeholder="Title" name="u_title[]" ' + $required_title + '></div>\n' +
-        '    <div class="form-group"><textarea class="form-control u-content" rows="3" name="u_content[]" placeholder="Content" ' + $required_content + '></textarea></div>\n' +
+        '    <div class="form-group"><textarea class="form-control u-contents" rows="3" name="u_content[]" placeholder="Content" ' + $required_content + '></textarea></div>\n' +
         '  </div>\n' +
         '<div class="form-group">' +
         '  <select class="form-control group u-group" name="u_group[]" ' + $required_group + '>\n' +

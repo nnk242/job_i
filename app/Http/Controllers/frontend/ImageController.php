@@ -8,6 +8,8 @@ use App\Types;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Images;
+Use Event;
+use Illuminate\Support\Facades\URL;
 
 class ImageController extends Controller
 {
@@ -42,6 +44,7 @@ class ImageController extends Controller
         if(isset($post)) {
             $images = Images::whereGroup_id($post->id)->orderby('id', 'DESC')->paginate(10);
             $first_url_image = $this->first_url_image;
+            Event::fire(URL::current(), $post);
             return view('frontends.album', compact('post', 'images', 'types', 'first_url_image'));
         } else return view('frontends.album', compact('post', 'images', 'types', 'first_url_image'));
     }

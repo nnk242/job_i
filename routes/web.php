@@ -12,7 +12,7 @@
 */
 
 Route::get('/', 'frontend\ImageController@index');
-Route::get('/{id}', 'frontend\ImageController@group');
+Route::get('/{id}', 'frontend\ImageController@group')->middleware('filter');
 Route::get('/the-loai/{id}', 'frontend\ImageController@group');
 
 Route::group(['prefix'=>'admin'], function () {

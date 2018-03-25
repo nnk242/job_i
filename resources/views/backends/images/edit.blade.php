@@ -3,7 +3,7 @@
     <!-- Toggle Switch -->
     <link href="{{ asset('common/toggle_switch.css') }}" rel="stylesheet">
 @endsection
-@section('content')
+@section('contents')
     @include('message.message')
     <div class="container-fluid">
         <div class="row mt-5">

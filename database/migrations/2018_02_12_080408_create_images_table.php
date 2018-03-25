@@ -20,7 +20,7 @@ class CreateImagesTable extends Migration
             $table->string('name', 255);
             $table->string('image_s', 255);
             $table->string('title', 255)->nullable();
-            $table->text('content')->nullable();
+            $table->text('contents')->nullable();
             $table->integer('group_id');
             $table->tinyInteger('status')->default(1);
             $table->timestamps();

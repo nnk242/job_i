@@ -70,7 +70,7 @@ function uploadPhoto(url) {
                             $('#group-check').val() == 1 ? group_ = '' : group_ = 'required';
                             $('#name-check').val() == 1 ? name_ = '' : name_ = 'required';
                             $('#title-check').val() == 1 ? title_ = '' : title_ = 'required';
-                            $('#content-check').val() == 1 ? content_ = '' : content_ = 'required';
+                            $('#contents-check').val() == 1 ? content_ = '' : content_ = 'required';
                             $('#file-uploaded').append(item_pic(group_, name_, title_, content_, data.responseJSON.url, data.responseJSON.url));
                             if ($('#file-uploaded').find('li').length === 1) {
                                 $('#file-uploaded').after('<div style="clear:left;" class="text-center mt-2 mb-2 u-buttom-upload">' +
@@ -130,7 +130,7 @@ $(document).on("click", ".u-upload-a-file", function () {
     var link = $(this).closest('.upload-a-file').find('.u-link').val();
     var name = $(this).closest('.upload-a-file').find('.u-name').val();
     var title = $(this).closest('.upload-a-file').find('.u-title').val();
-    var content_ = $(this).closest('.upload-a-file').find('.u-content').val();
+    var content_ = $(this).closest('.upload-a-file').find('.u-contents').val();
     var group = $(this).closest('.upload-a-file').find('.group').val();
 
     $(this).closest('.upload-a-file').find('.u-status').on('change', function () {
@@ -249,18 +249,18 @@ $(document).on('click', '#title-check', function () {
     }
 });
 
-$(document).on('click', '#content-check', function () {
-    changeBox('#content-check');
-    if ($('#content-check').val() == 1) {
-        $('.u-content').each(function () {
+$(document).on('click', '#contents-check', function () {
+    changeBox('#contents-check');
+    if ($('#contents-check').val() == 1) {
+        $('.u-contents').each(function () {
             $(this).prop('required', false);
         });
-        $('#p-content').prop('required', true);
+        $('#p-contents').prop('required', true);
     } else {
-        $('.u-content').each(function () {
+        $('.u-contents').each(function () {
             $(this).prop('required', true);
         });
-        $('#p-content').prop('required', false);
+        $('#p-contents').prop('required', false);
     }
 });
 $(document).on('click', '#status-check', function () {
