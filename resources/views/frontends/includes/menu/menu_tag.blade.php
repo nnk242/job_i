@@ -1,4 +1,4 @@
-<div class="mb-2">
+<div class="mb-2 mt-5">
     <div class="p-1">
         <p class="h4 ml-1 text-muted"><i class="fa fa-sliders"></i> Thể loại</p>
     </div>

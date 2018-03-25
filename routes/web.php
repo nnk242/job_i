@@ -10,11 +10,15 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//frontend
 Route::get('/', 'frontend\ImageController@index');
-Route::get('/{id}', 'frontend\ImageController@group')->middleware('filter');
-Route::get('/the-loai/{id}', 'frontend\ImageController@group');
+Route::get('/{id}', 'frontend\ImageController@show')->middleware('filter');
+Route::get('/the-loai/{id}', 'frontend\ImageController@group')->name('group');
+Route::get('/quoc-gia/{id}', 'frontend\ImageController@region')->name('region');
+Route::get('/chau-luc/{id}', 'frontend\ImageController@continent')->name('continent');
 
+
+//backend
 Route::group(['prefix'=>'admin'], function () {
     Auth::routes();
     Route::group(['prefix' => 'image'], function () {
@@ -63,6 +67,12 @@ Route::group(['prefix'=>'admin'], function () {
         Route::post('createContinent', 'backend\GroupController@createContinent')->name('view.group.createContinent');
         Route::post('{id}/editContinent', 'backend\GroupController@editContinent');
         Route::get('deleteContinent/{id}', 'backend\GroupController@deleteContinent')->name('view.group.deleteContinent');
+    });
+    //tag
+    Route::group(['prefix'=>'tag'], function () {
+        Route::get('/', 'backend\TagController@index')->name('view.tag');
+        Route::post('/', 'backend\TagController@edit')->name('view.edit');
+        Route::post('create', 'backend\TagController@create')->name('view.tag.create');
     });
 });
 Route::group(['prefix'=>'image'], function () {

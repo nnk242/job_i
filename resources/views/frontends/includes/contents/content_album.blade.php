@@ -5,8 +5,9 @@
         <nav class="breadcrumb">
             <div class="container">
                 <a class="breadcrumb-item" href="{{url('/')}}"><i class="fa fa-home"></i>Trang chủ</a>
-                <a class="breadcrumb-item" href="#">{{$post->region->name}}</a>
-                <a class="breadcrumb-item" href="#">{{$post->type->name}}</a>
+                <a class="breadcrumb-item" href="{{route('region', ['id'=>$continent->name_seo])}}">{{$continent->name}}</a>
+                <a class="breadcrumb-item" href="{{route('region', ['id'=>$post->region->name_seo])}}">{{$post->region->name}}</a>
+                <a class="breadcrumb-item" href="{{route('region', ['id'=>$post->type->name_seo])}}">{{$post->type->name}}</a>
                 <span class="breadcrumb-item active">{{$post->name}}</span>
             </div>
         </nav>
@@ -30,7 +31,7 @@
                                         </div>
                                         <div>
                                             <h1>{{$post->name}}</h1>
-                                            <p class="-bold"><i class="fa fa-eye"></i> 500 lượt xem</p>
+                                            <p class="-bold"><i class="fa fa-eye"></i> {{$post->view}}</p>
                                         </div>
                                         <div>
                                             <h4>{{$post->description}}</h4>

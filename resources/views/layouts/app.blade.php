@@ -39,6 +39,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('view.group')}}">Group</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{route('view.tag')}}">Tag</a>
+                    </li>
                 </ul>
             </div>
             @endif
