@@ -11,6 +11,8 @@ use App\Http\Controllers\Controller;
 use App\Images;
 Use Event;
 use Illuminate\Support\Facades\URL;
+use App\Views;
+use App\View\topView;
 
 class ImageController extends Controller
 {
@@ -36,16 +38,22 @@ class ImageController extends Controller
         return view('frontends.index', compact('groups', 'first_url_image', 'types'));
     }
 
-    public function show($id)
+    public function show($id, Groups $groups)
     {
         $post = Groups::where([['status', '=', 1], ['id', '<>', 1], ['name_seo', $id]])->with('region')->first();
         $types = Types::all();
 
+//        return $groups;
+
         if(isset($post)) {
+            $view_current_old = $post->view;
             $continent = Continents::find($post->region->continent_id);
             $images = Images::whereGroup_id($post->id)->orderby('id', 'DESC')->paginate(10);
             $first_url_image = $this->first_url_image;
             Event::fire(URL::current(), $post);
+            $view_current_new = $post->view;
+            //top view
+            $view = new topView();$view->topView7($post->id, $view_current_old, $view_current_new);
         } return view('frontends.album', compact('post', 'images', 'types', 'first_url_image', 'continent'));
     }
 

@@ -97,35 +97,9 @@
     <!-- HTML -->
     <script src="{{asset('html-js/html.js')}}" type="text/javascript"></script>
     <!-- Scrip -->
-    <script>
-        changeBox('.status');
-        closeError();
-
-        $(document).on('click', '.remove-item', function () {
-            var url = $(this).attr('href');
-            $('#remove-item').attr('action', url);
-        });
-
-        function search() {
-            var input, filter, ul, li, a, i;
-            input = document.getElementById("search");
-            filter = input.value.toUpperCase();
-            ul = document.getElementById("search-item");
-            li = ul.getElementsByClassName("element-item");
-            for (i = 0; i < li.length; i++) {
-                a = li[i].getElementsByClassName("region_name")[0].value;
-                console.log(a.toUpperCase());
-                if (a.toUpperCase().indexOf(filter) > -1) {
-                    li[i].style.display = "";
-                } else {
-                    li[i].style.display = "none";
-
-                }
-            }
-        }
-    </script>
     <script src="https://selectize.github.io/selectize.js/js/selectize.js"></script>
     <script>
+        closeError();
         $('.create_tag').selectize({
             plugins: ['remove_button'],
             delimiter: ',',

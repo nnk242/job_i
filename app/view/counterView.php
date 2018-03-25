@@ -4,6 +4,7 @@ namespace App\View;
 
 use App\Groups;
 use Illuminate\Session\Store;
+use App\Views;
 
 class counterView
 {
