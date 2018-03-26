@@ -13,10 +13,13 @@
 //frontend
 Route::get('/', 'frontend\ImageController@index');
 Route::get('/{id}', 'frontend\ImageController@show')->name('post')->middleware('filter');
-Route::get('/the-loai/{id}', 'frontend\ImageController@group')->name('group');
+Route::get('/the-loai/{id}', 'frontend\ImageController@type')->name('type');
 Route::get('/quoc-gia/{id}', 'frontend\ImageController@region')->name('region');
 Route::get('/chau-luc/{id}', 'frontend\ImageController@continent')->name('continent');
 Route::get('/tag/{id}', 'frontend\ImageController@tag')->name('tag');
+Route::get('/tag/{id}/bai-viet', 'frontend\ImageController@tagPost')->name('tagPost');
+Route::get('/tag/{id}/hinh-anh', 'frontend\ImageController@tagImage')->name('tagImage');
+Route::get('hinh-anh/{id}', 'frontend\ImageController@image')->name('image');
 
 
 //backend
@@ -75,8 +78,5 @@ Route::group(['prefix'=>'admin'], function () {
         Route::post('/', 'backend\TagController@edit')->name('view.edit');
         Route::post('create', 'backend\TagController@create')->name('view.tag.create');
     });
-});
-Route::group(['prefix'=>'image'], function () {
-    Route::get('/{image}', 'frontend\ImageController@show');
 });
 

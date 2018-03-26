@@ -11,8 +11,10 @@
                     class="navbar-toggler"><span class="navbar-toggler-icon"></span></button>
             <div id="navbarSupportedContent" class="collapse navbar-collapse">
                 <ul class="navbar-nav mr-auto"></ul>
-                <div class="form-inline my-2 my-lg-0"><input type="text" placeholder="Tìm kiếm..."
-                                                             class="form-control mr-sm-2">
+                <div class="form-inline my-2 my-lg-0">
+                    <select style="width: 280px" class="form-control mr-sm-2" id="select-movie"></select>
+                    {{--<input type="text" placeholder="Tìm kiếm..." i--}}
+                            {{--class="form-control mr-sm-2">--}}
                     <button type="submit" class="btn btn-outline-light my-2 my-sm-0 text-danger"><i
                                 class="fa fa-search"></i> Tìm kiếm
                     </button>

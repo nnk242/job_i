@@ -5,7 +5,7 @@
 @section('contents')
     @include('frontends.includes.header')
     @if (isset($post))
-        @include('frontends.includes.contents.content_album')
+        @include('frontends.contents.content_album')
     @else
         @include('frontends.includes.notfounds.not_file');
     @endif

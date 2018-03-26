@@ -4,14 +4,36 @@
     </div>
     @foreach($types as $type)
         <h2 class="h5">
-            <a href="{{route('group', ['id'=>$type->name_seo])}}" class="text-dark">
-                <div class="ml-1 border-bottom border-secondary p-1 m-menu-type">
-                    <div class="m-type-a">
-                        <i class="fa fa-file-photo-o text-info"></i> {{$type->name}}
-                    </div>
+            @if(!isset($type_id))
+                <a href="{{route('type', ['id'=>$type->name_seo])}}" class="text-dark">
+                    <div class="ml-1 border-bottom border-secondary p-1 m-menu-type">
+                        <div class="m-type-a">
+                            <i class="fa fa-file-photo-o text-info"></i> {{$type->name}}
+                        </div>
 
-                </div>
-            </a>
+                    </div>
+                </a>
+            @else
+                @if($type->id == $type_id->id)
+                    <span class="text-warning">
+                    <div class="ml-1 border-bottom border-secondary p-1 m-menu-type">
+                        <div class="m-type-a">
+                            <i class="fa fa-file-photo-o text-info"></i> {{$type->name}}
+                        </div>
+
+                    </div>
+                </span>
+                @else
+                    <a href="{{route('type', ['id'=>$type->name_seo])}}" class="text-dark">
+                        <div class="ml-1 border-bottom border-secondary p-1 m-menu-type">
+                            <div class="m-type-a">
+                                <i class="fa fa-file-photo-o text-info"></i> {{$type->name}}
+                            </div>
+
+                        </div>
+                    </a>
+                @endif
+            @endif
         </h2>
     @endforeach
 </div>

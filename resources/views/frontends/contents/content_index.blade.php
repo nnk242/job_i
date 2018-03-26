@@ -52,15 +52,7 @@
                                     </a>
                                 </div>
                                 @else
-                                <div class="text-center">
-                                    <a href="{{url('/')}}" class="text-danger">
-                                        <i class="fa fa-refresh fa-spin fa-3x fa-fw"></i>
-                                        <span class="sr-only">Loading...</span>
-                                        <p class="h1">Tải lại site</p>
-                                    </a>
-
-                                </div>
-
+                                @include('frontends.includes.notfounds.not_item')
                             @endif
                         </div>
                         <div class="col-md-3">
