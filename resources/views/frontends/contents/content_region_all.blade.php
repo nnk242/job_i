@@ -12,7 +12,7 @@
                             @if(isset($groups))
                                 @if (count($groups))
                                     <div class="grid">
-                                        @foreach($groups as $key=>$group)
+                                        @foreach($groups as $group)
                                             <div class="grid-item wow zoomIn">
                                                 <div class="m-positon-p">
                                                     <a href="{{url($group->name_seo)}}" class="m-a-p">
@@ -34,17 +34,14 @@
                                             </div>
                                         @endforeach
                                     </div>
-                                    @if (isset($key))
-                                        @if ($key == $tag_num-1)
-                                            <div class="text-center mb-3 mt-2">
-                                                <a href="{{route('tagPost', ['id' => $tag_old])}}">
-                                                    <button class="btn btn-secondary"><i
-                                                                class="fa fa-plus-square-o"></i>
-                                                        Xem thêm
-                                                    </button>
-                                                </a>
-                                            </div>
-                                        @endif
+                                    @if ($key == $tag_num)
+                                        <div class="text-center mb-3 mt-2">
+                                            <a href="{{route('tagPost', ['id' => $tag_old])}}">
+                                                <button class="btn btn-secondary"><i class="fa fa-plus-square-o"></i>
+                                                    Xem thêm
+                                                </button>
+                                            </a>
+                                        </div>
                                     @endif
                                 @else
                                     @include('frontends.includes.notfounds.not_item')
@@ -77,17 +74,14 @@
                                             </div>
                                         @endforeach
                                     </div>
-                                    @if(isset($key))
-                                        @if ($key == $tag_num)
-                                            <div class="text-center mb-3">
-                                                <a href="{{route('tagImage', ['id' => $tag_old])}}">
-                                                    <button class="btn btn-secondary"><i
-                                                                class="fa fa-plus-square-o"></i>
-                                                        Xem thêm
-                                                    </button>
-                                                </a>
-                                            </div>
-                                        @endif
+                                    @if ($key == $tag_num)
+                                        <div class="text-center mb-3">
+                                            <a href="{{route('tagImage', ['id' => $tag_old])}}">
+                                                <button class="btn btn-secondary"><i class="fa fa-plus-square-o"></i>
+                                                    Xem thêm
+                                                </button>
+                                            </a>
+                                        </div>
                                     @endif
                                 @else
                                     @include('frontends.includes.notfounds.not_item')
@@ -98,7 +92,8 @@
                         </div>
                         <div class="col-md-3">
                             @include('frontends.includes.menu.menu_type')
-                            @include('frontends.includes.menu.menu_tag')
+                            @include('frontends.includes.menu.menu_region')
+
                         </div>
                     </div>
 

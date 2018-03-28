@@ -19,7 +19,9 @@ class ImageController extends Controller
 {
     //
     public $first_url_image = array('http');
-    public $show_img = 20;
+    public $show_img = 1;
+    public $show_tag = 4;
+    protected $limit_region = 4;
 
     public function index()
     {
@@ -30,6 +32,7 @@ class ImageController extends Controller
 //                $q->setRelation('image', $q->image->take(1));
 //                return $q;
 //            });
+        $show_img = $this->show_img;
         $groups = Groups::where([['status', '=', 1], ['id', '<>', 1]])
             ->with(['image' => function ($q) {
                 $q->where('status', '=', 1);
@@ -41,9 +44,9 @@ class ImageController extends Controller
         $tags['name'] = explode(",", $tag->name);
         $tags['name_seo'] = explode(",", $tag->name_seo);
         //region
-        $regions = Regions::all();
+        $regions = Regions::limit($this->limit_region)->get();
         $first_url_image = $this->first_url_image;
-        return view('frontends.index', compact('groups', 'first_url_image', 'types', 'tags', 'regions'));
+        return view('frontends.index', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'show_img'));
     }
 
     public function show($id)
@@ -87,11 +90,12 @@ class ImageController extends Controller
     public function tag($id)
     {
         $tag_old = $id;
-        $groups = Groups::where([['status', '=', 1], ['id', '<>', 1], ['name_seo', 'like', '%'. $id . '%']])
+        $tag_num = $this->show_tag;
+        $groups = Groups::where([['status', '=', 1], ['id', '<>', 1], ['name_seo', 'like', '%' . $id . '%']])
             ->with(['image' => function ($q) {
                 $q->where('status', '=', 1);
-            }])->orderBy('id', 'DESC')->take($this->show_img)->get();
-        $images = Images::where([['status', '=', 1], ['image_s', 'like', '%'. $id . '%']])->orderBy('id', 'DESC')->take($this->show_img)->get();
+            }])->orderBy('id', 'DESC')->take($this->show_tag)->get();
+        $images = Images::where([['status', '=', 1], ['image_s', 'like', '%' . $id . '%']])->orderBy('id', 'DESC')->take($this->show_tag)->get();
         //type
         $types = Types::all();
         //tag
@@ -100,19 +104,15 @@ class ImageController extends Controller
         $tags['name'] = explode(",", $tag->name);
         $tags['name_seo'] = explode(",", $tag->name_seo);
         //region
-        $regions = Regions::all();
+        $regions = Regions::limit($this->limit_region)->get();
         $first_url_image = $this->first_url_image;
-        return view('frontends.tag', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'tag_old', 'images'));
+        return view('frontends.tag', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'tag_old', 'images', 'tag_num'));
     }
 
     public function tagPost($id)
     {
         $tag_old = $id;
-        $groups = Groups::where([['status', '=', 1], ['id', '<>', 1], ['name_seo', 'like', '%'. $id . '%']])
-            ->with(['image' => function ($q) {
-                $q->where('status', '=', 1);
-            }])->orderBy('id', 'DESC')->take($this->show_img)->get();
-        $images = Images::where([['status', '=', 1], ['image_s', 'like', '%'. $id . '%']])->orderBy('id', 'DESC')->take($this->show_img)->get();
+        $images = Images::where([['status', '=', 1], ['image_s', 'like', '%' . $id . '%']])->orderBy('id', 'DESC')->paginate($this->show_img);
         //type
         $types = Types::all();
         //tag
@@ -121,31 +121,56 @@ class ImageController extends Controller
         $tags['name'] = explode(",", $tag->name);
         $tags['name_seo'] = explode(",", $tag->name_seo);
         //region
-        $regions = Regions::all();
+        $regions = Regions::limit($this->limit_region)->get();
         $first_url_image = $this->first_url_image;
-        return view('frontends.tag', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'tag_old', 'images'));
+        return view('frontends.tagPost', compact('images', 'first_url_image', 'types', 'tags', 'regions', 'tag_old'));
+    }
+
+    public function tagImage($id)
+    {
+        $tag_old = $id;
+        $groups = Groups::where([['status', '=', 1], ['id', '<>', 1], ['name_seo', 'like', '%' . $id . '%']])
+            ->with(['image' => function ($q) {
+                $q->where('status', '=', 1);
+            }])->orderBy('id', 'DESC')->paginate($this->show_img);
+        //type
+        $types = Types::all();
+        //tag
+        $tag = Tags::first();
+        $tags = array();
+        $tags['name'] = explode(",", $tag->name);
+        $tags['name_seo'] = explode(",", $tag->name_seo);
+        //region
+        $regions = Regions::limit($this->limit_region)->get();
+        $first_url_image = $this->first_url_image;
+        return view('frontends.tagImage', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'tag_old'));
     }
 
     public function region($id)
     {
-        $region_id = Regions::wherename_seo($id)->first();
-        if (isset($region_id)) {
-            $groups = Groups::where([['status', '=', 1], ['id', '<>', 1], ['region_id', '=', $region_id->id]])
-                ->with(['image' => function ($q) {
-                    $q->where('status', '=', 1);
-                }])->orderBy('id', 'DESC')->paginate($this->show_img);
+        if ($id == 'xem-them') {
+
+        } else {
+            $region_id = Regions::wherename_seo($id)->first();
+            if (isset($region_id)) {
+                $groups = Groups::where([['status', '=', 1], ['id', '<>', 1], ['region_id', '=', $region_id->id]])
+                    ->with(['image' => function ($q) {
+                        $q->where('status', '=', 1);
+                    }])->orderBy('id', 'DESC')->paginate($this->show_img);
+            }
+            //type
+            $types = Types::all();
+            //tag
+            $tag = Tags::first();
+            $tags = array();
+            $tags['name'] = explode(",", $tag->name);
+            $tags['name_seo'] = explode(",", $tag->name_seo);
+            //region
+            $regions = Regions::limit($this->limit_region)->get();
+            $first_url_image = $this->first_url_image;
+            return view('frontends.region', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'region_id'));
         }
-        //type
-        $types = Types::all();
-        //tag
-        $tag = Tags::first();
-        $tags = array();
-        $tags['name'] = explode(",", $tag->name);
-        $tags['name_seo'] = explode(",", $tag->name_seo);
-        //region
-        $regions = Regions::all();
-        $first_url_image = $this->first_url_image;
-        return view('frontends.region', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'region_id'));
+
     }
 
     public function type($id)
@@ -165,9 +190,32 @@ class ImageController extends Controller
         $tags['name'] = explode(",", $tag->name);
         $tags['name_seo'] = explode(",", $tag->name_seo);
         //region
-        $regions = Regions::all();
+        $regions = Regions::limit($this->limit_region)->get();
         $first_url_image = $this->first_url_image;
         return view('frontends.type', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'type_id'));
 
+    }
+
+    public function postView()
+    {
+        $currentPage = \Illuminate\Support\Facades\Input::get('page', 2);
+        \Illuminate\Pagination\Paginator::currentPageResolver(function () use ($currentPage) {
+            return $currentPage;
+        });
+        $show_img = $this->show_img;
+        $groups = Groups::where([['status', '=', 1], ['id', '<>', 1]])
+            ->with(['image' => function ($q) {
+                $q->where('status', '=', 1);
+            }])->orderBy('id', 'DESC')->paginate($this->show_img);
+        $types = Types::all();
+        //tag
+        $tag = Tags::first();
+        $tags = array();
+        $tags['name'] = explode(",", $tag->name);
+        $tags['name_seo'] = explode(",", $tag->name_seo);
+        //region
+        $regions = Regions::limit($this->limit_region)->get();
+        $first_url_image = $this->first_url_image;
+        return view('frontends.postView', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'show_img'));
     }
 }

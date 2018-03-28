@@ -25,7 +25,7 @@
                         <div class="col-md-9">
                             @if(count($groups) > 0)
                                 <div class="grid">
-                                    @foreach($groups as $group)
+                                    @foreach($groups as $key=>$group)
                                         <div class="grid-item wow zoomIn">
                                             <div class="m-positon-p">
                                                 <a href="{{url($group->name_seo)}}" class="m-a-p">
@@ -35,7 +35,9 @@
                                                         <div class="m-text m-s-t">
                                                             <h5 class="text-dark small">{{date_format($group->created_at, "d") . ' Th' . date_format($group->created_at, "m," ). date_format($group->created_at, "Y" )}}</h5>
                                                             <h2 class="text-light">{{$group->name}}</h2>
-                                                            <p class="text-danger"><i class="fa fa-eye"></i> {{post_views($group->view)}} -
+                                                            <p class="text-danger"><i
+                                                                        class="fa fa-eye"></i> {{post_views($group->view)}}
+                                                                -
                                                                 <i class="fa fa-picture-o"></i> {{count($group->image)}}
                                                             </p>
                                                         </div>
@@ -45,13 +47,15 @@
                                         </div>
                                     @endforeach
                                 </div>
-                                <div class="text-center mb-3">
-                                    <a href="#">
-                                        <button class="btn btn-secondary"><span class="fa fa-plus"></span> Xem thêm
-                                        </button>
-                                    </a>
-                                </div>
-                                @else
+                                @if($key == $show_img-1)
+                                    <div class="text-center mb-3">
+                                        <a href="{{route('postView')}}">
+                                            <button class="btn btn-secondary"><span class="fa fa-plus"></span> Xem thêm
+                                            </button>
+                                        </a>
+                                    </div>
+                                @endif
+                            @else
                                 @include('frontends.includes.notfounds.not_item')
                             @endif
                         </div>

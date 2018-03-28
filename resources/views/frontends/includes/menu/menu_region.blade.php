@@ -17,7 +17,7 @@
         </h2>
     @endforeach
     <h2 class="h5">
-        <a href="/" class="text-info">
+        <a href="{{route('region', ['id'=>'xem-them'])}}" class="text-info">
             <div class="ml-1">
                 <div class="m-type-a text-center">
                     <i class="fa fa-plus-square-o"></i> Xem thêm

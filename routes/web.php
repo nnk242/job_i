@@ -19,6 +19,7 @@ Route::get('/chau-luc/{id}', 'frontend\ImageController@continent')->name('contin
 Route::get('/tag/{id}', 'frontend\ImageController@tag')->name('tag');
 Route::get('/tag/{id}/bai-viet', 'frontend\ImageController@tagPost')->name('tagPost');
 Route::get('/tag/{id}/hinh-anh', 'frontend\ImageController@tagImage')->name('tagImage');
+Route::get('/bai-viet/xem-them', 'frontend\ImageController@postView')->name('postView');
 Route::get('hinh-anh/{id}', 'frontend\ImageController@image')->name('image');
 
 
