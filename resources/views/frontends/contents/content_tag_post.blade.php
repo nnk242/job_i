@@ -20,7 +20,7 @@
                                                         <div class="m-none">
                                                             <div class="m-bg-img"></div>
                                                             <div class="m-text m-s-t">
-                                                                <h5 class="text-dark small">{{date_format($group->created_at, "d") . ' Th' . date_format($group->created_at, "m," ). date_format($group->created_at, "Y" )}}</h5>
+                                                                @if(isset($group->created_at))<h5 class="text-dark small">{{date_format($group->created_at, "d") . ' Th' . date_format($group->created_at, "m," ). date_format($group->created_at, "Y" )}}</h5>@endif
                                                                 <h2 class="text-light">{{$group->name}}</h2>
                                                                 <p class="text-danger"><i
                                                                             class="fa fa-eye"></i> {{post_views($group->view)}}

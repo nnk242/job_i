@@ -1,4 +1,3 @@
-<!-- contents  data-toggle="tab" -->
 
 <section>
     <nav class="m-margin-top-57px fixed-top bg-light" id="m-nav-tab">
@@ -50,13 +49,11 @@
                                             {{Illuminate\Pagination\AbstractPaginator::defaultView("pagination::bootstrap-4")}}
                                             {{ $images->links() }}
                                         </div>
-                                        <div class="">
-                                            <i class="fa fa-tags"></i> TAGS: <a href="#" class="text-dark p-1">abc</a><a
-                                                    href="#" class="text-dark p-1">abc</a>
-                                        </div>
+                                        <hr />
                                     @else
                                         @include('frontends.includes.notfounds.not_item')
                                     @endif
+
                                 </div>
 
                                 <div class="col-md-3">

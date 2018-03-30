@@ -6,7 +6,7 @@
                     <div class="row">
                         <div class="col-md-9">
                             <div class="clearfix mb-5 p-3 border-bottom">
-                                @include('frontends.includes.menu.menu_tag')
+                                @include('frontends.includes.menu.menu_region_all')
                             </div>
                             <div class="mb-3"><p class="h3"><i class="fa fa-id-card text-info"></i> Bài viết</p></div>
                             @if(isset($groups))
@@ -34,15 +34,6 @@
                                             </div>
                                         @endforeach
                                     </div>
-                                    @if ($key == $tag_num)
-                                        <div class="text-center mb-3 mt-2">
-                                            <a href="{{route('tagPost', ['id' => $tag_old])}}">
-                                                <button class="btn btn-secondary"><i class="fa fa-plus-square-o"></i>
-                                                    Xem thêm
-                                                </button>
-                                            </a>
-                                        </div>
-                                    @endif
                                 @else
                                     @include('frontends.includes.notfounds.not_item')
                                 @endif
@@ -54,7 +45,7 @@
                             @if(isset($images))
                                 @if (count($images))
                                     <div class="grid">
-                                        @foreach($images as $key=>$image)
+                                        @foreach($images as $image)
                                             <div class="grid-item wow zoomIn">
                                                 <div class="m-positon-p">
                                                     <a href="{{route('image', ['id', $tag_old])}}" class="m-a-p">
@@ -74,15 +65,6 @@
                                             </div>
                                         @endforeach
                                     </div>
-                                    @if ($key == $tag_num)
-                                        <div class="text-center mb-3">
-                                            <a href="{{route('tagImage', ['id' => $tag_old])}}">
-                                                <button class="btn btn-secondary"><i class="fa fa-plus-square-o"></i>
-                                                    Xem thêm
-                                                </button>
-                                            </a>
-                                        </div>
-                                    @endif
                                 @else
                                     @include('frontends.includes.notfounds.not_item')
                                 @endif
@@ -92,8 +74,7 @@
                         </div>
                         <div class="col-md-3">
                             @include('frontends.includes.menu.menu_type')
-                            @include('frontends.includes.menu.menu_region')
-
+                            @include('frontends.includes.menu.menu_tag')
                         </div>
                     </div>
 

@@ -15,12 +15,13 @@
                                         @foreach($images as $image)
                                             <div class="grid-item wow zoomIn">
                                                 <div class="m-positon-p">
-                                                    <a href="{{url($image->name_seo)}}" class="m-a-p">
-                                                        <img src="{{in_array(substr($image->thumbnail, 0, 4), $first_url_image)?$image->thumbnail:asset($image->thumbnail)}}">
+                                                    <a href="{{url($image->image_s)}}" class="m-a-p">
+                                                        <img src="{{in_array(substr($image->url, 0, 4), $first_url_image)?$image->url:asset($image->url)}}">
                                                         <div class="m-none">
                                                             <div class="m-bg-img"></div>
                                                             <div class="m-text m-s-t">
-                                                                <h5 class="text-dark small">{{date_format($image->created_at, "d") . ' Th' . date_format($image->created_at, "m," ). date_format($image->created_at, "Y" )}}</h5>
+                                                                @if($image->created_at)<h5
+                                                                        class="text-dark small">{{date_format($image->created_at, "d") . ' Th' . date_format($image->created_at, "m," ). date_format($image->created_at, "Y" )}}</h5>@endif
                                                                 <h2 class="text-light">{{$image->name}}</h2>
                                                             </div>
                                                         </div>

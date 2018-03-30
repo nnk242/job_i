@@ -21,6 +21,9 @@ Route::get('/tag/{id}/bai-viet', 'frontend\ImageController@tagPost')->name('tagP
 Route::get('/tag/{id}/hinh-anh', 'frontend\ImageController@tagImage')->name('tagImage');
 Route::get('/bai-viet/xem-them', 'frontend\ImageController@postView')->name('postView');
 Route::get('hinh-anh/{id}', 'frontend\ImageController@image')->name('image');
+Route::get('tim-kiem/{id}', 'SearchController@search')->name('search');
+Route::get('tim-kiem/{id}/bai-viet', 'frontend\ImageController@searchPost')->name('searchPost');
+Route::get('tim-kiem/{id}/hinh-anh', 'frontend\ImageController@searchImage')->name('searchImage');
 
 
 //backend

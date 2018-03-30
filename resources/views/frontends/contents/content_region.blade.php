@@ -16,12 +16,15 @@
         </nav>
     </nav>
     <div class="tab-content mt-5" id="nav-tabContent">
-        <div class="tab-pane fade show active m-margin-top-150px" id="nav-home" role="tabpanel"
+        <div class="tab-pane fade show active m-margin-top-110px" id="nav-home" role="tabpanel"
              aria-labelledby="nav-home-tab">
             <div class="container-fluid">
                 <div class="m-margin-top-bottom-30px">
                     <div class="row">
                         <div class="col-md-9">
+                            <div class="clearfix mb-5 p-3 border-bottom">
+                                @include('frontends.includes.menu.menu_region_all')
+                            </div>
                             @if(isset($groups))
                                 @if (count($groups))
                                     <div class="grid">
@@ -59,7 +62,6 @@
                         </div>
                         <div class="col-md-3">
                             @include('frontends.includes.menu.menu_type')
-                            @include('frontends.includes.menu.menu_region')
                             @include('frontends.includes.menu.menu_tag')
                         </div>
                     </div>

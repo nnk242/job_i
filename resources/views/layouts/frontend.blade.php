@@ -18,6 +18,11 @@
     <link href="{{ asset('common/style.css') }}" rel="stylesheet">
     <!-- Font awesome styles -->
     <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+
+    {{--<link href="{{ asset('selectize/css/bootstrap2.css') }}" rel="stylesheet">--}}
+    <link href="{{ asset('selectize/css/bootstrap3.css') }}" rel="stylesheet">
+    {{--<link href="{{ asset('selectize/css/default.css') }}" rel="stylesheet">--}}
+    {{--<link href="{{ asset('selectize/css/selectize.css') }}" rel="stylesheet">--}}
     @yield('stylesheet')
 </head>
 <body>
@@ -26,6 +31,7 @@
 </div>
 
 <script src="{{ asset('js/app.js') }}"></script>
+<script src="{{asset('jquery/jquery.js')}}" type="text/javascript"></script>
 <script src="{{ asset('common/js/header.js') }}"></script>
 
 {{--masonry--}}
@@ -38,8 +44,51 @@
 </script>
 <!-- animate js -->
 <script src="{{ asset('animate/wow.js') }}"></script>
+
+<!-- Script jquery -->
+<script src="{{ asset('selectize/standalone/selectize.js') }}"></script>
+
+<script src="{{ asset('selectize/selectize.js') }}"></script>
 <script>
     new WOW().init();
+
+
+    $('#select-repo').selectize({
+        valueField: 'name',
+        labelField: 'name',
+        searchField: ['name'],
+        create: true,
+        maxItems: 1,
+        maxOptions: 10,
+        render: {
+            option: function(item, escape) {
+                return '<div>' +
+                    '<span class="title">' +
+                    '<span class="name"><a href="11232">' + escape(item.name) + '</a></span>' +
+                    '<span style="float: right;" class="name">' + escape(item.view) + '</span>' +
+                    '</span>' +
+                    '</div>';
+            }
+        },
+        load: function(query, callback) {
+            if (!query.length) return callback();
+            $.ajax({
+                url: '/tim-kiem/' + encodeURIComponent(query),
+                type: 'GET',
+                error: function() {
+                    callback();
+                },
+                success: function(res) {
+                    callback(res);
+                }
+            });
+        },
+    });
+    $(document).on('click', '#select-repo', function () {
+        var val = $('#select-repo').val();
+        $(location).attr('href', 'http://' + window.location.origin + '/?timkiem=' + val);
+    });
+
 </script>
 @yield('js')
 </body>

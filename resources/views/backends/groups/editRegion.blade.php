@@ -63,7 +63,7 @@
         </div>
     </div>
 @endsection
-@section('js')
+@section('standalone')
     <!-- Script jquery -->
     <script src="{{asset('jquery/jquery.js')}}" type="text/javascript"></script>
     <script src="{{asset('html-js/html.js')}}" type="text/javascript"></script>

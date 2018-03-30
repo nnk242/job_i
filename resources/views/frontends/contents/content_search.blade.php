@@ -6,13 +6,14 @@
                     <div class="row">
                         <div class="col-md-9">
                             <div class="clearfix mb-5 p-3 border-bottom">
-                                @include('frontends.includes.menu.menu_tag')
+                                <span class="fa fa-search-plus fa-3x text-danger fa-spin"></span>
+                                <i class="h2 text-success -bold">@:</i> <i class="h3 text-warning">{{$tag_old}}</i>
                             </div>
                             <div class="mb-3"><p class="h3"><i class="fa fa-id-card text-info"></i> Bài viết</p></div>
                             @if(isset($groups))
                                 @if (count($groups))
                                     <div class="grid">
-                                        @foreach($groups as $group)
+                                        @foreach($groups as $key=>$group)
                                             <div class="grid-item wow zoomIn">
                                                 <div class="m-positon-p">
                                                     <a href="{{url($group->name_seo)}}" class="m-a-p">
@@ -34,15 +35,17 @@
                                             </div>
                                         @endforeach
                                     </div>
-                                    @if (count($groups) > $tag_num)
-                                        <div class="text-center mb-3 mt-2">
-                                            <a href="{{route('tagPost', ['id' => $tag_old])}}">
-                                                <button class="btn btn-secondary"><i
-                                                            class="fa fa-plus-square-o"></i>
-                                                    Xem thêm
-                                                </button>
-                                            </a>
-                                        </div>
+                                    @if (isset($key))
+                                        @if ($key == $tag_num-1)
+                                            <div class="text-center mb-3 mt-2">
+                                                <a href="{{route('searchPost', ['id' => $tag_old])}}">
+                                                    <button class="btn btn-secondary"><i
+                                                                class="fa fa-plus-square-o"></i>
+                                                        Xem thêm
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        @endif
                                     @endif
                                 @else
                                     @include('frontends.includes.notfounds.not_item')
@@ -55,7 +58,7 @@
                             @if(isset($images))
                                 @if (count($images))
                                     <div class="grid">
-                                        @foreach($images as $image)
+                                        @foreach($images as $key=>$image)
                                             <div class="grid-item wow zoomIn">
                                                 <div class="m-positon-p">
                                                     <a href="{{route('image', ['id', $tag_old])}}" class="m-a-p">
@@ -75,15 +78,17 @@
                                             </div>
                                         @endforeach
                                     </div>
-                                    @if (count($images) > $tag_num)
-                                        <div class="text-center mb-3">
-                                            <a href="{{route('tagImage', ['id' => $tag_old])}}">
-                                                <button class="btn btn-secondary"><i
-                                                            class="fa fa-plus-square-o"></i>
-                                                    Xem thêm
-                                                </button>
-                                            </a>
-                                        </div>
+                                    @if(isset($key))
+                                        @if ($key == $tag_num)
+                                            <div class="text-center mb-3">
+                                                <a href="{{route('searchImage', ['id' => $tag_old])}}">
+                                                    <button class="btn btn-secondary"><i
+                                                                class="fa fa-plus-square-o"></i>
+                                                        Xem thêm
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        @endif
                                     @endif
                                 @else
                                     @include('frontends.includes.notfounds.not_item')
