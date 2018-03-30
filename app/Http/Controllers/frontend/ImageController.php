@@ -75,6 +75,7 @@ class ImageController extends Controller
     public function show($id)
     {
         $post = Groups::where([['status', '=', 1], ['id', '<>', 1], ['name_seo', $id]])->with('region')->first();
+//        $tag_old = $post->tag;
         $types = Types::all();
 
         if (isset($post)) {

@@ -28,7 +28,13 @@ Route::get('tim-kiem/{id}/hinh-anh', 'frontend\ImageController@searchImage')->na
 
 //backend
 Route::group(['prefix'=>'admin'], function () {
-    Auth::routes();
+    $this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
+    $this->post('login', 'Auth\LoginController@login');
+    $this->post('logout', 'Auth\LoginController@logout')->name('logout');
+    Route::group(['prefix' => '/'], function () {
+        Route::get('dashboard', 'backend\DashboardController@index')->name('dashboard');
+    });
+
     Route::group(['prefix' => 'image'], function () {
         Route::get('/', 'backend\ImageController@index')->name('view.image');
         Route::get('create', 'backend\ImageController@create')->name('view.image.create');
