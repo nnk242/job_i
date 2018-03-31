@@ -49,7 +49,10 @@
                                             {{Illuminate\Pagination\AbstractPaginator::defaultView("pagination::bootstrap-4")}}
                                             {{ $images->links() }}
                                         </div>
+                                    <div class="mt-5">
                                         <hr />
+                                    </div>
+                                        @include('frontends.includes.menu.menu_tag')
                                     @else
                                         @include('frontends.includes.notfounds.not_item')
                                     @endif

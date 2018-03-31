@@ -84,6 +84,10 @@ class ImageController extends Controller
                 ->orderBy('id', 'DESC')
                 ->get();
 
+            $tags = array();
+            $tags['name'] = explode(",", $post->tag);
+            $tags['name_seo'] = explode(",", $post->tag_seo);
+
             $view_current_old = $post->view;
             $continent = Continents::find($post->region->continent_id);
             $images = Images::where([['Group_id','=',$post->id],['status', '=', 1]])->orderby('id', 'DESC')->paginate($this->show_img);
@@ -94,7 +98,7 @@ class ImageController extends Controller
             $view = new topView();
             $view->topView7($post->id, $view_current_old, $view_current_new);
         }
-        return view('frontends.album', compact('post', 'images', 'types', 'first_url_image', 'continent', 'post_relationship'));
+        return view('frontends.album', compact('post', 'images', 'types', 'first_url_image', 'continent', 'post_relationship', 'tags'));
     }
 
     public function group($id)
