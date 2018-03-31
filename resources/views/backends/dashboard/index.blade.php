@@ -44,18 +44,19 @@
 
             // The data for our dataset
             data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: ["{{$days[0]}}", "{{$days[1]}}", "{{$days[2]}}", "{{$days[3]}}", "{{$days[4]}}", "{{$days[5]}}", "{{$days[6]}}", "{{$days[7]}}"],
                 datasets: [{
-                    label: "My First dataset",
+                    label: "Picture update",
                     backgroundColor: ['rgb(255, 0, 132)',
                         'rgb(255, 99, 0)',
                         'rgb(0, 99, 132)',
                         'rgb(200, 99, 132)',
                         'rgb(200, 0, 132)',
                         'rgb(200, 99, 0)',
-                        'rgb(255, 99, 132)'],
+                        'rgb(255, 99, 132)',
+                        'rgb(255, 200, 200)'],
                     borderColor: 'rgb(255, 99, 132)',
-                    data: [20, 10, 5, 2, 20, 30, 45],
+                    data: [{{$pictures[$days[0]]}}, {{$pictures[$days[1]]}}, {{$pictures[$days[2]]}}, {{$pictures[$days[3]]}}, {{$pictures[$days[4]]}}, {{$pictures[$days[5]]}}, {{$pictures[$days[6]]}}, {{$pictures[$days[7]]}}],
                 }]
             },
 

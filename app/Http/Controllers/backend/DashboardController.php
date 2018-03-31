@@ -478,11 +478,11 @@ class DashboardController extends Controller
         });
 
         for ($i =0; $i <8;$i++) {
-
+            if(!isset($pictures[date("d-m-y", strtotime(date("Y-m-d")) - ($i * 3600 * 24))])) {
+                $pictures[date("d-m-y", strtotime(date("Y-m-d")) - ($i * 3600 * 24))] = 0;
+            }
         }
 
-
-        return $pictures;
 
         $days = array(date("d-m-y", strtotime(date("Y-m-d")) - (0 * 3600 * 24)),
             date("d-m-y", strtotime(date("Y-m-d")) - (1 * 3600 * 24)),
@@ -493,6 +493,6 @@ class DashboardController extends Controller
             date("d-m-y", strtotime(date("Y-m-d")) - (6 * 3600 * 24)),
             date("d-m-y", strtotime(date("Y-m-d")) - (7 * 3600 * 24)));
 
-        return view('backends.dashboard.index', compact('days', 'views'));
+        return view('backends.dashboard.index', compact('days', 'views', 'pictures'));
     }
 }
