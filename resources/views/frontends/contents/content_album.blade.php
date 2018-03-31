@@ -1,4 +1,3 @@
-
 <section>
     <nav class="m-margin-top-57px fixed-top bg-light" id="m-nav-tab">
         <nav class="breadcrumb">
@@ -25,11 +24,14 @@
                             <div class="row">
                                 <div class="col-md-9">
                                     <div>
-                                        <p class="text-secondary small"><i class="fa fa-calendar"></i> Ngày
-                                            đăng: {{dayofweed(date_format($post->created_at, "w"))}},
-                                            {{date_format($post->created_at, "d/m/Y | ")}} <i class="fa fa-clock-o"></i>
-                                            {{date_format($post->created_at, 'H:i')}}
-                                        </p>
+                                        @if (isset($post->created_at))
+                                            <p class="text-secondary small"><i class="fa fa-calendar"></i> Ngày
+                                                đăng: {{dayofweed(date_format($post->created_at, "w"))}},
+                                                {{date_format($post->created_at, "d/m/Y | ")}} <i
+                                                        class="fa fa-clock-o"></i>
+                                                {{date_format($post->created_at, 'H:i')}}
+                                            </p>
+                                        @endif
                                     </div>
                                     <div>
                                         <h1>{{$post->name}}</h1>
@@ -43,15 +45,15 @@
                                                 <a href="{{url('hinh-anh/' . $image->image_s)}}"><img
                                                             class="m-img-w m-border-darius-5"
                                                             src="{{in_array(substr($image->url, 0, 4), $first_url_image)?$image->url:asset($image->url)}}">
-                                                    <p class="text-info text-center">{{$image->title . date_format($post->created_at, " - d/m/Y")}}</p>
+                                                    <p class="text-info text-center">{{$image->title . date_format($image->created_at, " - d/m/Y")}}</p>
                                                 </a>
                                             @endforeach
                                             {{Illuminate\Pagination\AbstractPaginator::defaultView("pagination::bootstrap-4")}}
                                             {{ $images->links() }}
                                         </div>
-                                    <div class="mt-5">
-                                        <hr />
-                                    </div>
+                                        <div class="mt-5">
+                                            <hr/>
+                                        </div>
                                         @include('frontends.includes.menu.menu_tag')
                                     @else
                                         @include('frontends.includes.notfounds.not_item')

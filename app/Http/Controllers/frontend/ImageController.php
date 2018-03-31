@@ -55,6 +55,9 @@ class ImageController extends Controller
             $first_url_image = $this->first_url_image;
             return view('frontends.search', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'tag_old', 'images', 'tag_num'));
         }
+        $update = Groups::where('id', '=', 1)->with(['image' => function ($q) {
+            $q->where('status', '=', 1)->orderBy('id', 'DESC');
+        }])->first();
         $show_img = $this->show_img;
         $groups = Groups::where([['status', '=', 1], ['id', '<>', 1]])
             ->with(['image' => function ($q) {
@@ -69,17 +72,17 @@ class ImageController extends Controller
         //region
         $regions = Regions::limit($this->limit_region)->get();
         $first_url_image = $this->first_url_image;
-        return view('frontends.index', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'show_img'));
+        return view('frontends.index', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'show_img', 'update'));
     }
 
     public function show($id)
     {
-        $post = Groups::where([['status', '=', 1], ['id', '<>', 1], ['name_seo', $id]])->with('region')->first();
+        $post = Groups::where([['status', '=', 1], ['name_seo', $id]])->with('region')->first();
 //        $tag_old = $post->tag;
         $types = Types::all();
 
         if (isset($post)) {
-            $post_relationship = Groups::where([['status', '=', 1], ['id', '<>', 1], ['id', '<>', $post->id]])
+            $post_relationship = Groups::where([['status', '=', 1], ['id', '<>', $post->id]])
                 ->offset($post->id - 6)->limit(5)
                 ->orderBy('id', 'DESC')
                 ->get();
@@ -307,5 +310,12 @@ class ImageController extends Controller
         $regions = Regions::limit($this->limit_region)->get();
         $first_url_image = $this->first_url_image;
         return view('frontends.postView', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'show_img'));
+    }
+
+    public  function image($id) {
+        $first_url_image = $this->first_url_image;
+        $image = Images::whereimage_s($id)->first();
+//        return $image->url;
+        return view('frontends.show', compact('first_url_image', 'image'));
     }
 }

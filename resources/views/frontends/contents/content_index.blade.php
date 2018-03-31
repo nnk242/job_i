@@ -25,6 +25,25 @@
                         <div class="col-md-9">
                             @if(count($groups) > 0)
                                 <div class="grid">
+                                    <div class="grid-item wow zoomIn">
+                                        <div class="m-positon-p">
+                                            <a href="{{url($update->name_seo)}}" class="m-a-p">
+                                                <img src="{{in_array(substr(($update->image[0])->url, 0, 4), $first_url_image)?($update->image[0])->url:asset(($update->image[0])->url)}}">
+                                                <div class="m-none">
+                                                    <div class="m-bg-img"></div>
+                                                    <div class="m-text m-s-t">
+                                                        @if(isset(($update->image[0])->updated_at))<h5 class="text-dark small">{{date_format(($update->image[0])->updated_at, "d") . ' Th' . date_format(($update->image[0])->updated_at, "m," ). date_format(($update->image[0])->updated_at, "Y" )}}</h5>@endif
+                                                        <h2 class="text-light">{{$update->name}}</h2>
+                                                        <p class="text-danger"><i
+                                                                    class="fa fa-eye"></i> {{post_views($update->view)}}
+                                                            -
+                                                            <i class="fa fa-picture-o"></i> {{count($update->image)}}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
                                     @foreach($groups as $key=>$group)
                                         <div class="grid-item wow zoomIn">
                                             <div class="m-positon-p">
