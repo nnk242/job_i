@@ -50,6 +50,19 @@ class GroupController extends Controller
                 $group = new Groups();
                 $name = $request->name;
                 $status = $request->status;
+                $tag = $request->tag;
+
+                $tag_seo = explode(",", $tag);
+                $p = "";
+                foreach ($tag_seo as $key=>$val) {
+                    if($key ==0) {
+                        $p = str_seo_m(str_replace('.html', '', $tag_seo[$key]));
+                    } else {
+                        $p = $p . "," . str_seo_m(str_replace('.html', '', $tag_seo[$key]));
+                    }
+                }
+                $group->tag = $tag;
+                $group->tag_seo = $p;
 
                 $group->user_id = Auth::id();
                 $group->name = $name;
@@ -98,6 +111,20 @@ class GroupController extends Controller
             $group->name = $request->name;
             $group->name_seo = $request->name_seo;
 
+            $tag = $request->tag;
+
+            $tag_seo = explode(",", $tag);
+            $p = "";
+            foreach ($tag_seo as $key=>$val) {
+                if($key ==0) {
+                    $p = str_seo_m(str_replace('.html', '', $tag_seo[$key]));
+                } else {
+                    $p = $p . "," . str_seo_m(str_replace('.html', '', $tag_seo[$key]));
+                }
+            }
+            $group->tag = $tag;
+            $group->tag_seo = $p;
+
             if ($request->image_thumbnail) {
                 $extension = $request->file('image_thumbnail')->getClientOriginalExtension();
                 $dir = $this->folder_save_image_group;
@@ -117,7 +144,8 @@ class GroupController extends Controller
 
                 $group->thumbnail = $dir . $filename;
             } else {
-                $group->thumbnail = $request->link_image_thumbnail;
+                if($request->link_image_thumbnail)
+                    $group->thumbnail = $request->link_image_thumbnail;
             }
 
             $group->description = $request->description;

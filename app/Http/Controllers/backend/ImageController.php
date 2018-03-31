@@ -217,7 +217,7 @@ class ImageController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'title' => 'required|max:255',
-            'url' => 'required|max:255',
+            'url' => 'max:255',
             'name' => 'required',
             'group_id' => 'required'
         ]);
@@ -255,6 +255,7 @@ class ImageController extends Controller
                 $image->content = $content;
                 $image->group_id = $group;
                 $image->status = $status == 1 ? 1 : 0;
+                return $image->status;
                 $image->save();
                 return [
                     'status' => true,
@@ -263,7 +264,7 @@ class ImageController extends Controller
             } catch (\Exception $ex) {
                 return [
                     'status' => false,
-                    'message' => 'Upload fail!'
+                    'message' => 'Upload fail!!!'
                 ];
             }
         }
@@ -272,6 +273,7 @@ class ImageController extends Controller
 
     public function uploadFile(Request $request)
     {
+
         $group_check = $request->group_check;
         $name_check = $request->name_check;
         $title_check = $request->title_check;
@@ -325,6 +327,8 @@ class ImageController extends Controller
         try {
             for ($i = 0; $i < $count_item; $i++) {
                 $image = new Images();
+
+                $image->user_id = Auth::id();
                 if ($type[$i] == 1) {
                     try {
                         $extension = $file_upload[$k]->getClientOriginalExtension();
@@ -332,13 +336,11 @@ class ImageController extends Controller
                         $filename = uniqid() . '_' . time() . '.' . $extension;
                         $file_upload[$k]->move($dir, $filename);
                         $image->url = $dir . $filename;
-                        $k++;
                     } catch (\Exception $exception) {
                         return redirect()->back()->with('er', 'Upload file' . $k . ' fail...');
                     }
 
                 } else $image->url = $url[$i];
-                $image->user_id = Auth::id();
                 $image->name = $name[$i];
                 $image->image_s = Images::whereimage_s(str_seo_m($name[$i]))->count() > 0 ? str_seo_m(str_replace('.html', '', $name[$i])) . '-' . time() . $i : str_seo_m($name[$i]);
                 $image->title = $title[$i];
@@ -347,9 +349,17 @@ class ImageController extends Controller
                 $image->status = $status[$i] == 1 ? 1 : 0;
                 $image->save();
             }
+
             return redirect()->back()->with('mes', 'Upload successful...');
         } catch (\Exception $ex) {
-            return redirect()->back()->with('er', 'Upload fail...');
+            if (!in_array($dir . $filename, $this->first_url_image)) {
+                try {
+                    File::delete($dir . $filename);
+                } catch (\Exception $ex) {
+
+                }
+            }
+            return redirect()->back()->with('er', 'Upload fail...' );
         }
     }
 

@@ -10,6 +10,11 @@ use Auth;
 class TagController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index() {
         $tag = Tags::first();
         return view('backends.tags.index', compact('tag'));
@@ -24,7 +29,6 @@ class TagController extends Controller
         $name_seo = explode(",", $request->create_tag);
         $p = "";
         foreach ($name_seo as $key=>$val) {
-
             if($key ==0) {
                 $p = str_seo_m(str_replace('.html', '', $name_seo[$key]));
             } else {

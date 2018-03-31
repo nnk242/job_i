@@ -2,6 +2,7 @@
 @section('stylesheet')
     <!-- Toggle Switch -->
     <link href="{{ asset('common/toggle_switch.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://selectize.github.io/selectize.js/css/selectize.bootstrap3.css"/>
     <style>
         #search {
             background-image: url({{asset('/common/image/searchicon.png')}});
@@ -72,19 +73,16 @@
                                         <div class="form-group">
                                             <label for="region_name">Region name:</label>
                                             <input class="form-control region_name" type="text" readonly
-                                                   value="{{$region->name}}"
-                                                   id="region_name">
+                                                   value="{{$region->name}}">
                                         </div>
                                         <div class="form-group">
                                             <label for="region_name">Region seo:</label>
                                             <input class="form-control" type="text" readonly
-                                                   value="{{$region->name_seo}}"
-                                                   id="region_name">
+                                                   value="{{$region->name_seo}}">
                                         </div>
                                         <div class="form-group">
                                             <label for="region_image">Region image:</label>
-                                            <input class="form-control" type="text" readonly value="{{$region->image}}"
-                                                   id="region_image">
+                                            <input class="form-control" type="text" readonly value="{{$region->image}}">
                                         </div>
                                     </div>
                                     <div class="col-sm-4">
@@ -226,13 +224,13 @@
                                         <input type="file" class="form-control" id="group_image" name="group_image">
                                     </div>
                                     <div class="form-group">
-                                        <label for="group_image">Link image thumbnail:</label>
-                                        <input type="text" class="form-control" id="group_image" name="link_group_image">
+                                        <label for="link_group_image">Link image thumbnail:</label>
+                                        <input type="text" class="form-control" id="link_group_image" name="link_group_image">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="name">Name:</label>
-                                        <input type="text" class="form-control" id="name" name="name" required>
+                                        <label for="name_group">Name:</label>
+                                        <input type="text" class="form-control" id="name_group" name="name" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="description">Description:</label>
@@ -263,6 +261,10 @@
                                                    checked>
                                             <span class="slider round"></span>
                                         </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="input-tags3">Input tag:</label>
+                                        <input class="form-control create_tag" name="tag">
                                     </div>
                                 </div>
 
@@ -296,8 +298,8 @@
                                         <form method="POST" action="{{route('view.group.createType')}}">
                                             {{csrf_field()}}
                                             <div class="form-group">
-                                                <label for="name">Name:</label>
-                                                <input type="text" class="form-control" id="name" name="typename"
+                                                <label for="name_type">Name:</label>
+                                                <input type="text" class="form-control" id="name_type" name="typename"
                                                        required>
                                             </div>
                                             <div class="modal-footer">
@@ -314,13 +316,13 @@
                                                 {{csrf_field()}}
                                                 <div class="form-group">
                                                     <label for="name">Name:</label>
-                                                    <input type="text" class="form-control" id="name" name="name"
+                                                    <input type="text" class="form-control" name="name"
                                                            value="{{$type->name}}"
                                                            required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="name_seo_type">Name seo:</label>
-                                                    <input type="text" class="form-control" id="name_seo_type" disabled
+                                                    <input type="text" class="form-control" disabled
                                                            value="{{$type->name_seo}}"
                                                            required>
                                                 </div>
@@ -389,13 +391,13 @@
                                                 {{csrf_field()}}
                                                 <div class="form-group">
                                                     <label for="name">Name:</label>
-                                                    <input type="text" class="form-control" id="name" name="name"
+                                                    <input type="text" class="form-control" name="name"
                                                            value="{{$continent->name}}"
                                                            required>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="name_seo_continent">Name seo:</label>
-                                                    <input type="text" class="form-control" id="name_seo_continent" disabled
+                                                    <input type="text" class="form-control" disabled
                                                            value="{{$continent->name_seo}}"
                                                            required>
                                                 </div>
@@ -460,6 +462,7 @@
     <!-- HTML -->
     <script src="{{asset('html-js/html.js')}}" type="text/javascript"></script>
     <!-- Scrip -->
+    <script src="https://selectize.github.io/selectize.js/js/selectize.js"></script>
     <script>
         changeBox('.status');
         closeError();
@@ -486,5 +489,18 @@
                 }
             }
         }
+
+        $('.create_tag').selectize({
+            plugins: ['remove_button'],
+            delimiter: ',',
+            persist: false,
+            create: function (input) {
+                return {
+                    value: input,
+                    text: input
+                }
+            }
+        });
+
     </script>
 @endsection

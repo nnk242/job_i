@@ -23,6 +23,8 @@ class CreateGroupsTable extends Migration
             $table->integer('region_id')->references('id')->on('regions')->default(1);
             $table->integer('type_id')->references('id')->on('types')->default(1);
             $table->tinyInteger('status')->default(1);
+            $table->text('tag')->nullable();
+            $table->text('tag_seo')->nullable();
             $table->integer('view')->default(0);
             $table->timestamps();
         });

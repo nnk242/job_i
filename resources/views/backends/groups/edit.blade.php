@@ -2,6 +2,9 @@
 @section('stylesheet')
     <!-- Toggle Switch -->
     <link href="{{ asset('common/toggle_switch.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://selectize.github.io/selectize.js/css/selectize.bootstrap3.css"/>
+
+
 @endsection
 @section('contents')
     @include('message.message')
@@ -67,6 +70,10 @@
                                 <span class="slider round"></span>
                             </label>
                         </div>
+                        <div class="form-group">
+                            <label for="input-tags3">Input tag:</label>
+                            <input class="form-control create_tag" name="tag" value="{{$group->tag}}" style="width: 100% !important;">
+                        </div>
                         <div class="form-group text-center">
                             <button type="submit" class="btn btn-primary">Update</button>
                             <button type="reset" class="btn btn-warning">Reset</button>
@@ -84,6 +91,8 @@
     <!-- Script jquery -->
     <script src="{{asset('jquery/jquery.js')}}" type="text/javascript"></script>
     <script src="{{asset('html-js/html.js')}}" type="text/javascript"></script>
+    <script src="https://selectize.github.io/selectize.js/js/selectize.js"></script>
+
     <script>
         $(document).ready(function () {
             var timeout = null;
@@ -146,5 +155,18 @@
         });
         closeError();
         changeBox('#status');
+
+        $('.create_tag').selectize({
+            plugins: ['remove_button'],
+            delimiter: ',',
+            persist: false,
+            create: function (input) {
+                return {
+                    value: input,
+                    text: input
+                }
+            }
+        });
+
     </script>
 @endsection

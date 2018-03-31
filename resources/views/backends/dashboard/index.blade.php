@@ -27,7 +27,7 @@
             data: {
                 labels: ["{{$days[0]}}", "{{$days[1]}}", "{{$days[2]}}", "{{$days[3]}}", "{{$days[4]}}", "{{$days[5]}}", "{{$days[6]}}", "{{$days[7]}}"],
                 datasets: [{
-                    label: "View per day",
+                    label: "Views post per 7 day",
                     backgroundColor: 'rgb(255, 99, 132)',
                     borderColor: 'rgb(255, 99, 132)',
                     data: [{{$views[0]}}, {{$views[1]}}, {{$views[2]}}, {{$views[3]}}, {{$views[4]}}, {{$views[5]}}, {{$views[6]}}, {{$views[7]}}],
@@ -40,16 +40,22 @@
         var ctx = document.getElementById('myChart2').getContext('2d');
         var chart = new Chart(ctx, {
             // The type of chart we want to create
-            type: 'line',
+            type: 'bar',
 
             // The data for our dataset
             data: {
                 labels: ["January", "February", "March", "April", "May", "June", "July"],
                 datasets: [{
                     label: "My First dataset",
-                    backgroundColor: 'rgb(255, 99, 132)',
+                    backgroundColor: ['rgb(255, 0, 132)',
+                        'rgb(255, 99, 0)',
+                        'rgb(0, 99, 132)',
+                        'rgb(200, 99, 132)',
+                        'rgb(200, 0, 132)',
+                        'rgb(200, 99, 0)',
+                        'rgb(255, 99, 132)'],
                     borderColor: 'rgb(255, 99, 132)',
-                    data: [0, 10, 5, 2, 20, 30, 45],
+                    data: [20, 10, 5, 2, 20, 30, 45],
                 }]
             },
 

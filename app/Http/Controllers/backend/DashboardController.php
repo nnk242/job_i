@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\backend;
 
+use App\Images;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Views;
@@ -11,6 +12,11 @@ use Carbon\Carbon;
 class DashboardController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     protected function sumArray($arr){
         $result = 0;
         for ($i =0; $i <count($arr); $i++) {
@@ -453,12 +459,31 @@ class DashboardController extends Controller
         array_values($day8);
 //end day 8
 
-        $views =array();
-        $days =array();
+        $views = array();
+        $days = array();
 
         $views = array($this->sumArray($day1), $this->sumArray($day2), $this->sumArray($day3),
             $this->sumArray($day4), $this->sumArray($day5), $this->sumArray($day6), $this->sumArray($day7),
             $this->sumArray($day8));
+
+        $pictures = Images::where(function ($q) {
+            $q->where([['created_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) + (3600 * 24))],
+                ['created_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (7 * 3600 * 24))]
+            ])
+                ->orWhereNull('created_at');
+        })->get()->groupBy(function ($item) {
+            return $item->created_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->count('created_at');
+        });
+
+        for ($i =0; $i <8;$i++) {
+
+        }
+
+
+        return $pictures;
+
         $days = array(date("d-m-y", strtotime(date("Y-m-d")) - (0 * 3600 * 24)),
             date("d-m-y", strtotime(date("Y-m-d")) - (1 * 3600 * 24)),
             date("d-m-y", strtotime(date("Y-m-d")) - (2 * 3600 * 24)),
@@ -467,24 +492,6 @@ class DashboardController extends Controller
             date("d-m-y", strtotime(date("Y-m-d")) - (5 * 3600 * 24)),
             date("d-m-y", strtotime(date("Y-m-d")) - (6 * 3600 * 24)),
             date("d-m-y", strtotime(date("Y-m-d")) - (7 * 3600 * 24)));
-//        return $days;
-
-//        $test = "";
-//        $arr_views = array();
-//        $arr_days = array();
-//        for ($i = 1; $i <= 8; $i++) {
-//            $date = date('d-m-y', strtotime(date("Y-m-d")) - ((8 - $i) * 3600 * 24));
-//            $arr_days[$i - 1] = $date;
-//            if (!isset($views[$date])) {
-//                $arr_views[$i - 1] = 0;
-//            } else {
-//                $arr_views[$i - 1] = $views[$date];
-//            }
-//        }
-
-
-//        dd(date('Y-m-d',strtotime(date("Y-m-d")) - (7*3600*24)). $test);
-//        date('d-m-y',strtotime(date("Y-m-d")) - (7*3600*24))
 
         return view('backends.dashboard.index', compact('days', 'views'));
     }
