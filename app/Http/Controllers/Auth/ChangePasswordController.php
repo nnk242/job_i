@@ -11,7 +11,11 @@ use Validator;
 class ChangePasswordController extends Controller
 {
     //
-    protected $password = 'Story123';
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     private function adminCredentialRules(array $data)
     {
         $messages = [

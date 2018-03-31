@@ -25,12 +25,12 @@
 
             // The data for our dataset
             data: {
-                labels: ["{{$arr_days[0]}}", "{{$arr_days[1]}}", "{{$arr_days[2]}}", "{{$arr_days[3]}}", "{{$arr_days[4]}}", "{{$arr_days[5]}}", "{{$arr_days[6]}}"],
+                labels: ["{{$days[0]}}", "{{$days[1]}}", "{{$days[2]}}", "{{$days[3]}}", "{{$days[4]}}", "{{$days[5]}}", "{{$days[6]}}", "{{$days[7]}}"],
                 datasets: [{
                     label: "View per day",
                     backgroundColor: 'rgb(255, 99, 132)',
                     borderColor: 'rgb(255, 99, 132)',
-                    data: [{{$arr_views[0]}}, {{$arr_views[1]}}, {{$arr_views[2]}}, {{$arr_views[3]}}, {{$arr_views[4]}}, {{$arr_views[5]}}, {{$arr_views[6]}}],
+                    data: [{{$views[0]}}, {{$views[1]}}, {{$views[2]}}, {{$views[3]}}, {{$views[4]}}, {{$views[5]}}, {{$views[6]}}, {{$views[7]}}],
                 }]
             },
 

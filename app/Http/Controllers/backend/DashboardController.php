@@ -11,35 +11,481 @@ use Carbon\Carbon;
 class DashboardController extends Controller
 {
     //
-    public function index() {
+    protected function sumArray($arr){
+        $result = 0;
+        for ($i =0; $i <count($arr); $i++) {
+            foreach ($arr[$i] as $id => $val) {
+                $result += $arr[$i][$id];
+            }
+        }
+        return $result;
+    }
+
+    public function index()
+    {
 //        $today = Views::all()
 //            ->groupBy(function($item){ return $item->updated_at->format('d-M-y'); });
-        $views = Views::where(function($q) {
-            $q->where([['updated_at', '<=', date("Y-m-d")],
-                ['updated_at', '>=', date('Y-m-d',strtotime(date("Y-m-d")) - (7*3600*24))]
+        $views = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) + (3600 * 24))],
+                ['updated_at', '>=', date('Y-m-d', strtotime(date("Y-m-d")) - (7 * 3600 * 24))]
             ])
                 ->orWhereNull('updated_at');
-        })->get()->groupBy(function($item){ return $item->updated_at->format('d-m-y'); })->map(function ($row) {
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
             return $row->sum('total');
         });
 
-        $test = "";
-        $arr_views = array();
-        $arr_days = array();
-        for($i = 1; $i<=7; $i++) {
-            $date = date('d-m-y',strtotime(date("Y-m-d")) - ((8-$i)*3600*24));
-            $arr_days[$i-1] = $date;
-            if(!isset($views[$date])) {
-                $arr_views[$i-1] = 0;
-            } else {
-                $arr_views[$i-1] = $views[$date];
-            }
-        }
+        //today
+//        for($i = 1; $i<=8; $i++) {
+//            $day1[] = Views::where(function ($q) {
+//                $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) + (3600 * 24))],
+//                    ['updated_at', '>=', date('Y-m-d', strtotime(date("Y-m-d")))]
+//                ])
+//                    ->orWhereNull('updated_at');
+//            })->get()->groupBy(function ($item) {
+//                return $item->updated_at->format('d-m-y');
+//            })->map(function ($row) {
+//                return $row->sum('today');
+//            });
+//        }
+//day1
+        $day1[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) + (3600 * 24))],
+                ['updated_at', '>=', date('Y-m-d', strtotime(date("Y-m-d")))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('today');
+        });
+        //end day 1
+        //day2
+        $day2[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('today');
+        });
+        $day2[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) + (3600 * 24))],
+                ['updated_at', '>=', date('Y-m-d', strtotime(date("Y-m-d")))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_2');
+        });
+        //end day 2
+        //day 3
+        $day3[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_2');
+        });
+        $day3[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) + (3600 * 24))],
+                ['updated_at', '>=', date('Y-m-d', strtotime(date("Y-m-d")))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_3');
+        });
+
+        $day3[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) - (3600 * 24))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (2 * 3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('today');
+        });
+        //end day 3
+        //day 4
+        $day4[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) + (3600 * 24))],
+                ['updated_at', '>=', date('Y-m-d', strtotime(date("Y-m-d")))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_4');
+        });
+
+        $day4[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_3');
+        });
+
+        $day4[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) - (3600 * 24))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (2 * 3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_2');
+        });
+
+        $day4[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) - (2 * 3600 * 24))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (3 * 3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('today');
+        });
+        //end day 4
+        //day 5
+        $day5[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) + (3600 * 24))],
+                ['updated_at', '>=', date('Y-m-d', strtotime(date("Y-m-d")))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_5');
+        });
+
+        $day5[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_4');
+        });
+
+        $day5[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) - (3600 * 24))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (2 * 3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_3');
+        });
+
+        $day5[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) - (2 * 3600 * 24))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (3 * 3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_2');
+        });
+
+        $day5[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) - (3 * 3600 * 24))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (4 * 3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('today');
+        });
+        //end day 5
+        //day 6
+        $day6[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) + (3600 * 24))],
+                ['updated_at', '>=', date('Y-m-d', strtotime(date("Y-m-d")))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_6');
+        });
+
+        $day6[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_5');
+        });
+
+        $day6[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) - (3600 * 24))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (2 * 3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_4');
+        });
+
+        $day6[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) - (2 * 3600 * 24))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (3 * 3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_3');
+        });
+
+        $day6[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) - (3 * 3600 * 24))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (4 * 3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_2');
+        });
+
+        $day6[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) - (4 * 3600 * 24))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (5 * 3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('today');
+        });
+        //end day 6
+        //day 7
+        $day7[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) + (3600 * 24))],
+                ['updated_at', '>=', date('Y-m-d', strtotime(date("Y-m-d")))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_7');
+        });
+
+        $day7[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_6');
+        });
+
+        $day7[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) - (3600 * 24))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (2 * 3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_5');
+        });
+
+        $day7[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) - (2 * 3600 * 24))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (3 * 3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_4');
+        });
+
+        $day7[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) - (3 * 3600 * 24))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (4 * 3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_3');
+        });
+
+        $day7[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) - (4 * 3600 * 24))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (5 * 3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_2');
+        });
+
+        $day7[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) - (5 * 3600 * 24))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (6 * 3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('today');
+        });
+        //end day 7
+        //day 8
+        $day8[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) + (3600 * 24))],
+                ['updated_at', '>=', date('Y-m-d', strtotime(date("Y-m-d")))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_8');
+        });
+
+        $day8[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_7');
+        });
+
+        $day8[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) - (3600 * 24))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (2 * 3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_6');
+        });
+
+        $day8[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) - (2 * 3600 * 24))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (3 * 3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_5');
+        });
+
+        $day8[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) - (3 * 3600 * 24))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (4 * 3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_4');
+        });
+
+        $day8[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) - (4 * 3600 * 24))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (5 * 3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_3');
+        });
+
+        $day8[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) - (5 * 3600 * 24))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (6 * 3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('day_2');
+        });
+
+        $day8[] = Views::where(function ($q) {
+            $q->where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) - (6 * 3600 * 24))],
+                ['updated_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")) - (7 * 3600 * 24))]
+            ])
+                ->orWhereNull('updated_at');
+        })->get()->groupBy(function ($item) {
+            return $item->updated_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->sum('today');
+        });
+        array_values($day8);
+//end day 8
+
+        $views =array();
+        $days =array();
+
+        $views = array($this->sumArray($day1), $this->sumArray($day2), $this->sumArray($day3),
+            $this->sumArray($day4), $this->sumArray($day5), $this->sumArray($day6), $this->sumArray($day7),
+            $this->sumArray($day8));
+        $days = array(date("d-m-y", strtotime(date("Y-m-d")) - (0 * 3600 * 24)),
+            date("d-m-y", strtotime(date("Y-m-d")) - (1 * 3600 * 24)),
+            date("d-m-y", strtotime(date("Y-m-d")) - (2 * 3600 * 24)),
+            date("d-m-y", strtotime(date("Y-m-d")) - (3 * 3600 * 24)),
+            date("d-m-y", strtotime(date("Y-m-d")) - (4 * 3600 * 24)),
+            date("d-m-y", strtotime(date("Y-m-d")) - (5 * 3600 * 24)),
+            date("d-m-y", strtotime(date("Y-m-d")) - (6 * 3600 * 24)),
+            date("d-m-y", strtotime(date("Y-m-d")) - (7 * 3600 * 24)));
+//        return $days;
+
+//        $test = "";
+//        $arr_views = array();
+//        $arr_days = array();
+//        for ($i = 1; $i <= 8; $i++) {
+//            $date = date('d-m-y', strtotime(date("Y-m-d")) - ((8 - $i) * 3600 * 24));
+//            $arr_days[$i - 1] = $date;
+//            if (!isset($views[$date])) {
+//                $arr_views[$i - 1] = 0;
+//            } else {
+//                $arr_views[$i - 1] = $views[$date];
+//            }
+//        }
 
 
 //        dd(date('Y-m-d',strtotime(date("Y-m-d")) - (7*3600*24)). $test);
 //        date('d-m-y',strtotime(date("Y-m-d")) - (7*3600*24))
 
-        return view('backends.dashboard.index', compact('arr_days', 'arr_views'));
+        return view('backends.dashboard.index', compact('days', 'views'));
     }
 }
