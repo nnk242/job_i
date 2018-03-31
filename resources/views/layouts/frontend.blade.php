@@ -24,10 +24,37 @@
     {{--<link href="{{ asset('selectize/css/default.css') }}" rel="stylesheet">--}}
     {{--<link href="{{ asset('selectize/css/selectize.css') }}" rel="stylesheet">--}}
     @yield('stylesheet')
+    <style>
+        #loading {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            position: fixed;
+            display: block;
+            z-index: 99999;
+            text-align: center;
+        }
+
+        #loading-image {
+            position: relative;
+            top: 40%;
+            z-index: 9999999;
+        }
+    </style>
 </head>
 <body>
 <div id="app">
-@yield('contents')
+
+    <div id="loading" class="bg-dark">
+        <div id="loading-image">
+            <img src="{{asset('loading.svg')}}" width="200px">
+            <p class="h1 text-light">Loading...</p>
+        </div>
+    </div>
+    @yield('contents')
 </div>
 
 <script src="{{ asset('js/app.js') }}"></script>
@@ -49,7 +76,13 @@
 <script src="{{ asset('selectize/standalone/selectize.js') }}"></script>
 
 <script src="{{ asset('selectize/selectize.js') }}"></script>
+
 <script>
+    window.onload = function () {
+        // document.getElementById("loading").style.display = "none";
+        $('#loading').fadeOut();
+    }
+
     new WOW().init();
 
 
@@ -61,7 +94,7 @@
         maxItems: 1,
         maxOptions: 10,
         render: {
-            option: function(item, escape) {
+            option: function (item, escape) {
                 return '<div>' +
                     '<span class="title">' +
                     '<span class="name"><a href="11232">' + escape(item.name) + '</a></span>' +
@@ -70,15 +103,15 @@
                     '</div>';
             }
         },
-        load: function(query, callback) {
+        load: function (query, callback) {
             if (!query.length) return callback();
             $.ajax({
                 url: '/tim-kiem/' + encodeURIComponent(query),
                 type: 'GET',
-                error: function() {
+                error: function () {
                     callback();
                 },
-                success: function(res) {
+                success: function (res) {
                     callback(res);
                 }
             });

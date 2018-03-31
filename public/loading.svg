@@ -1,1 +1,11 @@
-<svg width="60px"  height="60px"  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid" class="lds-dual-ring" style="background: none;"><circle cx="50" cy="50" ng-attr-r="{{config.radius}}" ng-attr-stroke-width="{{config.width}}" ng-attr-stroke="{{config.stroke}}" ng-attr-stroke-dasharray="{{config.dasharray}}" fill="none" stroke-linecap="round" r="40" stroke-width="4" stroke="#b84a21" stroke-dasharray="62.83185307179586 62.83185307179586" transform="rotate(208.302 50 50)"><animateTransform attributeName="transform" type="rotate" calcMode="linear" values="0 50 50;360 50 50" keyTimes="0;1" dur="5.3s" begin="0s" repeatCount="indefinite"></animateTransform></circle></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 14 32 18" width="32" height="4" fill="#f20" preserveAspectRatio="none">
+    <path opacity="0.8" transform="translate(0 0)" d="M2 14 V18 H6 V14z">
+        <animateTransform attributeName="transform" type="translate" values="0 0; 24 0; 0 0" dur="2s" begin="0" repeatCount="indefinite" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline" />
+    </path>
+    <path opacity="0.5" transform="translate(0 0)" d="M0 14 V18 H8 V14z">
+        <animateTransform attributeName="transform" type="translate" values="0 0; 24 0; 0 0" dur="2s" begin="0.1s" repeatCount="indefinite" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline" />
+    </path>
+    <path opacity="0.25" transform="translate(0 0)" d="M0 14 V18 H8 V14z">
+        <animateTransform attributeName="transform" type="translate" values="0 0; 24 0; 0 0" dur="2s" begin="0.2s" repeatCount="indefinite" keySplines="0.2 0.2 0.4 0.8;0.2 0.2 0.4 0.8" calcMode="spline" />
+    </path>
+</svg>
