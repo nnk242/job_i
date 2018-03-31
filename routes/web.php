@@ -30,6 +30,9 @@ Route::get('tim-kiem/{id}/hinh-anh', 'frontend\ImageController@searchImage')->na
 Route::group(['prefix'=>'admin'], function () {
     $this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
     $this->post('login', 'Auth\LoginController@login');
+    //change password
+    Route::post('changePassword', 'Auth\ChangepasswordController@postCredentials')->name('changePassword');
+    //
     $this->post('logout', 'Auth\LoginController@logout')->name('logout');
     Route::group(['prefix' => '/'], function () {
         Route::get('dashboard', 'backend\DashboardController@index')->name('dashboard');

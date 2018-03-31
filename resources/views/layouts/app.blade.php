@@ -27,22 +27,23 @@
                 {{ config('app.name', 'Laravel') }}
             </a>
             @if (!Auth::guest())
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{route('dashboard')}}">Dashboard <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('view.image')}}">Image</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('view.group')}}">Group</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route('view.tag')}}">Tag</a>
-                    </li>
-                </ul>
-            </div>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="{{route('dashboard')}}">Dashboard <span
+                                        class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('view.image')}}">Image</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('view.group')}}">Group</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('view.tag')}}">Tag</a>
+                        </li>
+                    </ul>
+                </div>
             @endif
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,6 +64,9 @@
                                    onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                     Logout
                                 </a>
+                                <a data-toggle="modal" data-target="#changePassword" class="dropdown-item">
+                                    Change Password
+                                </a>
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST"
                                       style="display: none;">
@@ -80,8 +84,65 @@
     @yield('contents')
 </div>
 
+<!-- The Modal -->
+<div class="modal fade" id="changePassword">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Change password</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form action="{{ route('changePassword') }}" method="POST">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <label for="pwold">Password old:</label>
+                        <input type="password" class="form-control" id="pwold" name="current-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd1">Password new:</label>
+                        <input type="password" class="form-control" id="pwd1" name="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pwd2">Confirm Password new:</label>
+                        <input type="password" class="form-control" id="pwd2" name="password_confirmation" required>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
 @yield('js')
+<script>
+    var pwd1 = document.getElementById("pwd1")
+        , pwd2 = document.getElementById("pwd2");
+
+    function validatePassword() {
+        if (pwd1.value != pwd2.value) {
+            pwd2.setCustomValidity("Passwords Don't Match");
+        } else {
+            pwd2.setCustomValidity('');
+        }
+    }
+
+    pwd1.onchange = validatePassword;
+    pwd2.onkeyup = validatePassword;
+</script>
 </body>
 </html>
