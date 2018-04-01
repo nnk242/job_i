@@ -45,6 +45,7 @@ class ImageController extends Controller
                 }])->orderBy('id', 'DESC')->take($this->show_tag)->get();
             $images = Images::where([['status', '=', 1], ['image_s', 'like', '%' . $id . '%']])->orderBy('id', 'DESC')->take($this->show_tag)->get();
             //type
+            $count_s_img = Images::where([['status', '=', 1], ['image_s', 'like', '%' . $id . '%']])->orderBy('id', 'DESC')->count();
             $types = Types::all();
             //tag
             $tag = Tags::first();
@@ -54,7 +55,7 @@ class ImageController extends Controller
             //region
             $regions = Regions::limit($this->limit_region)->get();
             $first_url_image = $this->first_url_image;
-            return view('frontends.search', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'tag_old', 'images', 'tag_num'));
+            return view('frontends.search', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'tag_old', 'images', 'tag_num', 'count_s_img'));
         }
         $update = Groups::where('id', '=', 1)->with(['image' => function ($q) {
             $q->where('status', '=', 1)->orderBy('id', 'DESC');
@@ -212,11 +213,8 @@ class ImageController extends Controller
 
     public function searchImage($id)
     {
-        $tag_old = $id;
-        $groups = Groups::where([['status', '=', 1], ['id', '<>', 1], ['name_seo', 'like', '%' . $id . '%']])
-            ->with(['image' => function ($q) {
-                $q->where('status', '=', 1);
-            }])->orderBy('id', 'DESC')->paginate($this->show_img);
+        $images = Images::where([['status', '=', 1], ['id', '<>', 1], ['image_s', 'like', '%' . $id . '%']])
+            ->orderBy('id', 'DESC')->paginate($this->show_img);
         //type
         $types = Types::all();
         //tag
@@ -227,7 +225,7 @@ class ImageController extends Controller
         //region
         $regions = Regions::limit($this->limit_region)->get();
         $first_url_image = $this->first_url_image;
-        return view('frontends.searchImage', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'tag_old'));
+        return view('frontends.searchImage', compact('images', 'first_url_image', 'types', 'tags', 'regions'));
     }
 
     public function region($id)

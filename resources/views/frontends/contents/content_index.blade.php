@@ -17,7 +17,7 @@
                                                     <div class="m-text m-s-t">
                                                         @if(isset(($update->image[0])->updated_at))<h5
                                                                 class="text-dark small">{{date_format(($update->image[0])->updated_at, "d") . ' Th' . date_format(($update->image[0])->updated_at, "m," ). date_format(($update->image[0])->updated_at, "Y" )}}</h5>@endif
-                                                        <h2 class="text-light">{{$update->name}}</h2>
+                                                        <h2 class="text-light">{!! str_limit($update->name,$limit=9,$end='...') !!}</h2>
                                                         <p class="text-danger"><i
                                                                     class="fa fa-eye"></i> {{post_views($update->view)}}
                                                             -
@@ -70,6 +70,7 @@
                         <div class="col-md-3">
                             @include('frontends.includes.menu.menu_type')
                             @include('frontends.includes.menu.menu_region')
+                            @include('frontends.includes.menu.menu_top_post_7')
                             @include('frontends.includes.menu.menu_top_view')
                             @include('frontends.includes.menu.menu_tag')
                         </div>

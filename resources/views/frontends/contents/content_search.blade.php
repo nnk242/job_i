@@ -78,8 +78,8 @@
                                             </div>
                                         @endforeach
                                     </div>
-                                    @if(isset($key))
-                                        @if ($key == $tag_num)
+                                    @if(isset($count_s_img))
+                                        @if ($count_s_img > $key+1)
                                             <div class="text-center mb-3">
                                                 <a href="{{route('searchImage', ['id' => $tag_old])}}">
                                                     <button class="btn btn-secondary"><i

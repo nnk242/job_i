@@ -12,7 +12,7 @@
                             <div class="m-bg-img"></div>
                             <div class="m-text m-s-t">
                                 @if(isset($val->created_at))<h5 class="text-dark small">{{ date_format($val->created_at, "d") . ' Th' . date_format($val->created_at, "m," ). date_format($val->created_at, "Y" ) }}</h5>@endif
-                                <h2 class="text-light">{!! str_limit($val->name,$limit=9,$end='...') !!}</h2>
+                                <h2 class="text-light h3">{!! str_limit($val->name,$limit=9,$end='...') !!}</h2>
                                 <p class="text-danger"><i
                                             class="fa fa-eye"></i> {{post_views($val->view)}}
                                 </p>

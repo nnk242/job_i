@@ -456,7 +456,7 @@ class DashboardController extends Controller
         })->map(function ($row) {
             return $row->sum('today');
         });
-        array_values($day8);
+
 //end day 8
 
         $views = array();
