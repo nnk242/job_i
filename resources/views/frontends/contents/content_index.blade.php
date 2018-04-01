@@ -70,7 +70,6 @@
                         <div class="col-md-3">
                             @include('frontends.includes.menu.menu_type')
                             @include('frontends.includes.menu.menu_region')
-                            @include('frontends.includes.menu.menu_top_post_7')
                             @include('frontends.includes.menu.menu_top_view')
                             @include('frontends.includes.menu.menu_tag')
                         </div>

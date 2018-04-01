@@ -9,6 +9,7 @@
             <div class="container-fluid">
                 <div>
                     @if(isset($image))
+                        <div class="mb-5"><a href="{{route('post', ['id'=>$group->name_seo])}}" data-toggle="tooltip" title="{{$group->name}}"><h1 class="h3 text-danger text-uppercase">{{$image->name}}</h1></a></div>
                         <img src="{{in_array(substr($image->url, 0, 4), $first_url_image)?$image->url:asset($image->url)}}"
                              class="m-collection-w m-border-darius-5 m-border-img" id="m-img">
                         @if (!in_array(substr($image->url, 0, 4), $first_url_image))

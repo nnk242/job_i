@@ -324,9 +324,10 @@ class ImageController extends Controller
     public  function image($id) {
         $first_url_image = $this->first_url_image;
         $image = Images::where([['image_s','=',$id],['status','=',1]])->first();
+        $group = Groups::find($image->group_id);
         if(isset($image))
             Event::fire(URL::current(), $image);
 //        return $image->url;
-        return view('frontends.show', compact('first_url_image', 'image'));
+        return view('frontends.show', compact('first_url_image', 'image', 'group'));
     }
 }

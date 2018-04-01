@@ -24,26 +24,6 @@
     {{--<link href="{{ asset('selectize/css/default.css') }}" rel="stylesheet">--}}
     {{--<link href="{{ asset('selectize/css/selectize.css') }}" rel="stylesheet">--}}
     @yield('stylesheet')
-    <style>
-        #loading {
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            position: fixed;
-            display: block;
-            z-index: 99999;
-            text-align: center;
-        }
-
-        #loading-image {
-            position: relative;
-            top: 40%;
-            z-index: 9999999;
-        }
-    </style>
 </head>
 <body>
 <div id="app">
@@ -63,16 +43,8 @@
 
 {{--masonry--}}
 <script src="{{ asset('masonry/masonry.pkgd.min.js') }}"></script>
-<script>
-    $('.grid').masonry({
-        // options...
-        itemSelector: '.grid-item',
-    });
-    $('.grid-c').masonry({
-        // options...
-        itemSelector: '.grid-item-c',
-    });
-</script>
+<script src="{{ asset('masonry/js/imagesloaded.pkgd.min.js') }}"></script>
+
 <!-- animate js -->
 <script src="{{ asset('animate/wow.js') }}"></script>
 
@@ -83,9 +55,25 @@
 
 <script>
     window.onload = function () {
-        // document.getElementById("loading").style.display = "none";
         $('#loading').fadeOut();
     }
+
+    var $grid_ = $('.grid').masonry({
+        // options...
+        itemSelector: '.grid-item'
+    });
+
+    $grid_.imagesLoaded().progress( function() {
+        $grid_.masonry('layout');
+    });
+
+    var $grid = $('.grid_c').imagesLoaded( function() {
+        // init Masonry after all images have loaded
+        $grid.masonry({
+            // options...
+            itemSelector: '.grid-item-c',
+        });
+    });
 
     new WOW().init();
 

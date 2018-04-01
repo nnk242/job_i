@@ -30,7 +30,7 @@ class ImageController extends Controller
 
     public function index(Request $request)
     {
-        $images = Images::paginate($this->item_page);
+        $images = Images::orderby('id','DESC')->paginate($this->item_page);
         $first_url_image = $this->first_url_image;
         return view('backends.images.index', compact('images', 'first_url_image'));
     }
@@ -273,7 +273,6 @@ class ImageController extends Controller
 
     public function uploadFile(Request $request)
     {
-
         $group_check = $request->group_check;
         $name_check = $request->name_check;
         $title_check = $request->title_check;
@@ -283,6 +282,8 @@ class ImageController extends Controller
         $type = $request->u_type_upload;
         $file_upload = $request->file('u_upload_file_m');
 
+        $k = 0;
+
         $count_item = count($request->u_link);
 
         $group = [];
@@ -290,8 +291,6 @@ class ImageController extends Controller
         $content = [];
         $name = [];
         $status = [];
-
-        $k = 0;
 
         //group
         if ($group_check == 1) {
@@ -324,6 +323,7 @@ class ImageController extends Controller
             }
         } else $status = $request->u_status;
         //update
+        $dir = $this->folder_save_image;
         try {
             for ($i = 0; $i < $count_item; $i++) {
                 $image = new Images();
@@ -331,20 +331,18 @@ class ImageController extends Controller
                 $image->user_id = Auth::id();
 
                 if ($type[$i] == "1") {
-
                     try {
                         $extension = $file_upload[$k]->getClientOriginalExtension();
-                        $dir = $this->folder_save_image;
                         $filename = uniqid() . '_' . time() . '.' . $extension;
                         $file_upload[$k]->move($dir, $filename);
                         $image->url = $dir . $filename;
+                        $k++;
                     } catch (\Exception $exception) {
                         File::delete($dir . $filename);
-                        return redirect()->back()->with('er', 'Upload file' . $k . ' fail...');
+                        return redirect()->back()->with('er', 'Upload file' . $i . ' fail...');
                     }
 
                 } else {
-
                     if(isset($url[$i])) {
                         $image->url = $url[$i];
                     }
@@ -356,17 +354,11 @@ class ImageController extends Controller
                 $image->group_id = $group[$i];
                 $image->status = $status[$i] == 1 ? 1 : 0;
                 $image->save();
-                $k++;
             }
+
             return redirect()->back()->with('mes', 'Upload successful...');
         } catch (\Exception $ex) {
-            if (!in_array($dir . $filename, $this->first_url_image)) {
-                try {
-                    File::delete($dir . $filename);
-                } catch (\Exception $ex) {
-
-                }
-            }
+            return 1;
             return redirect()->back()->with('er', 'Upload fail...' );
         }
     }

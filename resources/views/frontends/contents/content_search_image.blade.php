@@ -8,18 +8,18 @@
                             <div class="mb-3"><p class="h3"><i class="fa fa-id-card text-info"></i> Hình ảnh</p></div>
                             @if(isset($images))
                                 @if (count($images))
-                                    <div class="grid">
+                                    <div class="grid" id="grid">
                                         @foreach($images as $image)
-                                            <div class="grid-item wow zoomIn">
+                                            <div class="grid-item wow pulse">
                                                 <div class="m-positon-p">
-                                                    <a href="{{url($image->image_s)}}" class="m-a-p">
+                                                    <a href="{{route('image',['id'=>$image->image_s])}}" class="m-a-p">
                                                         <img src="{{in_array(substr($image->url, 0, 4), $first_url_image)?$image->url:asset($image->url)}}">
                                                         <div class="m-none">
                                                             <div class="m-bg-img"></div>
                                                             <div class="m-text m-s-t">
                                                                 @if($image->created_at)<h5
                                                                         class="text-dark small">{{date_format($image->created_at, "d") . ' Th' . date_format($image->created_at, "m," ). date_format($image->created_at, "Y" )}}</h5>@endif
-                                                                <h2 class="text-light">{{$image->name}}</h2>
+                                                                <h2 class="text-light">{{str_limit($image->name,$limit=9,$end='...')}}</h2>
                                                             </div>
                                                         </div>
                                                     </a>
@@ -27,7 +27,7 @@
                                             </div>
                                         @endforeach
                                     </div>
-                                    <div class="mb-3 mt-2 w-50 m-auto">
+                                    <div class="mb-3 mt-5 w-50 m-auto">
                                         {{Illuminate\Pagination\AbstractPaginator::defaultView("pagination::bootstrap-4")}}
                                         {{ $images->links() }}
                                     </div>
