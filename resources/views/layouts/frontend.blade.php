@@ -37,8 +37,11 @@
     @yield('contents')
 </div>
 
-<script src="{{ asset('js/app.js') }}"></script>
+{{--<script src="{{ asset('js/app.js') }}"></script>--}}
+
 <script src="{{asset('jquery/jquery.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/popper.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('common/js/header.js') }}"></script>
 
 {{--masonry--}}
@@ -48,12 +51,15 @@
 <!-- animate js -->
 <script src="{{ asset('animate/wow.js') }}"></script>
 
-<!-- Script jquery -->
+<!-- Script selectize -->
 <script src="{{ asset('selectize/standalone/selectize.js') }}"></script>
 
 <script src="{{ asset('selectize/selectize.js') }}"></script>
-
 <script>
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
     window.onload = function () {
         $('#loading').fadeOut();
     }

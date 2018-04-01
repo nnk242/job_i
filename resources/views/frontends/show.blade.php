@@ -9,7 +9,12 @@
             <div class="container-fluid">
                 <div>
                     @if(isset($image))
-                        <div class="mb-5"><a href="{{route('post', ['id'=>$group->name_seo])}}" data-toggle="tooltip" title="{{$group->name}}"><h1 class="h3 text-danger text-uppercase">{{$image->name}}</h1></a></div>
+                        <div class="mb-5"><p class="text-warning text-center"><span
+                                        class="fa fa-eye"></span> {{$image->view}} Lượt xem - <span
+                                        class="text-dark small">{{date_format($image->updated_at, "d") . ' Th' . date_format($image->updated_at, "m," ). date_format($image->updated_at, "Y" )}}</span>
+                            </p><a href="{{route('post', ['id'=>$group->name_seo])}}" data-toggle="tooltip" class=""
+                                   title="{{$group->name}}"><h1
+                                        class="h3 text-danger text-uppercase text-center">{{$image->name}}</h1></a></div>
                         <img src="{{in_array(substr($image->url, 0, 4), $first_url_image)?$image->url:asset($image->url)}}"
                              class="m-collection-w m-border-darius-5 m-border-img" id="m-img">
                         @if (!in_array(substr($image->url, 0, 4), $first_url_image))
