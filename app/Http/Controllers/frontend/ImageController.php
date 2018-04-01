@@ -24,6 +24,7 @@ class ImageController extends Controller
     public $show_tag = 4;
     protected $limit_region = 4;
     protected $top_view_show = 9;
+    protected $show_img_album = 10;
 
     public function index(Request $request)
     {
@@ -63,16 +64,10 @@ class ImageController extends Controller
 
         $top_image = Images::where('status',1)->orderBy('view', 'DESC')->limit($this->top_view_show)->get();
 
-        $count_img = Images::where(function ($q) {
-            $q->where([['created_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) + (3600 * 24))],
-                ['created_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")))]
-            ])
-                ->orWhereNull('created_at');
-        })->get()->groupBy(function ($item) {
-            return $item->created_at->format('d-m-y');
-        })->map(function ($row) {
-            return $row->count('created_at');
-        });
+        $count_img = Images::where([['group_id', '=', 1], ['status', '=', 1],
+            ['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) + (3600 * 24))],
+            ['updated_at', '>=', date("Y-m-d")]
+            ])->count();
 
         $show_img = $this->show_img;
         $groups = Groups::where([['status', '=', 1], ['id', '<>', 1]])
@@ -109,7 +104,8 @@ class ImageController extends Controller
 
             $view_current_old = $post->view;
             $continent = Continents::find($post->region->continent_id);
-            $images = Images::where([['Group_id','=',$post->id],['status', '=', 1]])->orderby('id', 'DESC')->paginate($this->show_img);
+            $images = Images::where([['Group_id','=',$post->id],['status', '=', 1]])->orderby('id', 'DESC')->paginate($this->show_img_album);
+//            return $images;
             $first_url_image = $this->first_url_image;
             Event::fire(URL::current(), $post);
             $view_current_new = $post->view;

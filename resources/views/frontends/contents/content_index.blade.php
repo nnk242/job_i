@@ -23,9 +23,9 @@
                                                             -
                                                             <i class="fa fa-picture-o"></i> {{count($update->image)}}
                                                         </p>
-                                                        @if(isset($count_img[date("d-m-y")]))<p
+                                                        @if(isset($count_img))<p
                                                                 class="text-success"><i
-                                                                    class="fa fa-file-image-o"></i> {{$count_img[date("d-m-y")]}}
+                                                                    class="fa fa-file-image-o"></i> {{$count_img}}
                                                             ảnh mới</p>@endif
                                                     </div>
                                                 </div>

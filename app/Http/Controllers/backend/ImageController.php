@@ -329,7 +329,9 @@ class ImageController extends Controller
                 $image = new Images();
 
                 $image->user_id = Auth::id();
-                if ($type[$i] == 1) {
+
+                if ($type[$i] == "1") {
+
                     try {
                         $extension = $file_upload[$k]->getClientOriginalExtension();
                         $dir = $this->folder_save_image;
@@ -337,10 +339,16 @@ class ImageController extends Controller
                         $file_upload[$k]->move($dir, $filename);
                         $image->url = $dir . $filename;
                     } catch (\Exception $exception) {
+                        File::delete($dir . $filename);
                         return redirect()->back()->with('er', 'Upload file' . $k . ' fail...');
                     }
 
-                } else $image->url = $url[$i];
+                } else {
+
+                    if(isset($url[$i])) {
+                        $image->url = $url[$i];
+                    }
+                }
                 $image->name = $name[$i];
                 $image->image_s = Images::whereimage_s(str_seo_m($name[$i]))->count() > 0 ? str_seo_m(str_replace('.html', '', $name[$i])) . '-' . time() . $i : str_seo_m($name[$i]);
                 $image->title = $title[$i];
@@ -348,8 +356,8 @@ class ImageController extends Controller
                 $image->group_id = $group[$i];
                 $image->status = $status[$i] == 1 ? 1 : 0;
                 $image->save();
+                $k++;
             }
-
             return redirect()->back()->with('mes', 'Upload successful...');
         } catch (\Exception $ex) {
             if (!in_array($dir . $filename, $this->first_url_image)) {

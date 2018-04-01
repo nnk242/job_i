@@ -48,8 +48,10 @@
                                                     <p class="text-info text-center">{{$image->title . date_format($image->created_at, " - d/m/Y")}}</p>
                                                 </a>
                                             @endforeach
-                                            {{Illuminate\Pagination\AbstractPaginator::defaultView("pagination::bootstrap-4")}}
-                                            {{ $images->links() }}
+                                            <div class="mb-3 mt-2 w-50 m-auto">
+                                                {{Illuminate\Pagination\AbstractPaginator::defaultView("pagination::bootstrap-4")}}
+                                                {{ $images->links() }}
+                                            </div>
                                         </div>
                                         <div class="mt-5">
                                             <hr/>
