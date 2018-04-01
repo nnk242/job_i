@@ -23,6 +23,7 @@ class CreateImagesTable extends Migration
             $table->text('content')->nullable();
             $table->integer('group_id');
             $table->tinyInteger('status')->default(1);
+            $table->integer('view')->default(0);
             $table->timestamps();
         });
     }

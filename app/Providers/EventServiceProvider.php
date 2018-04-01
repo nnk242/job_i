@@ -29,7 +29,9 @@ class EventServiceProvider extends ServiceProvider
         parent::boot();
 
         //
-
-        Event::listen(URL::current(), 'App\view\counterView');
+        if(in_array('hinh-anh', explode('/', URL::current()))) {
+            Event::listen(URL::current(), 'App\view\counterViewImage');
+        } else
+            Event::listen(URL::current(), 'App\view\counterView');
     }
 }

@@ -68,6 +68,10 @@
         // options...
         itemSelector: '.grid-item',
     });
+    $('.grid-c').masonry({
+        // options...
+        itemSelector: '.grid-item-c',
+    });
 </script>
 <!-- animate js -->
 <script src="{{ asset('animate/wow.js') }}"></script>

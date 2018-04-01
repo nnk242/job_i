@@ -1,4 +1,4 @@
-@if (isset($tag))
+@if (isset($tags))
     <div class="mb-2 mt-5">
         <div class="p-1">
             <p class="h4 ml-1 text-muted"><i class="fa fa-tags"></i> TAGS</p>

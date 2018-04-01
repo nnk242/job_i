@@ -23,6 +23,7 @@ class ImageController extends Controller
     public $show_img_col = 4;
     public $show_tag = 4;
     protected $limit_region = 4;
+    protected $top_view_show = 9;
 
     public function index(Request $request)
     {
@@ -58,6 +59,20 @@ class ImageController extends Controller
         $update = Groups::where('id', '=', 1)->with(['image' => function ($q) {
             $q->where('status', '=', 1)->orderBy('id', 'DESC');
         }])->first();
+
+        $top_image = Images::where('status',1)->orderBy('view', 'DESC')->limit($this->top_view_show)->get();
+
+        $count_img = Images::where(function ($q) {
+            $q->where([['created_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) + (3600 * 24))],
+                ['created_at', '>=', date("Y-m-d", strtotime(date("Y-m-d")))]
+            ])
+                ->orWhereNull('created_at');
+        })->get()->groupBy(function ($item) {
+            return $item->created_at->format('d-m-y');
+        })->map(function ($row) {
+            return $row->count('created_at');
+        });
+
         $show_img = $this->show_img;
         $groups = Groups::where([['status', '=', 1], ['id', '<>', 1]])
             ->with(['image' => function ($q) {
@@ -72,7 +87,7 @@ class ImageController extends Controller
         //region
         $regions = Regions::limit($this->limit_region)->get();
         $first_url_image = $this->first_url_image;
-        return view('frontends.index', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'show_img', 'update'));
+        return view('frontends.index', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'show_img', 'update', 'count_img', 'top_image'));
     }
 
     public function show($id)
@@ -314,7 +329,9 @@ class ImageController extends Controller
 
     public  function image($id) {
         $first_url_image = $this->first_url_image;
-        $image = Images::whereimage_s($id)->first();
+        $image = Images::where([['image_s','=',$id],['status','=',1]])->first();
+        if(isset($image))
+            Event::fire(URL::current(), $image);
 //        return $image->url;
         return view('frontends.show', compact('first_url_image', 'image'));
     }

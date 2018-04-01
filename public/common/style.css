@@ -53,6 +53,10 @@
     width: 25%;
 }
 
+.grid-item-c {
+    width: 33.33%
+}
+
 @media screen and (max-width: 544px) {
     .grid-item {
         width: 100%;
@@ -76,7 +80,7 @@
     }
 }
 
-.grid-item img {
+.grid-item img, .grid-item-c img {
     width: 100%;
     margin:0 auto 20px auto;
     display: block;

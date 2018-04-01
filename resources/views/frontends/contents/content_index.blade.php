@@ -1,23 +1,6 @@
-<!-- contents  data-toggle="tab" -->
 <section>
-    <nav class="m-margin-top-57px fixed-top bg-light" id="m-nav-tab">
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link active m-tab-i" id="nav-home-tab" href="{{url('/')}}"
-               role="tab"
-               aria-controls="nav-home" aria-selected="true"><span class="fa fa-bell-o text-danger"></span>&nbsp;Ảnh
-                mới</a>
-            <a class="nav-item nav-link m-tab-i" id="nav-profile-tab" href=""
-               role="tab"
-               aria-controls="nav-profile" aria-selected="false"><span class="fa fa-vcard-o text-danger"></span>&nbsp;Bộ
-                sưu tập</a>
-            <a class="nav-item nav-link m-tab-i" id="nav-contact-tab" href="#nav-contact"
-               role="tab"
-               aria-controls="nav-contact" aria-selected="false"><span class="fa fa-ravelry text-danger"></span>&nbsp;BXH
-                tháng</a>
-        </div>
-    </nav>
-    <div class="tab-content mt-5" id="nav-tabContent">
-        <div class="tab-pane fade show active m-margin-top-150px" id="nav-home" role="tabpanel"
+    <div class="tab-content mt-5">
+        <div class="m-margin-top-150px" id="nav-home" role="tabpanel"
              aria-labelledby="nav-home-tab">
             <div class="container-fluid">
                 <div class="m-margin-top-bottom-30px">
@@ -32,13 +15,18 @@
                                                 <div class="m-none">
                                                     <div class="m-bg-img"></div>
                                                     <div class="m-text m-s-t">
-                                                        @if(isset(($update->image[0])->updated_at))<h5 class="text-dark small">{{date_format(($update->image[0])->updated_at, "d") . ' Th' . date_format(($update->image[0])->updated_at, "m," ). date_format(($update->image[0])->updated_at, "Y" )}}</h5>@endif
+                                                        @if(isset(($update->image[0])->updated_at))<h5
+                                                                class="text-dark small">{{date_format(($update->image[0])->updated_at, "d") . ' Th' . date_format(($update->image[0])->updated_at, "m," ). date_format(($update->image[0])->updated_at, "Y" )}}</h5>@endif
                                                         <h2 class="text-light">{{$update->name}}</h2>
                                                         <p class="text-danger"><i
                                                                     class="fa fa-eye"></i> {{post_views($update->view)}}
                                                             -
                                                             <i class="fa fa-picture-o"></i> {{count($update->image)}}
                                                         </p>
+                                                        @if(isset($count_img[date("d-m-y")]))<p
+                                                                class="text-success"><i
+                                                                    class="fa fa-file-image-o"></i> {{$count_img[date("d-m-y")]}}
+                                                            ảnh mới</p>@endif
                                                     </div>
                                                 </div>
                                             </a>
@@ -52,7 +40,8 @@
                                                     <div class="m-none">
                                                         <div class="m-bg-img"></div>
                                                         <div class="m-text m-s-t">
-                                                            @if(isset($group->created_at))<h5 class="text-dark small">{{date_format($group->created_at, "d") . ' Th' . date_format($group->created_at, "m," ). date_format($group->created_at, "Y" )}}</h5>@endif
+                                                            @if(isset($group->created_at))<h5
+                                                                    class="text-dark small">{{date_format($group->created_at, "d") . ' Th' . date_format($group->created_at, "m," ). date_format($group->created_at, "Y" )}}</h5>@endif
                                                             <h2 class="text-light">{{$group->name}}</h2>
                                                             <p class="text-danger"><i
                                                                         class="fa fa-eye"></i> {{post_views($group->view)}}
@@ -81,6 +70,7 @@
                         <div class="col-md-3">
                             @include('frontends.includes.menu.menu_type')
                             @include('frontends.includes.menu.menu_region')
+                            @include('frontends.includes.menu.menu_top_view')
                             @include('frontends.includes.menu.menu_tag')
                         </div>
                     </div>
