@@ -34,7 +34,7 @@
                                         @endif
                                     </div>
                                     <div>
-                                        <h1>{{$post->name}}</h1>
+                                        <h1 data-toggle="tooltip" title="{{$post->name}}">{{$post->name}}</h1>
                                         <p class="-bold"><i class="fa fa-eye"></i> {{$post->view}}</p>
                                         <h4>{{$post->description}}</h4>
                                     </div>

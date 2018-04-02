@@ -5,7 +5,7 @@
 @endsection
 @section('contents')
     @include('frontends.includes.header')
-    @include('frontends.contents.content_tag_post')
+    @include('frontends.contents.content_search_post')
     @include('frontends.includes.footer')
 @endsection
 @section('js')
