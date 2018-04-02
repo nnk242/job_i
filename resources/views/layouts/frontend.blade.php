@@ -37,7 +37,7 @@
     @yield('contents')
 </div>
 
-{{--<script src="{{ asset('js/app.js') }}"></script>--}}
+<!--<script src="{{ asset('js/app.js') }}"></script>-->
 
 <script src="{{asset('jquery/jquery.js')}}" type="text/javascript"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
@@ -56,8 +56,12 @@
 
 <script src="{{ asset('selectize/selectize.js') }}"></script>
 <script>
-    $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
+    $(function(){
+        var notFoundImage = "http://upload.wikimedia.org/wikipedia/en/thumb/d/da/Ziltoidtheomniscientcover.jpg/220px-Ziltoidtheomniscientcover.jpg";
+        var realImageSrc = $(".safelyLoadImage").data("imgsrc");
+        $(".safelyLoadImage").attr("onerror", "this.onerror=null; this.src='" + notFoundImage + "';");
+        $(".safelyLoadImage").attr("src", realImageSrc);
+        $(".safelyLoadImage").removeClass("safelyLoadImage");
     });
 
     window.onload = function () {
@@ -119,6 +123,10 @@
         var val = $('#select-repo').val();
         $(location).attr('href', 'http://' + window.location.origin + '/?timkiem=' + val);
     });
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
 
 </script>
 @yield('js')

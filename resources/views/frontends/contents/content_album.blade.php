@@ -2,14 +2,19 @@
     <nav class="m-margin-top-57px fixed-top bg-light" id="m-nav-tab">
         <nav class="breadcrumb">
             <div class="container">
-                <a class="breadcrumb-item" href="{{url('/')}}" data-toggle="tooltip" data-placement="bottom" title="Trang chủ"><i class="fa fa-home"></i>Trang chủ</a>
+                <a class="breadcrumb-item" href="{{url('/')}}" data-toggle="tooltip" data-placement="bottom"
+                   title="Trang chủ"><i class="fa fa-home"></i>Trang chủ</a>
                 <a class="breadcrumb-item"
-                   href="{{route('region', ['id'=>$continent->name_seo])}}" data-toggle="tooltip" data-placement="bottom" title="{{$continent->name}}">{{$continent->name}}</a>
+                   href="{{route('region', ['id'=>$continent->name_seo])}}" data-toggle="tooltip"
+                   data-placement="bottom" title="{{$continent->name}}">{{$continent->name}}</a>
                 <a class="breadcrumb-item"
-                   href="{{route('region', ['id'=>$post->region->name_seo])}}" data-toggle="tooltip" data-placement="bottom" title="{{$post->region->name}}">{{$post->region->name}}</a>
+                   href="{{route('region', ['id'=>$post->region->name_seo])}}" data-toggle="tooltip"
+                   data-placement="bottom" title="{{$post->region->name}}">{{$post->region->name}}</a>
                 <a class="breadcrumb-item"
-                   href="{{route('region', ['id'=>$post->type->name_seo])}}" data-toggle="tooltip" data-placement="bottom" title="{{$post->type->name}}">{{$post->type->name}}</a>
-                <span class="breadcrumb-item active" data-toggle="tooltip" data-placement="bottom" title="{{$post->name}}">{{$post->name}}</span>
+                   href="{{route('region', ['id'=>$post->type->name_seo])}}" data-toggle="tooltip"
+                   data-placement="bottom" title="{{$post->type->name}}">{{$post->type->name}}</a>
+                <span class="breadcrumb-item active" data-toggle="tooltip" data-placement="bottom"
+                      title="{{$post->name}}">{{$post->name}}</span>
             </div>
         </nav>
     </nav>
@@ -42,8 +47,9 @@
                                         <div>
                                             @foreach($images as $image)
                                                 <p class="">{{$image->content}}</p>
-                                                <a href="{{url('hinh-anh/' . $image->image_s)}}" data-toggle="tooltip" title="{{$image->name}}"><img
-                                                            class="m-img-w m-border-darius-5"
+                                                <a href="{{url('hinh-anh/' . $image->image_s)}}" data-toggle="tooltip"
+                                                   title="{{$image->name}}"><img
+                                                            class="m-img-w m-border-darius-5 safelyLoadImage"
                                                             src="{{in_array(substr($image->url, 0, 4), $first_url_image)?$image->url:asset($image->url)}}">
                                                     <p class="text-info text-center">{{$image->title . date_format($image->created_at, " - d/m/Y")}}</p>
                                                 </a>

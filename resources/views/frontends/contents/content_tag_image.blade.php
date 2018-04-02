@@ -15,8 +15,10 @@
                                         @foreach($images as $image)
                                             <div class="grid-item wow zoomIn">
                                                 <div class="m-positon-p">
-                                                    <a href="{{url($image->image_s)}}" class="m-a-p" data-toggle="tooltip" title="{{$image->name}}">
-                                                        <img src="{{in_array(substr($image->url, 0, 4), $first_url_image)?$image->url:asset($image->url)}}">
+                                                    <a href="{{url($image->image_s)}}" class="m-a-p"
+                                                       data-toggle="tooltip" title="{{$image->name}}">
+                                                        <img class="safelyLoadImage"
+                                                             src="{{in_array(substr($image->url, 0, 4), $first_url_image)?$image->url:asset($image->url)}}">
                                                         <div class="m-none">
                                                             <div class="m-bg-img"></div>
                                                             <div class="m-text m-s-t">

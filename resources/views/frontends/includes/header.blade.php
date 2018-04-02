@@ -12,7 +12,7 @@
             <div id="navbarSupportedContent" class="collapse navbar-collapse">
                 <ul class="navbar-nav mr-auto"></ul>
                 <div class="form-inline my-2 my-lg-0">
-                    <form class="form-inline">
+                    <form class="form-inline" method="GET" action="{{url('/')}}">
                         <select class="form-control mr-sm-2" id="select-repo" name="tim-kiem" placeholder="Tìm kiếm..."></select>
                         <button type="submit" class="btn btn-outline-light my-2 my-sm-0 text-danger"><i
                                     class="fa fa-search"></i> Tìm kiếm

@@ -1,5 +1,5 @@
 @extends('layouts.frontend')
-@section('title')Trang chủ@endsection
+@section('title')@if(isset($post)){{$post->name. ' | ' . $post->type->name . ' đẹp'}} @if(isset($images)) {{$images->currentPage() != 1? ' | trang ' . $images->currentPage():''}} @endif @else @endif @endsection
 @section('stylesheet')
     <link rel="stylesheet" href="{{asset('common/header.css')}}">@endsection
 @section('contents')

@@ -1,5 +1,5 @@
 @extends('layouts.frontend')
-@section('title')Trang chủ@endsection
+@section('title')Trang chủ | Anhxxx.net - Ảnh sex bướm xinh@endsection
 @section('stylesheet')
     <link rel="stylesheet" href="{{asset('common/header.css')}}">
 @endsection
