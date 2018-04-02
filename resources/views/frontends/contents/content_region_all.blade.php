@@ -15,7 +15,7 @@
                                         @foreach($groups as $group)
                                             <div class="grid-item wow zoomIn">
                                                 <div class="m-positon-p">
-                                                    <a href="{{url($group->name_seo)}}" class="m-a-p">
+                                                    <a href="{{url($group->name_seo)}}" class="m-a-p" data-toggle="tooltip" title="{{$group->name}}">
                                                         <img src="{{in_array(substr($group->thumbnail, 0, 4), $first_url_image)?$group->thumbnail:asset($group->thumbnail)}}">
                                                         <div class="m-none">
                                                             <div class="m-bg-img"></div>
@@ -48,7 +48,7 @@
                                         @foreach($images as $image)
                                             <div class="grid-item wow zoomIn">
                                                 <div class="m-positon-p">
-                                                    <a href="{{route('image', ['id', $tag_old])}}" class="m-a-p">
+                                                    <a href="{{route('image', ['id', $tag_old])}}" class="m-a-p" data-toggle="tooltip" title="{{$image->name}}">
                                                         <img src="{{in_array(substr($image->image_s, 0, 4), $first_url_image)?$image->image_s:asset($image->$image_s)}}">
                                                         <div class="m-none">
                                                             <div class="m-bg-img"></div>

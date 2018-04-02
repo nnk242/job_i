@@ -6,7 +6,7 @@
         <h2 class="h5">
             @if(!isset($tag_old))
                 @for($i = 0;$i<count($tags['name']); $i++)
-                    <a href="{{route('tag', ['id'=>$tags['name_seo'][$i]])}}" class="text-dark">
+                    <a href="{{route('tag', ['id'=>$tags['name_seo'][$i]])}}" class="text-dark" data-toggle="tooltip" title="{{$tags['name'][$i]}}">
                         <div class="float-left p-1 border-secondary border mr-1 ml-1 mt-1 mb-1 m-tag">
                             <i class="fa fa-hashtag text-warning"></i> {{$tags['name'][$i]}}
                         </div>
@@ -15,7 +15,7 @@
             @else
                 @for($i = 0;$i<count($tags['name']); $i++)
                     @if($tags['name_seo'][$i] != $tag_old)
-                        <a href="{{route('tag', ['id'=>$tags['name_seo'][$i]])}}" class="text-dark">
+                        <a href="{{route('tag', ['id'=>$tags['name_seo'][$i]])}}" class="text-dark" data-toggle="tooltip" title="{{$tags['name'][$i]}}">
                             <div class="float-left p-1 border-secondary border mr-1 ml-1 mt-1 mb-1 m-tag">
                                 <i class="fa fa-hashtag text-warning"></i> {{$tags['name'][$i]}}
                             </div>

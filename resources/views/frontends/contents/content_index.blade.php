@@ -10,7 +10,7 @@
                                 <div class="grid">
                                     <div class="grid-item wow zoomIn">
                                         <div class="m-positon-p">
-                                            <a href="{{url($update->name_seo)}}" class="m-a-p">
+                                            <a href="{{url($update->name_seo)}}" class="m-a-p" data-toggle="tooltip" title="{{$update->name}}">
                                                 <img src="{{in_array(substr(($update->image[0])->url, 0, 4), $first_url_image)?($update->image[0])->url:asset(($update->image[0])->url)}}">
                                                 <div class="m-none">
                                                     <div class="m-bg-img"></div>
@@ -35,7 +35,7 @@
                                     @foreach($groups as $key=>$group)
                                         <div class="grid-item wow zoomIn">
                                             <div class="m-positon-p">
-                                                <a href="{{url($group->name_seo)}}" class="m-a-p">
+                                                <a href="{{url($group->name_seo)}}" class="m-a-p" data-toggle="tooltip" title="{{$group->name}}">
                                                     <img src="{{in_array(substr($group->thumbnail, 0, 4), $first_url_image)?$group->thumbnail:asset($group->thumbnail)}}">
                                                     <div class="m-none">
                                                         <div class="m-bg-img"></div>
@@ -57,7 +57,7 @@
                                 </div>
                                 @if($key == $show_img-1)
                                     <div class="text-center mb-3">
-                                        <a href="{{route('postView')}}">
+                                        <a href="{{route('postView')}}" data-toggle="tooltip" title="Xem thêm">
                                             <button class="btn btn-secondary"><span class="fa fa-plus"></span> Xem thêm
                                             </button>
                                         </a>

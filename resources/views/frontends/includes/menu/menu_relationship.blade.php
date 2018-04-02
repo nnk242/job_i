@@ -4,7 +4,7 @@
     </div>
     @foreach($post_relationship as $val)
         <h2 class="h5">
-            <a href="{{route('post', ['id'=>$val->name_seo])}}" class="text-dark">
+            <a href="{{route('post', ['id'=>$val->name_seo])}}" class="text-dark" data-toggle="tooltip" title="{{$val->name}}">
                 <div class="ml-1 border-bottom border-secondary p-1 m-menu-type">
                     <div class="m-type-a">
                         <i class="fa fa-address-card-o text-info"></i> {{$val->name}}

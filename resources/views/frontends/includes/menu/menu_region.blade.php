@@ -4,7 +4,7 @@
     </div>
     @foreach($regions as $region)
         <h2 class="h5">
-            <a href="{{route('region', ['id'=>$region->name_seo])}}" class="text-dark">
+            <a href="{{route('region', ['id'=>$region->name_seo])}}" data-toggle="tooltip" title="{{$region->name}}" class="text-dark">
                 <div class="ml-1 border-bottom border-secondary p-1 m-menu-type">
                     <div class="m-type-a">
                         <div style="width: 30px" class="float-left">
@@ -17,7 +17,7 @@
         </h2>
     @endforeach
     <h2 class="h5">
-        <a href="{{route('region', ['id'=>'xem-them'])}}" class="text-info">
+        <a href="{{route('region', ['id'=>'xem-them'])}}" class="text-info" data-toggle="tooltip" title="xem thêm">
             <div class="ml-1">
                 <div class="m-type-a text-center">
                     <i class="fa fa-plus-square-o"></i> Xem thêm

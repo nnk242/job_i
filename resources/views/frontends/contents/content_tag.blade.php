@@ -1,6 +1,6 @@
 <section>
     <div class="tab-content">
-        <div class="tab-pane fade show active m-margin-top-110px">
+        <div class="m-margin-top-110px">
             <div class="container-fluid">
                 <div class="m-margin-top-bottom-30px">
                     <div class="row">
@@ -15,7 +15,7 @@
                                         @foreach($groups as $group)
                                             <div class="grid-item wow zoomIn">
                                                 <div class="m-positon-p">
-                                                    <a href="{{url($group->name_seo)}}" class="m-a-p">
+                                                    <a href="{{url($group->name_seo)}}" class="m-a-p" data-toggle="tooltip" title="{{$group->name}}">
                                                         <img src="{{in_array(substr($group->thumbnail, 0, 4), $first_url_image)?$group->thumbnail:asset($group->thumbnail)}}">
                                                         <div class="m-none">
                                                             <div class="m-bg-img"></div>
@@ -36,7 +36,7 @@
                                     </div>
                                     @if (count($groups) > $tag_num)
                                         <div class="text-center mb-3 mt-2">
-                                            <a href="{{route('tagPost', ['id' => $tag_old])}}">
+                                            <a href="{{route('tagPost', ['id' => $tag_old])}}" data-toggle="tooltip" title="Xem thêm">
                                                 <button class="btn btn-secondary"><i
                                                             class="fa fa-plus-square-o"></i>
                                                     Xem thêm

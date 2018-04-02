@@ -5,7 +5,8 @@
     @foreach($types as $type)
         <h2 class="h5">
             @if(!isset($type_id))
-                <a href="{{route('type', ['id'=>$type->name_seo])}}" class="text-dark">
+                <a href="{{route('type', ['id'=>$type->name_seo])}}" class="text-dark" data-toggle="tooltip"
+                   title="{{$type->name}}">
                     <div class="ml-1 border-bottom border-secondary p-1 m-menu-type">
                         <div class="m-type-a">
                             <i class="fa fa-file-photo-o text-info"></i> {{$type->name}}
@@ -15,16 +16,16 @@
                 </a>
             @else
                 @if($type->id == $type_id->id)
-                    <span class="text-warning">
-                    <div class="ml-1 border-bottom border-secondary p-1 m-menu-type">
-                        <div class="m-type-a">
-                            <i class="fa fa-file-photo-o text-info"></i> {{$type->name}}
+                    <span class="text-warning" data-toggle="tooltip" title="{{$type->name}}">
+                        <div class="ml-1 border-bottom border-secondary p-1 m-menu-type">
+                            <div class="m-type-a">
+                                <i class="fa fa-file-photo-o text-info"></i> {{$type->name}}
+                            </div>
                         </div>
-
-                    </div>
-                </span>
+                    </span>
                 @else
-                    <a href="{{route('type', ['id'=>$type->name_seo])}}" class="text-dark">
+                    <a href="{{route('type', ['id'=>$type->name_seo])}}" class="text-dark" data-toggle="tooltip"
+                       title="{{$type->name}}">
                         <div class="ml-1 border-bottom border-secondary p-1 m-menu-type">
                             <div class="m-type-a">
                                 <i class="fa fa-file-photo-o text-info"></i> {{$type->name}}

@@ -15,9 +15,8 @@
             </div>
         </nav>
     </nav>
-    <div class="tab-content mt-5" id="nav-tabContent">
-        <div class="tab-pane fade show active m-margin-top-150px" id="nav-home" role="tabpanel"
-             aria-labelledby="nav-home-tab">
+    <div class="tab-content mt-5">
+        <div class="m-margin-top-150px">
             <div class="container-fluid">
                 <div class="m-margin-top-bottom-30px">
                     <div class="row">
@@ -28,7 +27,7 @@
                                         @foreach($groups as $group)
                                             <div class="grid-item wow zoomIn">
                                                 <div class="m-positon-p">
-                                                    <a href="{{url($group->name_seo)}}" class="m-a-p">
+                                                    <a href="{{url($group->name_seo)}}" class="m-a-p" data-toggle="tooltip" title="{{$group->name}}">
                                                         <img src="{{in_array(substr($group->thumbnail, 0, 4), $first_url_image)?$group->thumbnail:asset($group->thumbnail)}}">
                                                         <div class="m-none">
                                                             <div class="m-bg-img"></div>

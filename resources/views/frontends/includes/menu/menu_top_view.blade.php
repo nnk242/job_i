@@ -6,7 +6,7 @@
         @foreach($top_image as $key=>$val)
             <div class="grid-item-c">
                 <div class="m-positon-p">
-                    <a href="{{ route('image', ['id'=>$val->image_s])}}" class="m-a-p">
+                    <a href="{{ route('image', ['id'=>$val->image_s])}}" class="m-a-p" data-toggle="tooltip" title="{{$val->name}}">
                         <img src="{{ in_array(substr($val->url, 0, 4), $first_url_image)?$val->url:asset($val->url) }}">
                         <div class="m-none">
                             <div class="m-bg-img"></div>
