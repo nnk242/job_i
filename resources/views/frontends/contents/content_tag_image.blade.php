@@ -24,7 +24,7 @@
                                                             <div class="m-text m-s-t">
                                                                 @if($image->created_at)<h5
                                                                         class="text-dark small">{{date_format($image->created_at, "d") . ' Th' . date_format($image->created_at, "m," ). date_format($image->created_at, "Y" )}}</h5>@endif
-                                                                <h2 class="text-light">{{$image->name}}</h2>
+                                                                <h2 class="text-light">{!! str_limit($image->name,$limit=9,$end='...') !!}</h2>
                                                             </div>
                                                         </div>
                                                     </a>

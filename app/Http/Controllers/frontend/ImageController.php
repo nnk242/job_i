@@ -19,7 +19,7 @@ class ImageController extends Controller
 {
     //
     public $first_url_image = array('http');
-    public $show_img = 10;
+    public $show_img = 20;
     public $show_img_col = 4;
     public $show_tag = 4;
     protected $limit_region = 4;
