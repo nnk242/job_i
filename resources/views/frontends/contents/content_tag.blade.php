@@ -36,7 +36,7 @@
                                             </div>
                                         @endforeach
                                     </div>
-                                    @if (count($groups) > $tag_num)
+                                    @if ($count_group > $tag_num)
                                         <div class="text-center mb-3 mt-2">
                                             <a href="{{route('tagPost', ['id' => $tag_old])}}" data-toggle="tooltip"
                                                title="Xem thêm">
@@ -63,7 +63,7 @@
                                                 <div class="m-positon-p">
                                                     <a href="{{route('image', ['id', $tag_old])}}" class="m-a-p">
                                                         <img class="safelyLoadImage"
-                                                             src="{{in_array(substr($image->image_s, 0, 4), $first_url_image)?$image->image_s:asset($image->$image_s)}}">
+                                                             src="{{in_array(substr($image->url, 0, 4), $first_url_image)?$image->url:asset($image->url)}}">
                                                         <div class="m-none">
                                                             <div class="m-bg-img"></div>
                                                             <div class="m-text m-s-t">
@@ -79,7 +79,7 @@
                                             </div>
                                         @endforeach
                                     </div>
-                                    @if (count($images) > $tag_num)
+                                    @if ($count_s_img > $tag_num)
                                         <div class="text-center mb-3">
                                             <a href="{{route('tagImage', ['id' => $tag_old])}}">
                                                 <button class="btn btn-secondary"><i

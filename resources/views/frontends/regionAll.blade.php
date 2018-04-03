@@ -1,5 +1,5 @@
 @extends('layouts.frontend')
-@section('title')Xem anh @endsection
+@section('title')Xem ảnh @endsection
 @section('stylesheet')
     <link rel="stylesheet" href="{{asset('common/header.css')}}">
 @endsection

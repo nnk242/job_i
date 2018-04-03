@@ -1,5 +1,5 @@
 @extends('layouts.frontend')
-@section('title')Trang chủ@endsection
+@section('title') Tổng hợp ảnh sex {{ $groups->currentPage() == 1 ? '' : ' | Trang ' . $groups->currentPage() }} @endsection
 @section('stylesheet')
     <link rel="stylesheet" href="{{asset('common/header.css')}}">
 @endsection
@@ -7,8 +7,4 @@
     @include('frontends.includes.header')
     @include('frontends.contents.content_post_view')
     @include('frontends.includes.footer')
-@endsection
-@section('js')
-    <!-- Script jquery -->
-    <script src="{{asset('jquery/jquery.js')}}" type="text/javascript"></script>
 @endsection

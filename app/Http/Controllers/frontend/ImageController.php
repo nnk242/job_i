@@ -19,7 +19,7 @@ class ImageController extends Controller
 {
     //
     public $first_url_image = array('http');
-    public $show_img = 20;
+    public $show_img = 10;
     public $show_img_col = 4;
     public $show_tag = 4;
     protected $limit_region = 4;
@@ -44,9 +44,11 @@ class ImageController extends Controller
                 ->with(['image' => function ($q) {
                     $q->where('status', '=', 1);
                 }])->orderBy('id', 'DESC')->take($this->show_tag)->get();
-            $images = Images::where([['status', '=', 1], ['image_s', 'like', '%' . $id . '%']])->orderBy('id', 'DESC')->take($this->show_tag)->get();
+            $images = Images::where([['status', '=', 1], ['image_s', 'like', '%' . $id . '%']])->orderBy('id', 'DESC')
+                ->take($this->show_tag)->get();
             //type
-            $count_s_img = Images::where([['status', '=', 1], ['image_s', 'like', '%' . $id . '%']])->orderBy('id', 'DESC')->count();
+            $count_s_img = Images::where([['status', '=', 1], ['image_s', 'like', '%' . $id . '%']])
+                ->orderBy('id', 'DESC')->count();
             $types = Types::all();
             //tag
             $tag = Tags::first();
@@ -54,20 +56,24 @@ class ImageController extends Controller
             $tags['name'] = explode(",", $tag->name);
             $tags['name_seo'] = explode(",", $tag->name_seo);
             //region
+            $count_group = Groups::where([['status', '=', 1], ['id', '<>', 1],
+                ['name_seo', 'like', '%' . str_seo_m($id) . '%']])->count();
+
             $regions = Regions::limit($this->limit_region)->get();
             $first_url_image = $this->first_url_image;
-            return view('frontends.search', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'tag_old', 'images', 'tag_num', 'count_s_img'));
+            return view('frontends.search', compact('groups', 'first_url_image', 'types', 'tags',
+                'regions', 'tag_old', 'images', 'tag_num', 'count_group', 'count_s_img'));
         }
         $update = Groups::where('id', '=', 1)->with(['image' => function ($q) {
             $q->where('status', '=', 1)->orderBy('id', 'DESC');
         }])->first();
 
-        $top_image = Images::where('status',1)->orderBy('view', 'DESC')->limit($this->top_view_show)->get();
+        $top_image = Images::where('status', 1)->orderBy('view', 'DESC')->limit($this->top_view_show)->get();
 
         $count_img = Images::where([['group_id', '=', 1], ['status', '=', 1],
             ['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) + (3600 * 24))],
             ['updated_at', '>=', date("Y-m-d")]
-            ])->count();
+        ])->count();
 
         $show_img = $this->show_img;
         $groups = Groups::where([['status', '=', 1], ['id', '<>', 1]])
@@ -83,7 +89,8 @@ class ImageController extends Controller
         //region
         $regions = Regions::limit($this->limit_region)->get();
         $first_url_image = $this->first_url_image;
-        return view('frontends.index', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'show_img', 'update', 'count_img', 'top_image'));
+        return view('frontends.index', compact('groups', 'first_url_image', 'types', 'tags', 'regions',
+            'show_img', 'update', 'count_img', 'top_image'));
     }
 
     public function show($id)
@@ -104,7 +111,8 @@ class ImageController extends Controller
 
             $view_current_old = $post->view;
             $continent = Continents::find($post->region->continent_id);
-            $images = Images::where([['Group_id','=',$post->id],['status', '=', 1]])->orderby('id', 'DESC')->paginate($this->show_img_album);
+            $images = Images::where([['Group_id', '=', $post->id], ['status', '=', 1]])->orderby('id', 'DESC')
+                ->paginate($this->show_img_album);
 //            return $images;
             $first_url_image = $this->first_url_image;
             Event::fire(URL::current(), $post);
@@ -113,7 +121,8 @@ class ImageController extends Controller
             $view = new topView();
             $view->topView7($post->id, $view_current_old, $view_current_new);
         }
-        return view('frontends.album', compact('post', 'images', 'types', 'first_url_image', 'continent', 'post_relationship', 'tags'));
+        return view('frontends.album', compact('post', 'images', 'types', 'first_url_image', 'continent',
+            'post_relationship', 'tags'));
     }
 
     public function group($id)
@@ -123,11 +132,13 @@ class ImageController extends Controller
         $types = Types::all();
 
         if (isset($post)) {
-            $images = Images::where(['Group_id','=',$post->id],['status', '=', 1])->orderby('id', 'DESC')->paginate($this->show_img);
+            $images = Images::where(['Group_id', '=', $post->id], ['status', '=', 1])->orderby('id', 'DESC')
+                ->paginate($this->show_img);
             $first_url_image = $this->first_url_image;
             Event::fire(URL::current(), $post);
         }
-        return view('frontends.album', compact('post', 'images', 'types', 'first_url_image', 'continent'));
+        return view('frontends.album', compact('post', 'images', 'types', 'first_url_image',
+            'continent'));
     }
 
     public function tag($id)
@@ -138,7 +149,13 @@ class ImageController extends Controller
             ->with(['image' => function ($q) {
                 $q->where('status', '=', 1);
             }])->orderBy('id', 'DESC')->take($this->show_tag)->get();
-        $images = Images::where([['status', '=', 1], ['image_s', 'like', '%' . $id . '%']])->orderBy('id', 'DESC')->take(3)->get();
+        $images = Images::where([['status', '=', 1], ['image_s', 'like', '%' . $id . '%']])->orderBy('id', 'DESC')
+            ->take($this->show_tag)->get();
+        //count
+        $count_s_img = Images::where([['status', '=', 1], ['image_s', 'like', '%' . $id . '%']])->orderBy('id', 'DESC')
+            ->count();
+        $count_group = Groups::where([['status', '=', 1], ['id', '<>', 1],
+            ['name_seo', 'like', '%' . str_seo_m($id) . '%']])->count();
         //type
         $types = Types::all();
         //tag
@@ -149,7 +166,8 @@ class ImageController extends Controller
         //region
         $regions = Regions::limit($this->limit_region)->get();
         $first_url_image = $this->first_url_image;
-        return view('frontends.tag', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'tag_old', 'images', 'tag_num'));
+        return view('frontends.tag', compact('groups', 'first_url_image', 'types', 'tags', 'regions',
+            'tag_old', 'images', 'tag_num', 'count_s_img', 'count_group'));
     }
 
     public function tagPost($id)
@@ -167,13 +185,15 @@ class ImageController extends Controller
         //region
         $regions = Regions::limit($this->limit_region)->get();
         $first_url_image = $this->first_url_image;
-        return view('frontends.tagPost', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'tag_old'));
+        return view('frontends.tagPost', compact('groups', 'first_url_image', 'types', 'tags', 'regions',
+            'tag_old'));
     }
 
     public function searchPost($id)
     {
         $tag_old = $id;
-        $groups = Groups::where([['status', '=', 1], ['name_seo', 'like', '%' . $id . '%']])->orderBy('id', 'DESC')->paginate($this->show_img);
+        $groups = Groups::where([['status', '=', 1], ['name_seo', 'like', '%' . $id . '%']])->orderBy('id', 'DESC')
+            ->paginate($this->show_img);
         //type
         $types = Types::all();
         //tag
@@ -184,15 +204,15 @@ class ImageController extends Controller
         //region
         $regions = Regions::limit($this->limit_region)->get();
         $first_url_image = $this->first_url_image;
-        return view('frontends.searchPost', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'tag_old'));
+        return view('frontends.searchPost', compact('groups', 'first_url_image', 'types', 'tags',
+            'regions', 'tag_old'));
     }
 
     public function tagImage($id)
     {
-        $groups = Groups::where([['status', '=', 1], ['id', '<>', 1], ['name_seo', 'like', '%' . $id . '%']])
-            ->with(['image' => function ($q) {
-                $q->where('status', '=', 1);
-            }])->orderBy('id', 'DESC')->paginate($this->show_img);
+        $tag_old = $id;
+        $images = Images::where([['status', '=', 1], ['id', '<>', 1], ['image_s', 'like', '%' . $id . '%']])
+            ->orderBy('id', 'DESC')->paginate($this->show_img);
         //type
         $types = Types::all();
         //tag
@@ -203,7 +223,8 @@ class ImageController extends Controller
         //region
         $regions = Regions::limit($this->limit_region)->get();
         $first_url_image = $this->first_url_image;
-        return view('frontends.tagImage', compact('groups', 'first_url_image', 'types', 'tags', 'regions'));
+        return view('frontends.tagImage', compact('images', 'first_url_image', 'types', 'tags',
+            'regions', 'tag_old'));
     }
 
     public function searchImage($id)
@@ -221,7 +242,8 @@ class ImageController extends Controller
         //region
         $regions = Regions::limit($this->limit_region)->get();
         $first_url_image = $this->first_url_image;
-        return view('frontends.searchImage', compact('images', 'first_url_image', 'types', 'tags', 'regions', 'tag_old'));
+        return view('frontends.searchImage', compact('images', 'first_url_image', 'types', 'tags',
+            'regions', 'tag_old'));
     }
 
     public function region($id)
@@ -235,26 +257,28 @@ class ImageController extends Controller
             $ran_show_id = array();
             $ran_show_id_img = array();
             $id_rand = Groups::where([['status', '=', 1], ['id', '<>', 1]])->pluck('id');
-            $id_rand_img = Images::where([['status', '=', 1],['group_id', '<>', 1]])->pluck('id');
+            $id_rand_img = Images::where([['status', '=', 1], ['group_id', '<>', 1]])->pluck('id');
             if (count($id_rand) >= $this->show_img_col) {
-                $ran_show = randomGen(0,count($id_rand)-1,$this->show_img_col);
-                $ran_show_img = randomGen(0,count($id_rand_img)-1,$this->show_img_col);
-                for($i = 0; $i<$this->show_img_col; $i++) {
+                $ran_show = randomGen(0, count($id_rand) - 1, $this->show_img_col);
+                $ran_show_img = randomGen(0, count($id_rand_img) - 1, $this->show_img_col);
+                for ($i = 0; $i < $this->show_img_col; $i++) {
                     $ran_show_id[] = $id_rand[$ran_show[$i]];
                     if (count($id_rand_img) != 0)
-                    $ran_show_id_img[] = $id_rand_img[$ran_show_img[$i]];
+                        $ran_show_id_img[] = $id_rand_img[$ran_show_img[$i]];
                 }
             } else {
                 $ran_show_id = $id_rand;
                 $ran_show_id_img = $id_rand_img;
             }
-            $images = Images::where([['status', '=', 1], ['group_id', '<>', 1]])->whereIn('id', $ran_show_id_img)->limit($this->show_img_col)->get();
+            $images = Images::where([['status', '=', 1], ['group_id', '<>', 1]])->whereIn('id', $ran_show_id_img)
+                ->limit($this->show_img_col)->get();
             $groups = Groups::where([['status', '=', 1], ['id', '<>', 1]])->whereIn('id', $ran_show_id)
                 ->with(['image' => function ($q) {
                     $q->where('status', '=', 1);
                 }])->limit($this->show_img_col)->get();
             $regions = Regions::all();
-            return view('frontends.regionAll', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'region_id', 'region_old', 'images'));
+            return view('frontends.regionAll', compact('groups', 'first_url_image', 'types', 'tags',
+                'regions', 'region_id', 'region_old', 'images'));
         } else {
             $region_id = Regions::wherename_seo($id)->first();
             if (isset($region_id)) {
@@ -270,7 +294,8 @@ class ImageController extends Controller
             $tags['name_seo'] = explode(",", $tag->name_seo);
             //region
             $regions = Regions::limit($this->limit_region)->get();
-            return view('frontends.region', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'region_id', 'region_old'));
+            return view('frontends.region', compact('groups', 'first_url_image', 'types', 'tags',
+                'regions', 'region_id', 'region_old'));
         }
 
     }
@@ -294,7 +319,8 @@ class ImageController extends Controller
         //region
         $regions = Regions::limit($this->limit_region)->get();
         $first_url_image = $this->first_url_image;
-        return view('frontends.type', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'type_id'));
+        return view('frontends.type', compact('groups', 'first_url_image', 'types', 'tags', 'regions',
+            'type_id'));
 
     }
 
@@ -318,14 +344,16 @@ class ImageController extends Controller
         //region
         $regions = Regions::limit($this->limit_region)->get();
         $first_url_image = $this->first_url_image;
-        return view('frontends.postView', compact('groups', 'first_url_image', 'types', 'tags', 'regions', 'show_img'));
+        return view('frontends.postView', compact('groups', 'first_url_image', 'types', 'tags',
+            'regions', 'show_img'));
     }
 
-    public  function image($id) {
+    public function image($id)
+    {
         $first_url_image = $this->first_url_image;
-        $image = Images::where([['image_s','=',$id],['status','=',1]])->first();
+        $image = Images::where([['image_s', '=', $id], ['status', '=', 1]])->first();
         $group = Groups::find($image->group_id);
-        if(isset($image))
+        if (isset($image))
             Event::fire(URL::current(), $image);
 //        return $image->url;
         return view('frontends.show', compact('first_url_image', 'image', 'group'));

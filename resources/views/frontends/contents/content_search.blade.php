@@ -13,7 +13,7 @@
                             @if(isset($groups))
                                 @if (count($groups))
                                     <div class="grid">
-                                        @foreach($groups as $key=>$group)
+                                        @foreach($groups as $group)
                                             <div class="grid-item wow zoomIn">
                                                 <div class="m-positon-p">
                                                     <a href="{{url($group->name_seo)}}" class="m-a-p"
@@ -37,18 +37,16 @@
                                             </div>
                                         @endforeach
                                     </div>
-                                    @if (isset($key))
-                                        @if ($key == $tag_num-1)
-                                            <div class="text-center mb-3 mt-2">
-                                                <a href="{{route('searchPost', ['id' => $tag_old])}}"
-                                                   data-toggle="tooltip" title="Xem thêm">
-                                                    <button class="btn btn-secondary"><i
-                                                                class="fa fa-plus-square-o"></i>
-                                                        Xem thêm
-                                                    </button>
-                                                </a>
-                                            </div>
-                                        @endif
+                                    @if ($count_group > $tag_num)
+                                        <div class="text-center mb-3 mt-2">
+                                            <a href="{{route('searchPost', ['id' => $tag_old])}}"
+                                               data-toggle="tooltip" title="Xem thêm">
+                                                <button class="btn btn-secondary"><i
+                                                            class="fa fa-plus-square-o"></i>
+                                                    Xem thêm
+                                                </button>
+                                            </a>
+                                        </div>
                                     @endif
                                 @else
                                     @include('frontends.includes.notfounds.not_item')
