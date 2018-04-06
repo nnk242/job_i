@@ -24,7 +24,7 @@
                                                             <div class="m-text m-s-t">
                                                                 @if(isset($group->created_at))<h5
                                                                         class="text-dark small">{{date_format($group->created_at, "d") . ' Th' . date_format($group->created_at, "m," ). date_format($group->created_at, "Y" )}}</h5>@endif
-                                                                <h2 class="text-light">{!! str_limit($group->name,$limit=9,$end='...') !!}</h2>
+                                                                <h2 class="text-light">{!! str_limit($group->name,$limit=7,$end='...') !!}</h2>
                                                                 <p class="text-danger"><i
                                                                             class="fa fa-eye"></i> {{post_views($group->view)}}
                                                                     -

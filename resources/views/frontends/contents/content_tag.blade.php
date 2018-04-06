@@ -63,7 +63,7 @@
                                                 <div class="m-positon-p">
                                                     <a href="{{route('image', ['id', $tag_old])}}" class="m-a-p">
                                                         <img class="safelyLoadImage"
-                                                             src="{{in_array(substr($image->url, 0, 4), $first_url_image)?$image->url:asset($image->url)}}">
+                                                             src="{{in_array(substr($image->url, 0, 4), $first_url_image)?$image->url:asset($image->url_seo)}}">
                                                         <div class="m-none">
                                                             <div class="m-bg-img"></div>
                                                             <div class="m-text m-s-t">
