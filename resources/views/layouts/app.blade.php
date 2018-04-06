@@ -24,7 +24,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="{{ url('/') }}">
-                {{ config('app.name', 'Laravel') }}
+                Anhxxx.net
             </a>
             @if (!Auth::guest())
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">

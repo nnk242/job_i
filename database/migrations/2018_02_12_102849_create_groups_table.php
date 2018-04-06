@@ -30,7 +30,7 @@ class CreateGroupsTable extends Migration
         });
         DB::table('groups')->insert([[
             'user_id'=> 1,
-            'name' => 'Default',
+            'name' => 'Ảnh cập nhật',
             'name_seo' => 'default',
         ]]);
     }
