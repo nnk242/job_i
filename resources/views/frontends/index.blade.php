@@ -6,5 +6,5 @@
 @section('contents')
     @include('frontends.includes.header')
     @include('frontends.contents.content_index')
-    @include('frontends.includes.footer')
+    @include('frontends.includes.footer_index')
 @endsection

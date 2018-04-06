@@ -19,10 +19,7 @@
     <!-- Font awesome styles -->
     <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
-    {{--<link href="{{ asset('selectize/css/bootstrap2.css') }}" rel="stylesheet">--}}
     <link href="{{ asset('selectize/css/bootstrap3.css') }}" rel="stylesheet">
-    {{--<link href="{{ asset('selectize/css/default.css') }}" rel="stylesheet">--}}
-    {{--<link href="{{ asset('selectize/css/selectize.css') }}" rel="stylesheet">--}}
     @yield('stylesheet')
 </head>
 <body>
@@ -36,9 +33,6 @@
     </div>
     @yield('contents')
 </div>
-
-<!--<script src="{{ asset('js/app.js') }}"></script>-->
-
 <script src="{{asset('jquery/jquery.js')}}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
@@ -51,13 +45,18 @@
 <!--  selectize -->
 <script src="{{ asset('selectize/standalone/selectize.js') }}"></script>
 <script src="{{ asset('selectize/selectize.js') }}"></script>
-<script>
+<script type="text/javascript">
     $(function(){
-        var notFoundImage = "http://upload.wikimedia.org/wikipedia/en/thumb/d/da/Ziltoidtheomniscientcover.jpg/220px-Ziltoidtheomniscientcover.jpg";
+        //not found image
+        var notFoundImage = window.location.origin + "/uploads/default/default.jpg";
         var realImageSrc = $(".safelyLoadImage").data("imgsrc");
         $(".safelyLoadImage").attr("onerror", "this.onerror=null; this.src='" + notFoundImage + "';");
         $(".safelyLoadImage").attr("src", realImageSrc);
         $(".safelyLoadImage").removeClass("safelyLoadImage");
+        //
+        //title image
+        $('[data-toggle="tooltip"]').tooltip();
+        //
     });
 
     window.onload = function () {
@@ -82,8 +81,6 @@
     });
 
     new WOW().init();
-
-
     $('#select-repo').selectize({
         valueField: 'name',
         labelField: 'name',
@@ -115,14 +112,6 @@
             });
         },
     });
-    $(document).on('click', '#select-repo', function () {
-        var val = $('#select-repo').val();
-        $(location).attr('href', 'http://' + window.location.origin + '/?timkiem=' + val);
-    });
-
-    $(function () {
-        $('[data-toggle="tooltip"]').tooltip()
-    })
 
 </script>
 @yield('js')

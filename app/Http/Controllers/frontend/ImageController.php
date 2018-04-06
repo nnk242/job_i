@@ -28,6 +28,7 @@ class ImageController extends Controller
 
     public function index(Request $request)
     {
+
 //        $groups = Groups::where([['status', '=', 1], ['id', '<>', 1]])
 //            ->with(['image' => function ($q) {
 //                $q->where('status', '=', 1);
@@ -64,6 +65,15 @@ class ImageController extends Controller
             return view('frontends.search', compact('groups', 'first_url_image', 'types', 'tags',
                 'regions', 'tag_old', 'images', 'tag_num', 'count_group', 'count_s_img'));
         }
+        $views = Views::where([['updated_at', '<=', date("Y-m-d", strtotime(date("Y-m-d")) + (3600 * 24))],
+                ['updated_at', '>=', date('Y-m-d h:m:i', strtotime(date("Y-m-d h:m:i")) - 7*(3600 * 24))],
+            ['group_id', '<>', 1]
+            ])->with(['group' => function ($q) {
+            $q->where([['status', '=', 1]]);
+        }])->orderby('total', 'DESC')->limit(6)->get();
+
+//        return $views->group->name;
+
         $update = Groups::where('id', '=', 1)->with(['image' => function ($q) {
             $q->where('status', '=', 1)->orderBy('id', 'DESC');
         }])->first();
@@ -90,7 +100,7 @@ class ImageController extends Controller
         $regions = Regions::limit($this->limit_region)->get();
         $first_url_image = $this->first_url_image;
         return view('frontends.index', compact('groups', 'first_url_image', 'types', 'tags', 'regions',
-            'show_img', 'update', 'count_img', 'top_image'));
+            'show_img', 'update', 'count_img', 'top_image', 'views'));
     }
 
     public function show($id)
