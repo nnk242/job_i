@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="m-margin-top-bottom-15px">
-                <p class="h4 text-dark cursor-default"><span class="fa fa-object-group text-white"></span>&nbsp;Bài
+                <p class="h4 text-dark"><span class="fa fa-object-group text-white"></span>&nbsp;Bài
                     viết xem nhiều...</p>
             </div>
         </div>
