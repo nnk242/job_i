@@ -39,7 +39,7 @@
 
 <!--<script src="{{ asset('js/app.js') }}"></script>-->
 
-<script src="{{asset('jquery/jquery.js')}}" type="text/javascript"></script>
+<script src="{{asset('jquery/jquery.js')}}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('common/js/header.js') }}"></script>
@@ -48,7 +48,7 @@
 <script src="{{ asset('masonry/js/imagesloaded.pkgd.min.js') }}"></script>
 <!-- animate js -->
 <script src="{{ asset('animate/wow.js') }}"></script>
-<!-- Script selectize -->
+<!--  selectize -->
 <script src="{{ asset('selectize/standalone/selectize.js') }}"></script>
 <script src="{{ asset('selectize/selectize.js') }}"></script>
 <script>

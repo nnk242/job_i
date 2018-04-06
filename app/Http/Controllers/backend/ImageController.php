@@ -18,19 +18,21 @@ class ImageController extends Controller
         $this->middleware('auth');
     }
 
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public $item_page = 10;
-    public $first_url_image = array('http');
-    public $folder_save_image = 'uploads/';
+    protected $item_page = 10;
+    protected $first_url_image = array('http');
+    protected $folder_save_image = 'uploads/';
+    protected $folder_save_image_small = 'uploads/smalls/';
 
 
     public function index(Request $request)
     {
-        $images = Images::orderby('id','DESC')->paginate($this->item_page);
+        $images = Images::orderby('id', 'DESC')->paginate($this->item_page);
         $first_url_image = $this->first_url_image;
         return view('backends.images.index', compact('images', 'first_url_image'));
     }
@@ -148,16 +150,19 @@ class ImageController extends Controller
                     $extension = $request->file('image')->getClientOriginalExtension();
                     $dir = $this->folder_save_image;
                     $filename = uniqid() . '_' . time() . '.' . $extension;
+                    //small image
+                    compress($request->file('image'), public_path($this->folder_save_image_small) . $filename, 30);
                     $request->file('image')->move($dir, $filename);
                     $check_name = substr($image->url, 0, 4);
                     if (!in_array($check_name, $this->first_url_image)) {
-                        try{
+                        try {
+                            File::delete($this->folder_save_image_small . $filename);
                             File::delete($filepath);
                         } catch (\Exception $ex) {
                             $str = "File not found";
                         }
                     }
-                    $image->url = $dir. $filename;
+                    $image->url = $dir . $filename;
                 }
 
                 $name = $request->name;
@@ -191,10 +196,11 @@ class ImageController extends Controller
             try {
                 $image_url = $image->url;
                 $check_name = substr($image_url, 0, 4);
-//                $file_name = str_replace($this->folder_save_image,'', $image_url);
+                $filename = explode('/', $image_url)[count(explode('/', $image_url))-1];
                 if (!in_array($check_name, $this->first_url_image)) {
                     try {
                         File::delete($image_url);
+                        File::delete($this->folder_save_image_small . $filename);
                     } catch (\Exception $ex) {
                         $str = "File not found";
                     }
@@ -246,8 +252,10 @@ class ImageController extends Controller
                     if (Images::whereimage_s($image_s)->count() > 0) {
                         $image_s2 = str_seo_m(str_replace('.html', '', $name)) . uniqid() . '-' . time();
                         if (Images::whereimage_s($image_s2)->count() > 0) {
-                            $image->image_s = str_seo_m(str_replace('.html', '', $name)) . uniqid() . '-' . time() . '-' . uniqid();
-                        } else $image->image_s = str_seo_m(str_replace('.html', '', $name)) . uniqid() . '-' . time();
+                            $image->image_s = str_seo_m(str_replace('.html', '', $name)) . uniqid() . '-' .
+                                time() . '-' . uniqid();
+                        } else $image->image_s = str_seo_m(str_replace('.html', '', $name)) . uniqid() .
+                            '-' . time();
                     } else $image->image_s = str_seo_m(str_replace('.html', '', $name)) . '-' . time();
                 } else $image->image_s = str_seo_m($name);
 
@@ -255,7 +263,7 @@ class ImageController extends Controller
                 $image->content = $content;
                 $image->group_id = $group;
                 $image->status = $status == 1 ? 1 : 0;
-                return $image->status;
+
                 $image->save();
                 return [
                     'status' => true,
@@ -334,21 +342,24 @@ class ImageController extends Controller
                     try {
                         $extension = $file_upload[$k]->getClientOriginalExtension();
                         $filename = uniqid() . '_' . time() . '.' . $extension;
+                        compress($file_upload[$k], public_path($this->folder_save_image_small) . $filename, 30);
                         $file_upload[$k]->move($dir, $filename);
                         $image->url = $dir . $filename;
+
                         $k++;
                     } catch (\Exception $exception) {
                         File::delete($dir . $filename);
-                        return redirect()->back()->with('er', 'Upload file' . $i . ' fail...');
+                        File::delete($this->folder_save_image_small . $filename);
+                        return redirect()->back()->with('er', 'Upload file ' . $i . ' fail...');
                     }
-
                 } else {
-                    if(isset($url[$i])) {
+                    if (isset($url[$i])) {
                         $image->url = $url[$i];
                     }
                 }
                 $image->name = $name[$i];
-                $image->image_s = Images::whereimage_s(str_seo_m($name[$i]))->count() > 0 ? str_seo_m(str_replace('.html', '', $name[$i])) . '-' . time() . $i : str_seo_m($name[$i]);
+                $image->image_s = Images::whereimage_s(str_seo_m($name[$i]))->count() > 0 ? str_seo_m(
+                        str_replace('.html', '', $name[$i])) . '-' . time() . $i : str_seo_m($name[$i]);
                 $image->title = $title[$i];
                 $image->content = $content[$i];
                 $image->group_id = $group[$i];
@@ -358,8 +369,7 @@ class ImageController extends Controller
 
             return redirect()->back()->with('mes', 'Upload successful...');
         } catch (\Exception $ex) {
-            return 1;
-            return redirect()->back()->with('er', 'Upload fail...' );
+            return redirect()->back()->with('er', 'Upload fail...');
         }
     }
 
@@ -392,7 +402,8 @@ class ImageController extends Controller
                 if (Images::whereimage_s($image_s)->count() > 0) {
                     $image_s2 = str_seo_m(str_replace('.html', '', $name)) . uniqid() . '-' . time();
                     if (Images::whereimage_s($image_s2)->count() > 0) {
-                        $image = str_seo_m(str_replace('.html', '', $name)) . uniqid() . '-' . time() . '-' . uniqid();
+                        $image = str_seo_m(str_replace('.html', '', $name)) . uniqid() . '-' . time() . '-'
+                            . uniqid();
                     } else $image = str_seo_m(str_replace('.html', '', $name)) . uniqid() . '-' . time();
                 } else $image = str_seo_m(str_replace('.html', '', $name)) . '-' . time();
             } else $image = str_seo_m($name);
@@ -436,6 +447,7 @@ class ImageController extends Controller
                 $extension = $request->file('file')->getClientOriginalExtension();
                 $dir = $this->folder_save_image;
                 $filename = uniqid() . '_' . time() . '.' . $extension;
+                compress($request->file('file'), public_path($this->folder_save_image_small) . $filename, 30);
                 $request->file('file')->move($dir, $filename);
 
                 $image->user_id = Auth:: id();
@@ -447,7 +459,8 @@ class ImageController extends Controller
                     if (Images::whereimage_s($image_s)->count() > 0) {
                         $image_s2 = str_seo_m(str_replace('.html', '', $name)) . uniqid() . '-' . time();
                         if (Images::whereimage_s($image_s2)->count() > 0) {
-                            $image->image_s = str_seo_m(str_replace('.html', '', $name)) . uniqid() . '-' . time() . '-' . uniqid();
+                            $image->image_s = str_seo_m(str_replace('.html', '', $name)) . uniqid() . '-' .
+                                time() . '-' . uniqid();
                         } else $image->image_s = str_seo_m(str_replace('.html', '', $name)) . uniqid() . '-' . time();
                     } else $image->image_s = str_seo_m(str_replace('.html', '', $name)) . '-' . time();
                 } else $image->image_s = str_seo_m($name);
@@ -464,6 +477,8 @@ class ImageController extends Controller
                     'message' => 'uploaded.',
                 ];
             } catch (\Exception $exception) {
+                File::delete($dir . $filename);
+                File::delete($this->folder_save_image_small . $filename);
                 return [
                     'status' => false,
                     'data' => $request->all(),

@@ -286,8 +286,6 @@ function uploadServe(url, name, title, content, group, status, file, current) {
         },
     });
 
-    // var img_old = $('#profile-image1').attr('src');
-    //$('#profile-image1').attr('src', '{{url('/img')}}' + '/' + 'loader.svg');
     $.ajax({
         url: url,
         data: form_data,
@@ -299,7 +297,6 @@ function uploadServe(url, name, title, content, group, status, file, current) {
             $('#loading').remove();
             switch (data.status) {
                 case true: // Nếu upload thành công
-
                     current.closest('.upload-a-file').remove();
                     $('body').append($.parseHTML(successful(data.message)));
                     closeError();
@@ -321,8 +318,6 @@ function uploadServe(url, name, title, content, group, status, file, current) {
             $('#loading').remove();
         }
     });
-
-
     closeError();
     $('#loading').remove();
 }
