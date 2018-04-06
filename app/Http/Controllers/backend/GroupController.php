@@ -21,10 +21,11 @@ class GroupController extends Controller
         $this->middleware('auth');
     }
 
-    public $item_group = 10;
-    public $first_url_image = array('http');
-    public $folder_save_image = 'regions/';
-    public $folder_save_image_group = 'thumbnails/';
+    protected $item_group = 10;
+    protected $first_url_image = array('http');
+    protected $folder_save_image = 'uploads/regions/';
+    protected $folder_save_image_group = 'uploads/thumbnails/';
+    protected $quantity_image = 20;
 
     public function index()
     {
@@ -70,7 +71,8 @@ class GroupController extends Controller
                     $extension = $request->file('group_image')->getClientOriginalExtension();
                     $dir = $this->folder_save_image_group;
                     $filename = uniqid() . '_' . time() . '.' . $extension;
-                    $request->file('group_image')->move($dir, $filename);
+                    compress($request->file('group_image'), public_path($dir) . $filename, $this->quantity_image);
+//                    $request->file('group_image')->move($dir, $filename);
 
                     $group->thumbnail = $dir. $filename;
                 } else {
@@ -129,7 +131,9 @@ class GroupController extends Controller
                 $extension = $request->file('image_thumbnail')->getClientOriginalExtension();
                 $dir = $this->folder_save_image_group;
                 $filename = uniqid() . '_' . time() . '.' . $extension;
-                $request->file('image_thumbnail')->move($dir, $filename);
+//                $request->file('image_thumbnail')->move($dir, $filename);
+                compress($request->file('image_thumbnail'), public_path($dir) . $filename,
+                    $this->quantity_image);
 
                 $filepath = $group->thumbnail;
                 $check_name = substr($filepath, 0, 4);
@@ -203,6 +207,7 @@ class GroupController extends Controller
                     $extension = $request->file('flag_image')->getClientOriginalExtension();
                     $dir = $this->folder_save_image;
                     $filename = uniqid() . '_' . time() . '.' . $extension;
+
                     $request->file('flag_image')->move($dir, $filename);
                     $region->image = $dir . $filename;
                 } else {
@@ -210,7 +215,8 @@ class GroupController extends Controller
                 }
                 $region->continent_id = $request->continent;
                 $region->name = $name;
-                $region->name_seo = Regions::wherename_seo($name)->count() > 0 ? str_seo_m(str_replace('.html', '', $name)) . '-' . time() : str_seo_m($name);
+                $region->name_seo = Regions::wherename_seo($name)->count() > 0 ? str_seo_m(str_replace('.html',
+                        '', $name)) . '-' . time() : str_seo_m($name);
                 $region->description = $request->description;
                 $region->status = $status == 1 ? 1 : 0;
                 $region->save();

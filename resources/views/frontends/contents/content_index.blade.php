@@ -13,7 +13,7 @@
                                             <a href="{{url($update->name_seo)}}" class="m-a-p" data-toggle="tooltip"
                                                title="{{$update->name}}">
                                                 <img class="safelyLoadImage"
-                                                     src="{{in_array(substr(($update->image[0])->url, 0, 4), $first_url_image)?($update->image[0])->url:asset(($update->image[0])->url)}}">
+                                                     src="{{ isset($update->image[0]) ? in_array(substr(($update->image[0])->url, 0, 4), $first_url_image)?($update->image[0])->url:asset(($update->image[0])->url) : '/'}}">
                                                 <div class="m-none">
                                                     <div class="m-bg-img"></div>
                                                     <div class="m-text m-s-t">

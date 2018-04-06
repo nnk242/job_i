@@ -17,6 +17,7 @@ class CreateImagesTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->references('id')->on('users');
             $table->string('url', 255);
+            $table->string('url_seo', 255)->nullable();
             $table->string('name', 255);
             $table->string('image_s', 255);
             $table->string('title', 255)->nullable();

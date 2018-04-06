@@ -28,27 +28,27 @@ class CreateRegionsTable extends Migration
             'user_id'=> 1,
             'name' => 'Việt Nam',
             'name_seo' => 'viet-nam',
-            'image' => 'regions/vietnam.png',
+            'image' => 'uploads/regions/vietnam.png',
         ],[
             'user_id'=> 1,
             'name' => 'Hàn Quốc',
             'name_seo' => 'han-quoc',
-            'image' => 'regions/korea.png',
+            'image' => 'uploads/regions/korea.png',
         ],[
             'user_id'=> 1,
             'name' => 'Nhật Bản',
             'name_seo' => 'nhat-ban',
-            'image' => 'regions/japan.png',
+            'image' => 'uploads/regions/japan.png',
         ],[
             'user_id'=> 1,
             'name' => 'Trung Quốc',
             'name_seo' => 'trung-quoc',
-            'image' => 'regions/china.png',
+            'image' => 'uploads/regions/china.png',
         ],[
             'user_id'=> 1,
             'name' => 'Thái Lan',
             'name_seo' => 'thai-lan',
-            'image' => 'regions/thailand.png',
+            'image' => 'uploads/regions/thailand.png',
         ],]);
     }
 

@@ -47,10 +47,10 @@
                                         <div>
                                             @foreach($images as $image)
                                                 <p class="">{{$image->content}}</p>
-                                                <a href="{{url('hinh-anh/' . $image->image_s)}}" data-toggle="tooltip"
+                                                <a href="{{route('image', ['id' => $image->image_s])}}" data-toggle="tooltip"
                                                    title="{{$image->name}}"><img
                                                             class="m-img-w m-border-darius-5 safelyLoadImage"
-                                                            src="{{in_array(substr($image->url, 0, 4), $first_url_image)?$image->url:asset($image->url)}}">
+                                                            src="{{in_array(substr($image->url, 0, 4), $first_url_image)?$image->url:asset($image->url_seo )}}">
                                                     <p class="text-info text-center">{{$image->title . date_format($image->created_at, " - d/m/Y")}}</p>
                                                 </a>
                                             @endforeach
