@@ -3,15 +3,8 @@
     float: left;
 }
 
-.m-bg-b8cccc {
+.m-bg-b8cccc, .m-bg-img, .m-positon-p {
     background: #b8cccc;
-}
-
-.m-top-right-bottom-left-0 {
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
 }
 
 .m-font-size-3em {
@@ -26,13 +19,12 @@
     margin-top: 15%;
 }
 
-.m-margin-bottom-15px {
+.m-margin-bottom-15px, .m-margin-top-bottom-15px {
     margin-bottom: 15px;
 }
 
 .m-margin-top-bottom-15px {
     margin-top: 15px;
-    margin-bottom: 15px;
 }
 
 .grid-item {
@@ -69,64 +61,56 @@
 .grid-item img, .grid-item-c img {
     width: 100%;
     margin:0 auto 20px auto;
-    display: block;
     border-radius: 5px;
-    transition:         background-position 2s ease-out;
-    -moz-transition:    background-position 2s ease-out;
-    -webkit-transition: background-position 2s ease-out;
-    -o-transition:      background-position 2s ease-out;
+}
+.grid-item img, .grid-item-c img, #loading, .m-tab:hover  .m-tab-icon, .m-img-b, .m-b-img,.m-img-w, .m-collection-w, .m-positon-p, .m-positon-p:hover .m-none  {
+    display: block;
 }
 
-.m-bg-img {
-    position: absolute;
+.m-bg-img, .m-top-right-bottom-left-0, #loading, .loading {
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    background: #b8cccc;
-    opacity: 0.7;
+}
+
+.m-bg-img, .m-s-t,.m-bg, .loading-child, .m-tab-c {
+    position: absolute;
+}
+
+.m-positon-p, #loading-image {
+    position: relative;
+}
+
+.m-bg-img {
     border-radius: 5px;
-    transition:         background-position 2s ease-out;
-    -moz-transition:    background-position 2s ease-out;
-    -webkit-transition: background-position 2s ease-out;
-    -o-transition:      background-position 2s ease-out;
+}
+
+.m-bg-img, .m-positon-p, .m-none, .m-positon-p:hover .m-none, .grid-item img, .grid-item-c img, .loading-child, .m-remove-item, .u-remove-a-file:hover, .m-tab, .m-tab:hover .m-tab-icon, .m-bg, .m-tag:hover, .m-menu-type:hover .m-type-a,.m-menu-type, .m-type-a, .m-tag {
+    transition:         background-position 1.5s ease-out;
+    -moz-transition:    background-position 1.5s ease-out;
+    -webkit-transition: background-position 1.5s ease-out;
+    -o-transition:      background-position 1.5s ease-out;
 }
 
 .m-s-t {
-    position: absolute;
     top: 10px;
     left: 10px;
 }
 
 .m-positon-p {
-    position: relative;
-    background: #b8cccc;
     width: 95%;
+}
+
+.m-positon-p, .m-img-b, .m-img-w, .m-collection-w {
     margin: 0 auto;
-    display: block;
-    transition:         background-position 2s ease-out;
-    -moz-transition:    background-position 2s ease-out;
-    -webkit-transition: background-position 2s ease-out;
-    -o-transition:      background-position 2s ease-out;
 }
 
-.m-none {
+.m-none, .m-tab-icon {
     display: none;
-    transition:         background-position 2s ease-out;
-    -moz-transition:    background-position 2s ease-out;
-    -webkit-transition: background-position 2s ease-out;
-    -o-transition:      background-position 2s ease-out;
 }
 
-.m-positon-p:hover .m-none {
-    display: block;
-    transition:         background-position 2s ease-out;
-    -moz-transition:    background-position 2s ease-out;
-    -webkit-transition: background-position 2s ease-out;
-    -o-transition:      background-position 2s ease-out;
-}
-
-.m-opacity-7 {
+.m-opacity-7, .m-bg-img, .loading, .m-error {
     opacity: 0.7;
 }
 
@@ -151,10 +135,8 @@
 
 .m-collection-w {
     width: 98%;
-    margin: 0 auto;
     margin-top: 3px;
     margin-bottom: 3px;
-    display: block;
 }
 
 .m-border-darius-5 {
@@ -163,17 +145,13 @@
 
 .m-img-w {
     width: 90%;
-    margin: 0 auto;
-    display: block;
 }
 
 .m-b-img {
     width: auto;
     max-height: 135px;
-    margin: 0 auto;
     margin-top: 3px;
     margin-bottom: 3px;
-    display: block;
     border-radius: 5px;
     border: 1px #ccc;
 }
@@ -182,13 +160,13 @@
 }
 
 .loading {
-    position: fixed; background: #cccccc; top: 0; left: 0; right: 0; bottom: 0;
-    opacity: 0.7;
+    background: #cccccc;
+}
+.loading, .m-error, .m-tab, #loading {
+    position: fixed;
 }
 .loading-child {
-    position: absolute;
     top: 45%; left: 45%;
-    transition: 1s;
 }
 .m-height-150px{
     height: 150px;
@@ -204,13 +182,9 @@
     height: auto;
     width: auto;
     max-height: 140px;
-    margin: 0 auto;
-    display: block;
 }
 
 .m-error {
-    position: fixed;
-    opacity: 0.7;
     right: 15px;
     top: 15px;
     z-index: 99999;
@@ -219,11 +193,9 @@
 .m-remove-item {
     top: 5px;
     right: 5px;
-    transition: 1s;
 }
 .u-remove-a-file:hover {
     font-size: 24px;
-    transition: 1s;
 }
 
 .m-border-img {
@@ -232,19 +204,13 @@
 
 .m-tab {
     border: solid 1px #c6c8ca;
-    position: fixed;
     bottom: 5px;
     right: 5px;
     border-radius: 50%;
     padding: 2px;
-    transition:         background-position 1s ease-out;
-    -moz-transition:    background-position 1s ease-out;
-    -webkit-transition: background-position 1s ease-out;
-    -o-transition:      background-position 1s ease-out;
 }
 
 .m-tab-c {
-    position: absolute;
     top: 0;
     right: 150%;
 }
@@ -253,34 +219,16 @@
     width: 2.2rem;
     height: 2.2rem;
 }
-.m-tab:hover  .m-tab-icon {
-    display: block;
+.m-tab:hover .m-tab-icon, .m-bg {
     background: #1b1e21;
-    transition:         background-position 1s ease-out;
-    -moz-transition:    background-position 1s ease-out;
-    -webkit-transition: background-position 1s ease-out;
-    -o-transition:      background-position 1s ease-out;
 }
 .m-bg {
-    position: absolute;
-    background: #1d2124;
     top: -1px;
     right: -1px;
     bottom: -1px;
     left: -55px;
     border-radius: 0 15px 15px 0;
     z-index: -1;
-    transition:         background-position 1s ease-out;
-    -moz-transition:    background-position 1s ease-out;
-    -webkit-transition: background-position 1s ease-out;
-    -o-transition:      background-position 1s ease-out;
-}
-.m-tab-icon {
-    display: none;
-}
-
-.m-menu-type, .m-type-a, .m-tag{
-    transition: 1s ease-out;
 }
 
 .m-menu-type:hover {
@@ -289,32 +237,21 @@
 
 .m-menu-type:hover .m-type-a {
     margin-left: 10px;
-    transition: 1s ease-out;
 }
-
-
 
 .m-tag:hover {
     background: #bf5329;
-    transition: 1s ease-out;
     color: #f8f9fa;
 }
 
 #loading {
     width: 100%;
     height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    position: fixed;
-    display: block;
     z-index: 99999;
     text-align: center;
 }
 
 #loading-image {
-    position: relative;
     top: 40%;
     z-index: 9999999;
 }
