@@ -2,18 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c028cef4-e79b-4821-8f8b-45ad037c6603" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/animate/animate.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/animate/wow.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/style.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/css/app.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jquery/jquery.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/selectize/css/bootstrap3.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/selectize/selectize.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/selectize/standalone/selectize.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/anhxxx" beforeDir="false" afterPath="$PROJECT_DIR$/anhxxx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/animate/wow.js" beforeDir="false" afterPath="$PROJECT_DIR$/animate/wow.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/common/style.css" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -41,7 +31,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="frontend.blade.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="frontend.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/anhxxx/resources/views/layouts/frontend.blade.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="84">
@@ -51,6 +41,16 @@
               </folding>
             </state>
           </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/anhxxx/.gitignore">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name=".gitattributes" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/anhxxx/.gitattributes">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file leaf-file-name="selectize.js" pinned="false" current-in-tab="false">
@@ -124,24 +124,6 @@
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="font-awesome.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/font-awesome/css/font-awesome.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="17" column="23" lean-forward="true" selection-end-line="2337" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bootstrap3.min.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/selectize/css/bootstrap3.min.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="7899" selection-start-column="7899" selection-end-column="7899" />
             </state>
           </provider>
         </entry>
@@ -413,115 +395,6 @@
               <item name="views" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="layouts" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
-            <path>
-              <item name="job_ii" type="b2602c69:ProjectViewProjectNode" />
-              <item name="job_ii" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="animate" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="job_ii" type="b2602c69:ProjectViewProjectNode" />
-              <item name="job_ii" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="animate" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="animate.css" type="620a8d5e:NestingTreeNode" />
-            </path>
-            <path>
-              <item name="job_ii" type="b2602c69:ProjectViewProjectNode" />
-              <item name="job_ii" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="animate" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="wow.js" type="620a8d5e:NestingTreeNode" />
-            </path>
-            <path>
-              <item name="job_ii" type="b2602c69:ProjectViewProjectNode" />
-              <item name="job_ii" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="common" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="job_ii" type="b2602c69:ProjectViewProjectNode" />
-              <item name="job_ii" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="common" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="js" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="job_ii" type="b2602c69:ProjectViewProjectNode" />
-              <item name="job_ii" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="common" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="style.css" type="620a8d5e:NestingTreeNode" />
-            </path>
-            <path>
-              <item name="job_ii" type="b2602c69:ProjectViewProjectNode" />
-              <item name="job_ii" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="css" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="job_ii" type="b2602c69:ProjectViewProjectNode" />
-              <item name="job_ii" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="css" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="app.css" type="620a8d5e:NestingTreeNode" />
-            </path>
-            <path>
-              <item name="job_ii" type="b2602c69:ProjectViewProjectNode" />
-              <item name="job_ii" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="font-awesome" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="job_ii" type="b2602c69:ProjectViewProjectNode" />
-              <item name="job_ii" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="font-awesome" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="css" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="job_ii" type="b2602c69:ProjectViewProjectNode" />
-              <item name="job_ii" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="jquery" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="job_ii" type="b2602c69:ProjectViewProjectNode" />
-              <item name="job_ii" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="jquery" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="jquery.js" type="620a8d5e:NestingTreeNode" />
-            </path>
-            <path>
-              <item name="job_ii" type="b2602c69:ProjectViewProjectNode" />
-              <item name="job_ii" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="selectize" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="job_ii" type="b2602c69:ProjectViewProjectNode" />
-              <item name="job_ii" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="selectize" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="css" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="job_ii" type="b2602c69:ProjectViewProjectNode" />
-              <item name="job_ii" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="selectize" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="css" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="bootstrap3.css" type="620a8d5e:NestingTreeNode" />
-            </path>
-            <path>
-              <item name="job_ii" type="b2602c69:ProjectViewProjectNode" />
-              <item name="job_ii" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="selectize" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="standalone" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="job_ii" type="b2602c69:ProjectViewProjectNode" />
-              <item name="job_ii" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="selectize" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="standalone" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="selectize.js" type="620a8d5e:NestingTreeNode" />
-            </path>
-            <path>
-              <item name="job_ii" type="b2602c69:ProjectViewProjectNode" />
-              <item name="job_ii" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="selectize" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="selectize.js" type="620a8d5e:NestingTreeNode" />
-            </path>
-            <path>
-              <item name="job_ii" type="b2602c69:ProjectViewProjectNode" />
-              <item name="job_ii" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="uploads" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -545,11 +418,11 @@
       <recent name="D:\xampp\htdocs\job_i\public" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\xampp\htdocs\job_ii\anhxxx" />
+      <recent name="D:\xampp\htdocs\job_ii" />
       <recent name="D:\xampp\htdocs\job_i\public\uploads" />
       <recent name="D:\xampp\htdocs\job_i\resources\views\frontends" />
       <recent name="D:\xampp\htdocs\job_i\resources\views\frontends\includes\contents" />
-      <recent name="D:\xampp\htdocs\job_i\resources\views\frontends\includes" />
-      <recent name="D:\xampp\htdocs\job_i\public\regions" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -604,12 +477,12 @@
       <workItem from="1522979558838" duration="25371000" />
       <workItem from="1523077598019" duration="2365000" />
       <workItem from="1523084861661" duration="3911000" />
-      <workItem from="1523088903919" duration="3924000" />
+      <workItem from="1523088903919" duration="4542000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="318017000" />
+    <option name="totallyTimeSpent" value="318635000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -628,8 +501,8 @@
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32900432" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.32683983" />
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4978355" visible="true" weight="0.23187633" />
+      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.32683983" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4978355" visible="true" weight="0.23187633" />
       <window_info anchor="bottom" id="Docker" order="10" show_stripe_button="false" />
       <window_info anchor="right" id="Database" order="3" weight="0.32995737" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32792208" />
@@ -652,10 +525,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/view/topView.php" />
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/backend/DashboardController.php" />
-    <entry file="file://$PROJECT_DIR$/resources/views/frontends/includes/menu/menu_top_view.blade.php" />
-    <entry file="file://$PROJECT_DIR$/resources/views/frontends/includes/menu/menu_type.blade.php" />
     <entry file="file://$PROJECT_DIR$/resources/views/frontends/includes/footer_index.blade.php" />
     <entry file="file://$PROJECT_DIR$/resources/views/frontends/type.blade.php" />
     <entry file="file://$PROJECT_DIR$/resources/views/frontends/includes/footer.blade.php" />
@@ -897,6 +766,25 @@
           </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor />
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/anhxxx/phpunit.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-207" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/anhxxx/.gitignore">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/anhxxx/.gitattributes">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
 </project>
